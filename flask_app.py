@@ -1,6 +1,9 @@
 from flask import Flask, render_template
+#from api.website import api_datetime
 
-app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')
+from app import app
+
+
 
 @app.route('/')
 def root_page():
