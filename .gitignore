@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# ZX custom
+ako.cmd
+website_wsgi.py.txt
