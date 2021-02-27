@@ -32,8 +32,9 @@ secrets = get_secrets()
 
 logging_format = logging.Formatter('[%(levelname)-8s] %(funcName)-20s %(message)s')
 root_logger = logging.getLogger()
-# root_logger.setLevel(logging.DEBUG)
+root_logger.setLevel(logging.NOTSET)
 try:
+    logging.
     console_logger = logging.StreamHandler()
     # console_logger.setLevel(logging.ERROR)
     console_logger.setFormatter(logging_format)
