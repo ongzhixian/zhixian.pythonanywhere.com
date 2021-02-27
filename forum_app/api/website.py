@@ -51,7 +51,7 @@ def api_website_change_notification():
     has_x_hub_signature = "X-Hub-Signature" in request.headers
     has_git_webhook_secret = 'GIT_WEBHOOK_SECRET' in secrets
 
-    if is_post and has_x_hub_signature in request.headers and has_git_webhook_secret in secrets:
+    if is_post and has_x_hub_signature and has_git_webhook_secret:
         signature = request.headers["X-Hub-Signature"]
         encoded_git_webhook_secret = secrets['GIT_WEBHOOK_SECRET'].encode("utf8")
         hash_algorithm, hash_value = signature.split("=")
