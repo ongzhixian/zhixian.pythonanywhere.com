@@ -56,19 +56,18 @@ def api_website_change_notification():
         github_hash_key, github_hash = signature.split("=")
         logging.info(f"github_hash_key:{github_hash_key}, github_hash:{github_hash}")
         logging.info(f"Type {str(type(github_hash_key))}")
-        
 
         hash_algorithm = hashlib.new(github_hash_key)
-        
         logging.info("Getting {0}".format(secrets['GIT_SECRET']))
 
         encoded_key = secrets['GIT_SECRET'].encode("utf8")
+        logging.info("after encodided")
+
         mac = hmac.new(encoded_key, msg = request.data, digestmod=github_hash_key)
+        logging.info("after mac")
         
         is_valid = hmac.compare_digest(mac.hexdigest(), github_hash)
         logging.info("is_valid: {is_valid}")
-
-        
 
     if request.method == 'POST':
         repo = git.Repo('/home/zhixian/website')
