@@ -6,6 +6,9 @@
 import json
 import logging
 
+import hmac
+import hashlib
+
 from datetime import datetime
 from time import time
 
@@ -46,6 +49,24 @@ def api_website_change_notification():
 
     logging.info("In api_website_change_notification()")
     logging.info(str(request.headers))
+
+    if "X-Hub-Signature" in request.headers:
+        signature = request.headers["X-Hub-Signature"]
+
+        github_hash_key, github_hash = signature.split("=")
+        logging.info(f"github_hash_key:{github_hash_key}, github_hash:{github_hash}")
+        
+        hash_algorithm = hashlib.new(github_hash_key)
+        
+        logging.info("Getting {0}".format(secrets['GIT_SECRET']))
+
+        encoded_key = secrets['GIT_SECRET'].encode("utf8")
+        mac = hmac.new(encoded_key, msg = request.data, digestmod=hash_algorithm)
+        
+        is_valid = hmac.compare_digest(mac.hexdigest(), github_hash)
+        logging.info("is_valid: {is_valid}")
+
+        
 
     if request.method == 'POST':
         repo = git.Repo('/home/zhixian/website')
