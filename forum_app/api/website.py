@@ -45,7 +45,7 @@ def api_datetime():
 
         for h in root_logger.handlers:
             logging.info(str(h))
-            logging.info(h.level)
+            logging.info(str(h.level))
             logging.info(h.name)
         
         logging_format = logging.Formatter('%(asctime)-15s %(levelname)-8s %(funcName)-20s %(message)s')
