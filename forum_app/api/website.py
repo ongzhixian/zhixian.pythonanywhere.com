@@ -55,7 +55,7 @@ def api_website_change_notification():
 
         github_hash_key, github_hash = signature.split("=")
         logging.info(f"github_hash_key:{github_hash_key}, github_hash:{github_hash}")
-        logging.info("Type {str(type(github_hash_key))}")
+        logging.info(f"Type {str(type(github_hash_key))}")
         
 
         hash_algorithm = hashlib.new(github_hash_key)
