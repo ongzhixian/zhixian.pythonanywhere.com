@@ -23,8 +23,9 @@ def api_website_env():
 
     sec1 = os.getenv('BASH_SECRET')
     sec2 = os.getenv('OTHER_SECRET')
+    return str(os.environ)
 
-    return str(sec1) + ' -- ' + str(sec2)
+    #return str(sec1) + ' -- ' + str(sec2)
 
 
 @app.route('/api/website/datetime', methods=['GET', 'POST'])
