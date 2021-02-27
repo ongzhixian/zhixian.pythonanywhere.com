@@ -54,6 +54,11 @@ def api_datetime():
         logging_format = logging.Formatter('%(asctime)-15s %(levelname)-8s %(funcName)-20s %(message)s')
         default_console_logger = root_logger.handlers[0]
         default_console_logger.setFormatter(logging_format)
+
+        logging.info(root_logger.handlers[0].name)
+        logging.info(root_logger.handlers[1].name)
+        logging.info(root_logger.handlers[0].level)
+        logging.info(root_logger.handlers[1].level)
     except Exception as e:
         logging.info("ERROR----------ERROR----------")
         logging.error(e)
