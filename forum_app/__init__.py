@@ -30,7 +30,7 @@ def get_secrets():
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')
 secrets = get_secrets()
 
-logging_format = logging.Formatter('%(levelname)-8s %(funcName)-20s %(message)s')
+logging_format = logging.Formatter('[%(levelname)-8s] %(funcName)-20s %(message)s')
 root_logger = logging.getLogger()
 # root_logger.setLevel(logging.DEBUG)
 try:
@@ -42,7 +42,7 @@ except Exception as e:
     logging.info("ERROR----------ERROR----------")
     logging.error(e)
 
-logging.info("START-------------------------------------")
+logging.info("STARTX-------------------------------------")
 logging.info(len(root_logger.handlers))
 
 #root_logger.handlers
