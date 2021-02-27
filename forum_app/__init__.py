@@ -9,6 +9,7 @@ __all__ = ["pages", "api"]
 ################################################################################
 
 import json
+import logging
 from flask import Flask
 
 ################################################################################
@@ -27,6 +28,17 @@ def get_secrets():
 
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')
 secrets = get_secrets()
+
+logging_format = logging.Formatter('%(asctime)-15s %(levelname)-8s %(funcName)-20s %(message)s')
+root_logger = logging.getLogger()
+root_logger.setLevel(logging.DEBUG)
+logging.info("START-------------------------------------")
+logging.info(len(root_logger.handlers))
+
+#root_logger.handlers
+
+#default_console_logger = root_logger.handlers[0]
+#default_console_logger.setFormatter(logging_format)
 
 ################################################################################
 # Import pages and API for application

@@ -38,9 +38,7 @@ def api_website_env():
 
 @app.route('/api/website/datetime', methods=['GET', 'POST'])
 def api_datetime():
-
     logging.info("In api_datetime()")
-
     return str(datetime.utcnow())
 
 
@@ -48,28 +46,30 @@ def api_datetime():
 def api_website_change_notification():
 
     logging.info("In api_website_change_notification()")
-    logging.info(str(request.headers))
 
+    is_post = request.method == 'POST'
+    has_x_hub_signature = "X-Hub-Signature" in request.headers
+    has_git_webhook_secret = 'GIT_WEBHOOK_SECRET' in secrets
 
-
-    if request.method == 'POST' and "X-Hub-Signature" in request.headers and 'GIT_SECRET' in secrets:
+    if is_post and has_x_hub_signature in request.headers and has_git_webhook_secret in secrets:
         signature = request.headers["X-Hub-Signature"]
-        encoded_git_hook_secret = secrets['GIT_SECRET'].encode("utf8")
-        github_hash_key, github_hash = signature.split("=")
+        encoded_git_webhook_secret = secrets['GIT_WEBHOOK_SECRET'].encode("utf8")
+        hash_algorithm, hash_value = signature.split("=")
 
-        logging.info(f"github_hash_key:{github_hash_key}, github_hash:{github_hash}")
+        logging.info(f"github_hash_key:{hash_algorithm}, github_hash:{hash_value}")
 
-        mac = hmac.new(encoded_git_hook_secret, msg=request.data, digestmod=github_hash_key)
-        mac_hex_digest = mac.hexdigest()
-        logging.info(f"Mac: {mac_hex_digest}")
-        
-        is_valid = hmac.compare_digest(mac.hexdigest(), github_hash)
-        logging.info(f"is_valid: {is_valid}")
+        mac = hmac.new(encoded_git_webhook_secret, msg=request.data, digestmod=hash_algorithm)
+        is_matching_hash = hmac.compare_digest(mac.hexdigest(), hash_value)
+        logging.info(f"Github hash match: {is_matching_hash}")
 
-    if request.method == 'POST':
-        repo = git.Repo('/home/zhixian/website')
-        origin = repo.remotes.origin
-        origin.pull()
-        return 'Updated PythonAnywhere successfully', 200
+        if is_matching_hash:
+            repo = git.Repo('/home/zhixian/website')
+            origin = repo.remotes.origin
+            origin.pull()
+
+            logging.info("Local Github repository pulled.")
+            return 'OK', 200
     else:
-        return 'Wrong event type', 400
+        error_message = f"Invalid api_website_change_notification() call; is_post:{is_post}, has_x_hub_signature: {has_x_hub_signature} has_git_webhook_secret: {has_git_webhook_secret}"
+        logging.info(error_message)
+        return error_message, 400
