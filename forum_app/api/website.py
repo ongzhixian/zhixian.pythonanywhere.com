@@ -45,6 +45,7 @@ def api_datetime():
 def api_website_change_notification():
 
     logging.info("In api_website_change_notification()")
+    logging.info(str(request.headers))
 
     if request.method == 'POST':
         repo = git.Repo('/home/zhixian/website')
