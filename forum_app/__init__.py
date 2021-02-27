@@ -32,6 +32,12 @@ secrets = get_secrets()
 logging_format = logging.Formatter('%(asctime)-15s %(levelname)-8s %(funcName)-20s %(message)s')
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.DEBUG)
+try:
+    default_console_logger = root_logger.handlers[0]
+except Exception as e:
+    logging.info("ERROR----------ERROR----------")
+    logging.error(e)
+
 logging.info("START-------------------------------------")
 logging.info(len(root_logger.handlers))
 
