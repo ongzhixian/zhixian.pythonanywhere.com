@@ -22,6 +22,17 @@ def get_secrets():
     return app_secrets
 
 
+def setup_logging():
+    try:
+        logging_format = logging.Formatter('[%(levelname)-8s] %(funcName)-20s %(message)s')
+        root_logger = logging.getLogger()
+        root_logger.setLevel(logging.NOTSET)
+        console_logger = logging.StreamHandler()
+        console_logger.setFormatter(logging_format)
+        root_logger.addHandler(console_logger)
+    except Exception as e:
+        logging.error(e)
+
 
 ################################################################################
 # Define Flask application
@@ -29,26 +40,9 @@ def get_secrets():
 
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')
 secrets = get_secrets()
+setup_logging()
+logging.info("[APPLICATION START]")
 
-logging_format = logging.Formatter('[%(levelname)-8s] %(funcName)-20s %(message)s')
-root_logger = logging.getLogger()
-root_logger.setLevel(logging.NOTSET)
-try:
-    console_logger = logging.StreamHandler()
-    # console_logger.setLevel(logging.ERROR)
-    console_logger.setFormatter(logging_format)
-    root_logger.addHandler(console_logger)
-except Exception as e:
-    logging.info("ERROR----------ERROR----------")
-    logging.error(e)
-
-logging.info("STARTX-------------------------------------")
-logging.info(len(root_logger.handlers))
-
-#root_logger.handlers
-
-#default_console_logger = root_logger.handlers[0]
-#default_console_logger.setFormatter(logging_format)
 
 ################################################################################
 # Import pages and API for application
