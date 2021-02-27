@@ -61,11 +61,15 @@ def api_datetime():
         logging.info(x.name)
         logging.info(x.level)
         logging.info(str(type(x)))
+        x.setFormatter(logging_format)
 
         y = root_logger.handlers[1]
         logging.info(y.name)
         logging.info(y.level)
         logging.info(str(type(y)))
+        y.setFormatter(logging_format)
+
+        logging.info('asdzxc')
 
         #logging.info(str(dir(logging.getLogger().handlers[0])))
 
