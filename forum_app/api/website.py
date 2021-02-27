@@ -11,7 +11,7 @@ from time import time
 
 from flask import request, make_response, abort
 
-from forum_app import app
+from forum_app import app, secrets
 
 import git
 import os
@@ -24,9 +24,10 @@ def api_website_env():
     # sec1 = os.getenv('BASH_SECRET')
     # sec2 = os.getenv('OTHER_SECRET')
 
-    app_secrets_file = open('/home/zhixian/.app-secrets.json')
-    app_secrets = json.load(app_secrets_file)
-    return str(app_secrets)
+    # app_secrets_file = open('/home/zhixian/.app-secrets.json')
+    # app_secrets = json.load(app_secrets_file)
+    # return str(app_secrets)
+    return secrets['GIT_SECRET']
 
     # return str(os.environ)
     #return str(sec1) + ' -- ' + str(sec2)
