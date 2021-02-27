@@ -23,6 +23,11 @@ def api_website_env():
 
     sec1 = os.getenv('BASH_SECRET')
     sec2 = os.getenv('OTHER_SECRET')
+
+    app_secrets_file = open('/home/zhixian/.app-secrets.json')
+    app_secrets = json.load(app_secrets_file)
+    return app_secrets
+
     return str(os.environ)
 
     #return str(sec1) + ' -- ' + str(sec2)
