@@ -34,6 +34,7 @@ root_logger = logging.getLogger()
 root_logger.setLevel(logging.DEBUG)
 try:
     default_console_logger = root_logger.handlers[0]
+    default_console_logger.setFormatter(logging_format)
 except Exception as e:
     logging.info("ERROR----------ERROR----------")
     logging.error(e)
