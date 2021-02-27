@@ -50,24 +50,21 @@ def api_website_change_notification():
     logging.info("In api_website_change_notification()")
     logging.info(str(request.headers))
 
-    if "X-Hub-Signature" in request.headers:
+
+
+    if request.method == 'POST' and "X-Hub-Signature" in request.headers and 'GIT_SECRET' in secrets:
         signature = request.headers["X-Hub-Signature"]
-
+        encoded_git_hook_secret = secrets['GIT_SECRET'].encode("utf8")
         github_hash_key, github_hash = signature.split("=")
+
         logging.info(f"github_hash_key:{github_hash_key}, github_hash:{github_hash}")
-        logging.info(f"Type {str(type(github_hash_key))}")
 
-        hash_algorithm = hashlib.new(github_hash_key)
-        logging.info("Getting {0}".format(secrets['GIT_SECRET']))
-
-        encoded_key = secrets['GIT_SECRET'].encode("utf8")
-        logging.info("after encodided")
-
-        mac = hmac.new(encoded_key, msg = request.data, digestmod=github_hash_key)
-        logging.info("after mac")
+        mac = hmac.new(encoded_git_hook_secret, msg=request.data, digestmod=github_hash_key)
+        mac_hex_digest = mac.hexdigest()
+        logging.info(f"Mac: {mac_hex_digest}")
         
         is_valid = hmac.compare_digest(mac.hexdigest(), github_hash)
-        logging.info("is_valid: {is_valid}")
+        logging.info(f"is_valid: {is_valid}")
 
     if request.method == 'POST':
         repo = git.Repo('/home/zhixian/website')
