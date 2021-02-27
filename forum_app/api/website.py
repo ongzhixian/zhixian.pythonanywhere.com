@@ -39,9 +39,9 @@ def api_website_env():
 @app.route('/api/website/datetime', methods=['GET', 'POST'])
 def api_datetime():
     logging.info("In api_datetime()")
-    root_logger = logging.getLogger()
+    # root_logger = logging.getLogger()
     try:
-        logging.info(len(root_logger.handlers))
+        # logging.info(len(root_logger.handlers))
 
         # logging.info((str(root_logger.handlers[0])))
         # logging.info((str(root_logger.handlers[1])))
