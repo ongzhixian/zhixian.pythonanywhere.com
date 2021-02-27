@@ -41,13 +41,14 @@ def api_datetime():
     logging.info("In api_datetime()")
     root_logger = logging.getLogger()
     try:
+        logging.info(len(root_logger.handlers))
         logging_format = logging.Formatter('%(asctime)-15s %(levelname)-8s %(funcName)-20s %(message)s')
         default_console_logger = root_logger.handlers[0]
         default_console_logger.setFormatter(logging_format)
     except Exception as e:
         logging.info("ERROR----------ERROR----------")
         logging.error(e)
-        
+
     logging.info("In api_datetime() END")
     return str(datetime.utcnow())
 
