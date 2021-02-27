@@ -43,10 +43,13 @@ def api_datetime():
     try:
         logging.info(len(root_logger.handlers))
 
-        for h in root_logger.handlers:
-            logging.info(str(h))
-            # logging.info(str(h.level))
-            # logging.info(str(h.name))
+        logging.info((str(root_logger.handlers[0])))
+        logging.info((str(root_logger.handlers[1])))
+
+        # for h in root_logger.handlers:
+        #     logging.info(str(h))
+        #     # logging.info(str(h.level))
+        #     # logging.info(str(h.name))
         
         logging_format = logging.Formatter('%(asctime)-15s %(levelname)-8s %(funcName)-20s %(message)s')
         default_console_logger = root_logger.handlers[0]
