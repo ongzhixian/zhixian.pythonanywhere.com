@@ -57,8 +57,10 @@ def api_datetime():
 
         logging.info("OK SZET")
 
-        logging.info(str(logging.getLogger().handlers[0]))
-        logging.info(str(logging.getLogger().handlers[1]))
+        logging.info(str(dir(logging.getLogger().handlers[0])))
+
+        # logging.info(str(logging.getLogger().handlers[0]))
+        # logging.info(str(logging.getLogger().handlers[1]))
 
         # logging.info(root_logger.handlers[0].name)
         # logging.info(root_logger.handlers[1].name)
