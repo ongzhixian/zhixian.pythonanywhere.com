@@ -63,10 +63,10 @@ def api_website_change_notification():
         logging.info("Getting {0}".format(secrets['GIT_SECRET']))
 
         encoded_key = secrets['GIT_SECRET'].encode("utf8")
-        mac = hmac.new(encoded_key, msg = request.data, digestmod=github_hash_key)
+        # mac = hmac.new(encoded_key, msg = request.data, digestmod=github_hash_key)
         
-        is_valid = hmac.compare_digest(mac.hexdigest(), github_hash)
-        logging.info("is_valid: {is_valid}")
+        # is_valid = hmac.compare_digest(mac.hexdigest(), github_hash)
+        # logging.info("is_valid: {is_valid}")
 
         
 
