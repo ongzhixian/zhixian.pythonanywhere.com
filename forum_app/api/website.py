@@ -43,8 +43,8 @@ def api_datetime():
     try:
         logging.info(len(root_logger.handlers))
 
-        logging.info((str(root_logger.handlers[0])))
-        logging.info((str(root_logger.handlers[1])))
+        # logging.info((str(root_logger.handlers[0])))
+        # logging.info((str(root_logger.handlers[1])))
 
         # for h in root_logger.handlers:
         #     logging.info(str(h))
