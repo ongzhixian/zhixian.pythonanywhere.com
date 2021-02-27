@@ -22,6 +22,7 @@ def get_secrets():
     return app_secrets
 
 
+
 ################################################################################
 # Define Flask application
 ################################################################################
@@ -31,10 +32,12 @@ secrets = get_secrets()
 
 logging_format = logging.Formatter('%(asctime)-15s %(levelname)-8s %(funcName)-20s %(message)s')
 root_logger = logging.getLogger()
-root_logger.setLevel(logging.DEBUG)
+# root_logger.setLevel(logging.DEBUG)
 try:
-    default_console_logger = root_logger.handlers[0]
-    default_console_logger.setFormatter(logging_format)
+    console_logger = logging.StreamHandler()
+    # console_logger.setLevel(logging.ERROR)
+    console_logger.setFormatter(logging_format)
+    root_logger.addHandler(console_logger)
 except Exception as e:
     logging.info("ERROR----------ERROR----------")
     logging.error(e)
