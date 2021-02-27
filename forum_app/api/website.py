@@ -14,7 +14,17 @@ from flask import request, make_response, abort
 from forum_app import app
 
 import git
+import os
 
+@app.route('/api/website/env', methods=['GET', 'POST'])
+def api_website_env():
+
+    logging.info("In api_website_env()")
+
+    sec1 = os.getenv('BASH_SECRET')
+    sec2 = os.getenv('OTHER_SECRET')
+
+    return sec1 + ' -- ' + sec2 
 
 
 @app.route('/api/website/datetime', methods=['GET', 'POST'])
