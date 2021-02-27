@@ -55,10 +55,15 @@ def api_datetime():
         default_console_logger = root_logger.handlers[0]
         default_console_logger.setFormatter(logging_format)
 
-        logging.info(root_logger.handlers[0].name)
-        logging.info(root_logger.handlers[1].name)
-        logging.info(root_logger.handlers[0].level)
-        logging.info(root_logger.handlers[1].level)
+        logging.info("OK SZET")
+
+        logging.info(str(logging.getLogger().handlers[0]))
+        logging.info(str(logging.getLogger().handlers[1]))
+
+        # logging.info(root_logger.handlers[0].name)
+        # logging.info(root_logger.handlers[1].name)
+        # logging.info(root_logger.handlers[0].level)
+        # logging.info(root_logger.handlers[1].level)
     except Exception as e:
         logging.info("ERROR----------ERROR----------")
         logging.error(e)
