@@ -51,23 +51,23 @@ def api_datetime():
         #     # logging.info(str(h.level))
         #     # logging.info(str(h.name))
         
-        logging_format = logging.Formatter('%(asctime)-15s %(levelname)-8s %(funcName)-20s %(message)s')
-        default_console_logger = root_logger.handlers[0]
-        default_console_logger.setFormatter(logging_format)
+        # logging_format = logging.Formatter('%(asctime)-15s %(levelname)-8s %(funcName)-20s %(message)s')
+        # default_console_logger = root_logger.handlers[0]
+        # default_console_logger.setFormatter(logging_format)
 
-        logging.info("OK SZET")
+        # logging.info("OK SZET")
 
-        x = root_logger.handlers[0]
-        logging.info(x.name)
-        logging.info(x.level)
-        logging.info(str(type(x)))
-        x.setFormatter(logging_format)
+        # x = root_logger.handlers[0]
+        # logging.info(x.name)
+        # logging.info(x.level)
+        # logging.info(str(type(x)))
+        # x.setFormatter(logging_format)
 
-        y = root_logger.handlers[1]
-        logging.info(y.name)
-        logging.info(y.level)
-        logging.info(str(type(y)))
-        y.setFormatter(logging_format)
+        # y = root_logger.handlers[1]
+        # logging.info(y.name)
+        # logging.info(y.level)
+        # logging.info(str(type(y)))
+        # y.setFormatter(logging_format)
 
         logging.info('asdzxc')
 
