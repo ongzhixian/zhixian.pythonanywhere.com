@@ -26,9 +26,7 @@
 
 {% block tabs %}
 <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-  <a href="#scroll-tab-1" class="mdl-layout__tab is-active">
-    <span class="material-icons">search</span>
-    Latest topics</a>
+  <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Latest topics</a>
   <a href="#scroll-tab-2" class="mdl-layout__tab">Trending topics</a>
   <a href="#scroll-tab-3" class="mdl-layout__tab">Tab 3</a>
   <a href="#scroll-tab-4" class="mdl-layout__tab">Tab 4</a>
@@ -41,43 +39,37 @@
 {% block content %}
 <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
   <div class="page-content"><!-- Your content goes here -->
+    
+    <section class="mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
 
-    <div class="mdl-layout__tab-panel is-active" id="overview">
-      
-      <section class="mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+      <div class="mdl-card mdl-cell mdl-cell--12-col">
+        <div class="mdl-card__menu">
+          <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+            <span class="material-icons">more_vert</span>
+          </button>
 
-        <div class="mdl-card mdl-cell mdl-cell--12-col">
-          <div class="mdl-card__menu">
-            <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
-              <span class="material-icons">more_vert</span>
-            </button>
-
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" 
-              for="demo-menu-lower-right">
-              <li class="mdl-menu__item">Some Action</li>
-              <li class="mdl-menu__item">Another Action</li>
-              <li disabled class="mdl-menu__item">Disabled Action</li>
-              <li class="mdl-menu__item">Yet Another Action</li>
-            </ul>
-          </div>
-
-          <div class="mdl-card__supporting-text">
-            <h4>Technology</h4>
-            <p>Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse. Pariatur occaecat nisi laboris tempor laboris eiusmod qui id Lorem esse commodo in. Exercitation aute dolore deserunt culpa consequat elit labore incididunt elit anim.</p>
-          </div>
-
-          <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              Get Started
-            </a>
-          </div>
+          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" 
+            for="demo-menu-lower-right">
+            <li class="mdl-menu__item">Some Action</li>
+            <li class="mdl-menu__item">Another Action</li>
+            <li disabled class="mdl-menu__item">Disabled Action</li>
+            <li class="mdl-menu__item">Yet Another Action</li>
+          </ul>
         </div>
-      </section>
 
+        <div class="mdl-card__supporting-text">
+          <h4>Technology</h4>
+          <p>Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse. Pariatur occaecat nisi laboris tempor laboris eiusmod qui id Lorem esse commodo in. Exercitation aute dolore deserunt culpa consequat elit labore incididunt elit anim.</p>
+        </div>
 
-
+        <div class="mdl-card__actions mdl-card--border">
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            Get Started
+          </a>
+        </div>
+      </div>
+    </section>
       
-    </div>
   </div>
 </section>
 <section class="mdl-layout__tab-panel" id="scroll-tab-2">
