@@ -1,0 +1,100 @@
+{% extends "_layouts/_default.html" %}
+
+{% block title %}MySql{% endblock %}
+
+{# Comment out
+{% block meta_description %}ccc Forums XX{% endblock %}
+{% block meta_author %}ONG ZHI XIAN xx{% endblock %}
+#}
+
+
+{% block head_link %}<link rel="stylesheet" href="/css/mdl/material.min.css" />
+<link rel="stylesheet" href="/css/mdl/material.min.css" />{% endblock %}
+
+
+{% block drawer %}
+<div class="mdl-layout__drawer">
+  <span class="mdl-layout-title">{{self.title()}}</span>
+  <nav class="mdl-navigation">
+    <a class="mdl-navigation__link" href="/mysql">MySql Administration</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+  </nav>
+</div>
+{% endblock %}
+
+{% block tabs %}
+<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+  <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Tables</a>
+  <a href="#scroll-tab-2" class="mdl-layout__tab">Tab 2</a>
+  <a href="#scroll-tab-3" class="mdl-layout__tab">Tab 3</a>
+  <a href="#scroll-tab-4" class="mdl-layout__tab">Tab 4</a>
+  <a href="#scroll-tab-5" class="mdl-layout__tab">Tab 5</a>
+  <a href="#scroll-tab-6" class="mdl-layout__tab">Tab 6</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+  <div class="page-content"><!-- Your content goes here -->
+
+    <div class="action-panel">
+      <!-- FAB button with ripple -->
+<!-- Raised button with ripple -->
+<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+  <i class="material-icons" role="presentation">add</i>
+  Add new table
+</button>
+
+    </div>
+    &nbsp;
+    
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+      <thead>
+        <tr>
+          <th class="mdl-data-table__cell--non-numeric">Material</th>
+          <th>Quantity</th>
+          <th>Unit price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
+          <td>25</td>
+          <td>$2.90</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
+          <td>50</td>
+          <td>$1.25</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
+          <td>10</td>
+          <td>$2.35</td>
+        </tr>
+      </tbody>
+    </table>
+
+  
+  </div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-2">
+  <div class="page-content"><!-- Your content goes here -->Tab content 2</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-3">
+  <div class="page-content"><!-- Your content goes here -->Tab content 3</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-4">
+  <div class="page-content"><!-- Your content goes here -->Tab content 4</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-5">
+  <div class="page-content"><!-- Your content goes here -->Tab content 5</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-6">
+  <div class="page-content"><!-- Your content goes here -->Tab content 6</div>
+</section>
+{% endblock %}
+
+{% block scripts %}{% endblock %}

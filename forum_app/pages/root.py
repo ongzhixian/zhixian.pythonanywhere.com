@@ -5,4 +5,4 @@ from forum_app import app
 def root_get():
     """Web page at '/'"""
     #return app.config
-    return render_template('index.html')
+    return render_template('root_get.html')

@@ -1,0 +1,63 @@
+{% extends "_layouts/_default.html" %}
+
+{% block title %}Forums{% endblock %}
+
+{# Comment out
+{% block meta_description %}ccc Forums XX{% endblock %}
+{% block meta_author %}ONG ZHI XIAN xx{% endblock %}
+
+{% block drawer %}
+<div class="mdl-layout__drawer">
+  <span class="mdl-layout-title">{{self.title()}}</span>
+  <nav class="mdl-navigation">
+    <a class="mdl-navigation__link" href="/mysql">MySql Administration</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+  </nav>
+  {{ macros.drawer() }}
+</div>
+{% endblock %}
+#}
+
+{% block head_link %}<link rel="stylesheet" href="/css/mdl/material.min.css" />
+<link rel="stylesheet" href="/css/mdl/material.min.css" />{% endblock %}
+
+
+{% block tabs %}
+<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+  <a href="#scroll-tab-1" class="mdl-layout__tab is-active">
+    <span class="material-icons">search</span>
+    Latest topics</a>
+  <a href="#scroll-tab-2" class="mdl-layout__tab">Trending topics</a>
+  <a href="#scroll-tab-3" class="mdl-layout__tab">Tab 3</a>
+  <a href="#scroll-tab-4" class="mdl-layout__tab">Tab 4</a>
+  <a href="#scroll-tab-5" class="mdl-layout__tab">Tab 5</a>
+  <a href="#scroll-tab-6" class="mdl-layout__tab">Tab 6</a>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+  <div class="page-content"><!-- Your content goes here -->Tab content 1
+  </div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-2">
+  <div class="page-content"><!-- Your content goes here -->Tab content 2</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-3">
+  <div class="page-content"><!-- Your content goes here -->Tab content 3</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-4">
+  <div class="page-content"><!-- Your content goes here -->Tab content 4</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-5">
+  <div class="page-content"><!-- Your content goes here -->Tab content 5</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-6">
+  <div class="page-content"><!-- Your content goes here -->Tab content 6</div>
+</section>
+{% endblock %}
+
+{% block scripts %}{% endblock %}

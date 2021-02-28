@@ -1,0 +1,43 @@
+{#  PLACEHOLDER 
+    The purpoes of this file is to define macros used in _default layout.
+    _default layout is meant for use with pages that are accessed by public 
+    ie. Users who have yet to be authenticated with application.
+#}
+
+{% macro drawer() %}
+{% 
+    set menu_items = [
+        { 'href' : "/",         'text' : "Home", 'view_id' : 'pages.site.webroot_get'},
+        { 'href' : "/about",    'text' : "About us" },
+        { 'href' : "/contact",  'text' : "Contact us" },
+        { 'href' : "#",         'text' : "Link 3" },
+        { 'href' : "#",         'text' : "Link 4" },
+        ]
+%}
+<nav class="mdl-navigation">
+    <a class="mdl-navigation__link" href="/">Home</a>
+    <a class="mdl-navigation__link" href="/mysql">MySql Administration xx</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+</nav>
+{% endmacro %}
+
+{% macro test_function(param1) %}
+{% 
+    set menu_items = [
+        { 'href' : "/",         'text' : "Home", 'view_id' : 'pages.site.webroot_get'},
+        { 'href' : "/about",    'text' : "About us" },
+        { 'href' : "/contact",  'text' : "Contact us" },
+        { 'href' : "#",         'text' : "Link 3" },
+        { 'href' : "#",         'text' : "Link 4" },
+        ]
+%}
+
+{% if param1 == "display" %}
+    {% for item in menu_items %}
+    <a href="{{item.href}}" class="btn btn-link">{{item.text}}</a>
+    {%- endfor %}
+{% else %}
+    <span>DO NOT DISPLAY ANYTHING</span>
+{% endif %}
+{% endmacro %}
