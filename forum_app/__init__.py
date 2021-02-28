@@ -10,6 +10,7 @@ __all__ = ["pages", "api"]
 
 import json
 import logging
+import os
 from flask import Flask
 
 ################################################################################
@@ -17,8 +18,14 @@ from flask import Flask
 ################################################################################
 
 def get_secrets():
-    app_secrets_file = open('/home/zhixian/.app-secrets.json')
-    app_secrets = json.load(app_secrets_file)
+    app_secrets = {}
+    if 'PYTHONANYWHERE_DOMAIN' in os.environ:
+        pythonanywhere_settings_path = '/home/zhixian/.app-secrets.json'
+    elif 'USERPROFILE' in os.environ:
+        pythonanywhere_settings_path = os.path.join(os.environ['USERPROFILE'], '.pythonanywhere.json')
+    
+    with open(pythonanywhere_settings_path) as app_secrets_file:
+        app_secrets = json.load(app_secrets_file)
     return app_secrets
 
 
