@@ -1,3 +1,23 @@
 .page-content {
     padding:1em;
 }
+
+.fab-panel {
+    padding: 1em;
+    bottom: 7em;
+    right: 1em;
+    position: fixed;
+    z-index: 10;
+}
+
+.topic-list section {
+    margin-bottom: 1em;
+}
+
+input.large-text {
+    font-size: x-large !important;
+}
+
+.full-width {
+    width:100% !important;
+}
