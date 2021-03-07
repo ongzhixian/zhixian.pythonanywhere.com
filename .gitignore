@@ -132,4 +132,4 @@ dmypy.json
 .vscode/settings.json
 ako.cmd
 website_wsgi.py.txt
-data/*.sqlite3
+**/data/*.sqlite3
