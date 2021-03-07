@@ -21,3 +21,40 @@ input.large-text {
 .full-width {
     width:100% !important;
 }
+
+.no-margin {
+    margin: 0;
+}
+
+/* ul.test-list
+*********************************/
+
+ul.test-list li:hover {
+    border-bottom: 1px solid steelblue;
+    color: steelblue;
+}
+
+ul.test-list li:hover a {
+    color: steelblue;
+    text-decoration: underline;
+}
+
+ul.test-list li {
+    border-bottom: 1px solid sienna;
+    padding: 0;
+    margin-bottom: 0.67em;
+
+    flex-direction: column;
+    align-items: stretch;
+}
+
+ul.test-list li a {
+    color: rgba(0,0,0,.87);
+    font-weight: normal;
+    text-decoration: none;
+}
+
+ul.test-list li h1 {
+    margin: 0 0 4px;
+    font-size: 2em;
+}

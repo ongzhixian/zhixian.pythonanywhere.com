@@ -1,0 +1,85 @@
+{% extends "_layouts/_test_pages_layout.html" %}
+
+{% block title %}Add test page{% endblock %}
+
+{# Comment out
+################################################################################
+{% block meta_description %}ccc Forums XX{% endblock %}
+{% block meta_author %}ONG ZHI XIAN xx{% endblock %}
+
+{% block drawer %}
+<div class="mdl-layout__drawer">
+  <span class="mdl-layout-title">{{self.title()}}</span>
+  <nav class="mdl-navigation">
+    <a class="mdl-navigation__link" href="/mysql">MySql Administration</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+  </nav>
+  {{ macros.drawer() }}
+</div>
+{% endblock %}
+################################################################################
+#}
+
+{% block head_link %}<link rel="stylesheet" href="/css/mdl/material.min.css" />
+<link rel="stylesheet" href="/css/mdl/material.min.css" />{% endblock %}
+
+
+{% block content %}
+<div class="page-content">
+
+  <h1 class="no-margin">Add test page</h1>
+
+  <hr/>
+
+  <form method="POST" action="/test/add" enctype="application/x-www-form-urlencoded">
+
+    <p>
+      <div class="mdl-textfield mdl-js-textfield full-width">
+        <input class="mdl-textfield__input" type="text" id="topic_title" name="topic_title" />
+        <label class="mdl-textfield__label" for="topic_title">Topic title</label>
+      </div>
+    </p>
+
+    <p>
+      <div class="mdl-textfield mdl-js-textfield full-width">
+        <textarea class="mdl-textfield__input" type="text" rows= "12" id="topic_content" name="topic_content"></textarea>
+        <label class="mdl-textfield__label" for="topic_content">Topic content</label>
+      </div>
+    </p>
+
+    <p>
+      <div>
+        <button class="mdl-button mdl-js-button mdl-button--raised" 
+          name="submit_button" value="submit_val">Submit</button>
+      </div>
+    </p>
+
+  </form>
+
+<!--
+<div class="fab-panel">
+  <button id="addTopicButton" class="mdl-button mdl-js-button mdl-button--fab mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+    <i class="material-icons">add</i>
+  </button>
+  <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="addTopicButton">
+    Add topic
+    </div>
+</div>
+-->
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+(function() {
+    "use strict";
+    document.addEventListener("DOMContentLoaded", function() {
+      // Handler when the DOM is fully loaded
+      // topic_title_element = document.getElementById("topic_title");
+      // topic_title_element.focus();
+      document.getElementById('topic_title').focus();
+    });
+}());
+</script>
+{% endblock %}
