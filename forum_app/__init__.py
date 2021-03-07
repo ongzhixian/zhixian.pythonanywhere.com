@@ -31,7 +31,7 @@ def get_secrets():
 
 def setup_logging():
     try:
-        logging_format = logging.Formatter('[%(levelname)-8s] %(funcName)-20s %(message)s')
+        logging_format = logging.Formatter('%(levelname).3s|%(module)-12s|%(funcName)-20s|%(message)s')
         root_logger = logging.getLogger()
         root_logger.setLevel(logging.NOTSET)
         console_logger = logging.StreamHandler()
