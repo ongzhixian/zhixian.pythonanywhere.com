@@ -47,6 +47,10 @@ def setup_logging():
 
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')
 secrets = get_secrets()
+if "SESSION_SECRET_KEY" in secrets:
+    print("SETTING APP SECRET KEY")
+    app.secret_key = secrets["SESSION_SECRET_KEY"]
+# print(secrets["SESSION_SECRET_KEY"])
 setup_logging()
 logging.info("[APPLICATION START]")
 
@@ -55,5 +59,6 @@ logging.info("[APPLICATION START]")
 # Import pages and API for application
 ################################################################################
 
+from forum_app.lifecycle_handlers import *
 from forum_app.pages import *
 from forum_app.api import *

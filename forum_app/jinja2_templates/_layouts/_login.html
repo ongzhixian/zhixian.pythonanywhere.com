@@ -1,0 +1,82 @@
+{% import "./_macros/_default.html" as macros %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8" />
+  <title>{% block title %}Forums{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}ZX Forums{% endblock %}" />
+  <meta name="author" content="{% block meta_author %}ONG ZHI XIAN{% endblock %}" />
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!-- <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css"> -->
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css" />
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="/css/mdl/material.min.css" />
+  <link rel="stylesheet" href="/css/site.css" />
+  {% block head_link %}{% endblock %}
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  </head>
+<body>
+  
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <main class="mdl-layout__content">
+      {% block content %}
+      <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+        <div class="page-content"><!-- Your content goes here -->Tab content 1</div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="scroll-tab-2">
+        <div class="page-content"><!-- Your content goes here -->Tab content 2</div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="scroll-tab-3">
+        <div class="page-content"><!-- Your content goes here -->Tab content 3</div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="scroll-tab-4">
+        <div class="page-content"><!-- Your content goes here -->Tab content 4</div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="scroll-tab-5">
+        <div class="page-content"><!-- Your content goes here -->Tab content 5</div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="scroll-tab-6">
+        <div class="page-content"><!-- Your content goes here -->Tab content 6</div>
+      </section>
+      {% endblock %}
+
+    </main>
+
+    <footer class="mdl-mini-footer">
+      <div class="mdl-mini-footer__left-section">
+        <div class="mdl-logo">{{self.title()}}</div>
+        <ul class="mdl-mini-footer__link-list">
+          <li><a href="#">Help</a></li>
+          <li><a href="#">Privacy & Terms</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="/js/mdl/material.min.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

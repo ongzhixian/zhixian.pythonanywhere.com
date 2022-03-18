@@ -129,6 +129,7 @@ dmypy.json
 .pyre/
 
 # ZX custom
+.idea
 .vscode/settings.json
 ako.cmd
 website_wsgi.py.txt

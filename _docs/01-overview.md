@@ -7,3 +7,7 @@ python -m venv .venv
 pip install -r .\requirements.txt
 
 python .\flask_app.py
+
+
+## Create
+python -c 'import secrets; print(secrets.token_hex())'
