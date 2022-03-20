@@ -1,6 +1,3 @@
-import logging
-import os
-
 from forum_app import app
 
 if __name__ == '__main__':

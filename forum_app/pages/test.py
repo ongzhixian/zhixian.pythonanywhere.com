@@ -1,7 +1,7 @@
 import logging as log
 from flask import render_template, request
 from forum_app import app
-from forum_app.modules.data_access import SqliteDatabase
+from forum_app.modules.sqlitedb import SqliteDatabase
 
 @app.route('/test/')
 def test_get():

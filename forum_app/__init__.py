@@ -13,6 +13,7 @@ import logging
 import os
 from flask import Flask
 
+
 ################################################################################
 # Define application helper functions
 ################################################################################
@@ -23,7 +24,7 @@ def get_secrets():
         pythonanywhere_settings_path = '/home/zhixian/.app-secrets.json'
     elif 'USERPROFILE' in os.environ:
         pythonanywhere_settings_path = os.path.join(os.environ['USERPROFILE'], '.pythonanywhere.json')
-    
+
     with open(pythonanywhere_settings_path) as app_secrets_file:
         app_secrets = json.load(app_secrets_file)
     return app_secrets
@@ -53,7 +54,6 @@ if "SESSION_SECRET_KEY" in secrets:
 # print(secrets["SESSION_SECRET_KEY"])
 setup_logging()
 logging.info("[APPLICATION START]")
-
 
 ################################################################################
 # Import pages and API for application

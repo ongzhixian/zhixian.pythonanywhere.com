@@ -11,3 +11,9 @@ python .\flask_app.py
 
 ## Create
 python -c 'import secrets; print(secrets.token_hex())'
+
+## 
+
+Using ApexCharts
+
+https://apexcharts.com/docs/chart-types/pie-donut/

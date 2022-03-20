@@ -1,0 +1,188 @@
+{% extends "_layouts/_default.html" %}
+
+{% block title %}Forums{% endblock %}
+
+{# Comment out
+{% block meta_description %}ccc Forums XX{% endblock %}
+{% block meta_author %}ONG ZHI XIAN xx{% endblock %}
+
+{% block drawer %}
+<div class="mdl-layout__drawer">
+  <span class="mdl-layout-title">{{self.title()}}</span>
+  <nav class="mdl-navigation">
+    <a class="mdl-navigation__link" href="/mysql">MySql Administration</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+  </nav>
+  {{ macros.drawer() }}
+</div>
+{% endblock %}
+#}
+
+{% block head_link %}<link rel="stylesheet" href="/css/mdl/material.min.css" />
+<link rel="stylesheet" href="/css/mdl/material.min.css" />{% endblock %}
+
+
+{% block tabs %}
+<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+  <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Latest topics</a>
+  <a href="#scroll-tab-2" class="mdl-layout__tab">Trending topics</a>
+  <a href="#scroll-tab-3" class="mdl-layout__tab">Tab 3</a>
+  <a href="#scroll-tab-4" class="mdl-layout__tab">Tab 4</a>
+  <a href="#scroll-tab-5" class="mdl-layout__tab">Tab 5</a>
+  <a href="#scroll-tab-6" class="mdl-layout__tab">Tab 6</a>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+  <div class="page-content topic-list"><!-- Your content goes here -->
+    
+    <section class="mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+      <div class="mdl-card mdl-cell mdl-cell--12-col">
+        <div class="mdl-card__menu">
+          <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+            <span class="material-icons">more_vert</span>
+          </button>
+
+          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" 
+            for="demo-menu-lower-right">
+            <li class="mdl-menu__item">Some Action</li>
+            <li class="mdl-menu__item">Another Action</li>
+            <li disabled class="mdl-menu__item">Disabled Action</li>
+            <li class="mdl-menu__item">Yet Another Action</li>
+          </ul>
+        </div>
+
+        <div class="mdl-card__supporting-text">
+          <h4>Technology</h4>
+          <p>ZC Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse. Pariatur occaecat nisi laboris tempor laboris eiusmod qui id Lorem esse commodo in. Exercitation aute dolore deserunt culpa consequat elit labore incididunt elit anim.</p>
+        </div>
+
+        <div class="mdl-card__actions mdl-card--border">
+          <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            Get Started
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+      
+      <div class="mdl-card mdl-cell mdl-cell--12-col">
+        <div class="mdl-card__menu">
+          <button id="demo-menu-lower-right2" class="mdl-button mdl-js-button mdl-button--icon">
+            <span class="material-icons">more_vert</span>
+          </button>
+
+          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" 
+            for="demo-menu-lower-right2">
+            <li class="mdl-menu__item">Some Action</li>
+            <li class="mdl-menu__item">Another Action</li>
+            <li disabled class="mdl-menu__item">Disabled Action</li>
+            <li class="mdl-menu__item">Yet Another Action</li>
+          </ul>
+        </div>
+
+        <form action="#">
+          
+          <div class="mdl-card__supporting-text">
+            
+              <div class="mdl-textfield mdl-js-textfield full-width">
+                <input class="mdl-textfield__input large-text" type="text" id="new_topic_title">
+                <label class="mdl-textfield__label" for="new_topic_title">New topic title</label>
+              </div>
+
+              <div>
+                <textarea type="text" id="new_topic_content"></textarea>
+              </div>
+            
+          </div>
+  
+          <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Save
+            </a>
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+              Cancel
+            </a>
+
+            <!-- <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text" id="sample1">
+              <label class="mdl-textfield__label" for="sample1">Text...</label>
+            </div>
+             -->
+          </div>
+        </form>
+
+        
+
+      </div>
+    </section>
+      
+      
+  </div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-2">
+  <div class="page-content"><!-- Your content goes here -->Tab content 2</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-3">
+  <div class="page-content"><!-- Your content goes here -->Tab content 3</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-4">
+  <div class="page-content"><!-- Your content goes here -->Tab content 4</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-5">
+  <div class="page-content"><!-- Your content goes here -->Tab content 5</div>
+</section>
+<section class="mdl-layout__tab-panel" id="scroll-tab-6">
+  <div class="page-content"><!-- Your content goes here -->Tab content 6</div>
+</section>
+
+<div class="fab-panel">
+  <button id="addTopicButton" class="mdl-button mdl-js-button mdl-button--fab mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+    <i class="material-icons">add</i>
+  </button>
+  <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="addTopicButton">
+    Add topic
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/tinymce/tinymce.min.js"></script>
+<script>
+  document.addEventListener('mdl-componentupgraded', function(e){
+  //In case other element are upgraded before the layout  
+  if (typeof e.target.MaterialLayout !== 'undefined') {
+    tinymce.init({
+      selector: '#new_topic_content',
+      height: 267
+    });
+    // tinymce.init({
+    //   selector: '#new_topic_content',
+    //   //width: 600,
+    //   height: 267,
+    //   plugins: [
+    //     'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+    //     'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+    //     'table emoticons template paste help'
+    //   ],
+    //   toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+    //     'bullist numlist outdent indent | link image | print preview media fullpage | ' +
+    //     'forecolor backcolor emoticons | help',
+    //   menu: {
+    //     favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
+    //   },
+    //   menubar: 'favs file edit view insert format tools table help'
+    //   //content_css: 'css/content.css'
+    // });
+  }
+});
+
+  </script>
+
+{% endblock %}

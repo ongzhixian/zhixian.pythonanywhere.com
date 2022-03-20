@@ -129,6 +129,7 @@ dmypy.json
 .pyre/
 
 # ZX custom
+.vs
 .idea
 .vscode/settings.json
 ako.cmd

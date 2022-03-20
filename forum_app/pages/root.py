@@ -7,6 +7,10 @@ from forum_app.helpers.auth import login_required
 @login_required
 def root_get():
     """GET /"""
-    if 'username' not in session:
-        return redirect('/login')
     return render_template('root_get.html')
+
+@app.route('/forum')
+@login_required
+def forum_get():
+    """GET /"""
+    return render_template('forum_get.html')
