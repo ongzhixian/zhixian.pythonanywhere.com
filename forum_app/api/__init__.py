@@ -2,6 +2,6 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["website", "test"]
+__all__ = ["website", "test", "db"]
 
 # ZX: There's a better way to do this; see other source code from elsewhere
