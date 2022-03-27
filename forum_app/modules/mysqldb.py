@@ -24,19 +24,42 @@ class MySqlDatabase:
         log.info(f"Init {database_name} using {setting_name} settings")
         self.db_settings = secrets['MYSQL'][setting_name]
 
-    def getDatabase(self):
+    def get_connection(self):
         mydb = mysql.connector.connect(
             host=self.db_settings['HOST'],
             user=self.db_settings['USERNAME'],
             password=self.db_settings['PASSWORD'],
             database=self.db_settings['DATABASE']
         )
-        mycursor = mydb.cursor()
+        return mydb
 
-        mycursor.execute("SHOW DATABASES")
+    def fetch_one(self, sql):
+        with self.get_connection() as connection, connection.cursor() as mycursor:
+            mycursor.execute(sql)
+            return mycursor.fetchone()
 
-        for x in mycursor:
-            print(x)
+    def table_exists(self, table_name):
+        sql = """SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = %s;"""
+        with self.get_connection() as connection, connection.cursor() as mycursor:
+            mycursor.execute(sql, (table_name,))
+            return False if mycursor.fetchone() == None else True
+        
+    def create_table(self, sql):
+        with self.get_connection() as connection, connection.cursor() as mycursor:
+            mycursor.execute(sql)
+
+    def execute(self, sql, args):
+        with self.get_connection() as connection, connection.cursor() as mycursor:
+            mycursor.execute(sql, args)
+            connection.commit()
+            return mycursor.rowcount
+
+    def execute_batch(self, sql, data):
+        with self.get_connection() as connection, connection.cursor() as mycursor:
+            mycursor.executemany(sql, data)
+            connection.commit()
+            return mycursor.rowcount
+            
     
     # def create_database(self):
     #     try:
