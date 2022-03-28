@@ -46,6 +46,11 @@ class ForumDb:
             "INSERT INTO weblink (url) VALUES (%s);", url_list)
         print(f"Rows affected {rows_affected}")
 
+    def get_links_added_by_date(self):
+        rows_affected = self.db.execute_batch(
+            "INSERT INTO weblink (url) VALUES (%s);", url_list)
+        print(f"Rows affected {rows_affected}")
+
     # Sql create table scripts
 
     sql_create_weblink = """

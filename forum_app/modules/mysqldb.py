@@ -38,6 +38,12 @@ class MySqlDatabase:
             mycursor.execute(sql)
             return mycursor.fetchone()
 
+    def fetch_many(self, sql):
+        with self.get_connection() as connection, connection.cursor() as mycursor:
+            mycursor.execute(sql)
+            return mycursor.fetchone()
+
+
     def table_exists(self, table_name):
         sql = """SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = %s;"""
         with self.get_connection() as connection, connection.cursor() as mycursor:
