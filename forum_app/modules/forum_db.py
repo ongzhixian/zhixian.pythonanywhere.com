@@ -60,6 +60,6 @@ CREATE TABLE `weblink` (
 	`created_dt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	PRIMARY KEY (`id`)
 )
-COLLATE='utf8mb4_0900_ai_ci'
+COLLATE='utf8mb4_general_ci'
 ;
 """
