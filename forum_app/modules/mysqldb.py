@@ -34,15 +34,29 @@ class MySqlDatabase:
         )
         return mydb
 
+
     def fetch_one(self, sql):
-        with self.get_connection() as connection, connection.cursor() as mycursor:
-            mycursor.execute(sql)
-            return mycursor.fetchone()
+        # With statements does not work on Python 3.7 :-(
+        # with self.get_connection() as connection, connection.cursor() as mycursor:
+        #     mycursor.execute(sql)
+        #     return mycursor.fetchone()
+        # The Python 3.7 compliant way
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        mycursor.execute(sql)
+        return mycursor.fetchone()
+
 
     def fetch_many(self, sql):
-        with self.get_connection() as connection, connection.cursor() as mycursor:
-            mycursor.execute(sql)
-            return mycursor.fetchone()
+        # With statements does not work on Python 3.7 :-(
+        # with self.get_connection() as connection, connection.cursor() as mycursor:
+        #     mycursor.execute(sql)
+        #     return mycursor.fetchone()
+        # The Python 3.7 compliant way
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        mycursor.execute(sql)
+        return mycursor.fetchone()
 
 
     def table_exists(self, table_name):
@@ -57,26 +71,42 @@ class MySqlDatabase:
         mycursor.execute(sql, (table_name,))
         return False if mycursor.fetchone() == None else True
 
-        
+
     def create_table(self, sql):
+        # With statements does not work on Python 3.7 :-(
         # with self.get_connection() as connection, connection.cursor() as mycursor:
         #     mycursor.execute(sql)
+        # The Python 3.7 compliant way
         connection = self.get_connection()
         mycursor = connection.cursor()
         mycursor.execute(sql)
 
 
     def execute(self, sql, args):
-        with self.get_connection() as connection, connection.cursor() as mycursor:
-            mycursor.execute(sql, args)
-            connection.commit()
-            return mycursor.rowcount
+        # With statements does not work on Python 3.7 :-(
+        # with self.get_connection() as connection, connection.cursor() as mycursor:
+        #     mycursor.execute(sql, args)
+        #     connection.commit()
+        #     return mycursor.rowcount
+        # The Python 3.7 compliant way
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        mycursor.execute(sql, args)
+        connection.commit()
+        return mycursor.rowcount
 
     def execute_batch(self, sql, data):
-        with self.get_connection() as connection, connection.cursor() as mycursor:
-            mycursor.executemany(sql, data)
-            connection.commit()
-            return mycursor.rowcount
+        # With statements does not work on Python 3.7 :-(
+        # with self.get_connection() as connection, connection.cursor() as mycursor:
+        #     mycursor.executemany(sql, data)
+        #     connection.commit()
+        #     return mycursor.rowcount
+        # The Python 3.7 compliant way
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        mycursor.executemany(sql, data)
+        connection.commit()
+        return mycursor.rowcount
             
     
     # def create_database(self):
