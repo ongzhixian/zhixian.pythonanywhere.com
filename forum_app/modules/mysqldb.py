@@ -1,3 +1,4 @@
+from ast import Try
 import logging as log
 
 from os import environ
@@ -46,13 +47,24 @@ class MySqlDatabase:
 
     def table_exists(self, table_name):
         sql = """SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = %s;"""
-        with self.get_connection() as connection, connection.cursor() as mycursor:
-            mycursor.execute(sql, (table_name,))
-            return False if mycursor.fetchone() == None else True
+        # With statements does not work on Python 3.7 :-(
+        # with self.get_connection() as connection, connection.cursor() as mycursor:
+        #     mycursor.execute(sql, (table_name,))
+        #     return False if mycursor.fetchone() == None else True
+        # The Python 3.7 compliant way
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        mycursor.execute(sql, (table_name,))
+        return False if mycursor.fetchone() == None else True
+
         
     def create_table(self, sql):
-        with self.get_connection() as connection, connection.cursor() as mycursor:
-            mycursor.execute(sql)
+        # with self.get_connection() as connection, connection.cursor() as mycursor:
+        #     mycursor.execute(sql)
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        mycursor.execute(sql)
+
 
     def execute(self, sql, args):
         with self.get_connection() as connection, connection.cursor() as mycursor:
