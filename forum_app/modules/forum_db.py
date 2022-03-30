@@ -46,10 +46,25 @@ class ForumDb:
             "INSERT INTO weblink (url) VALUES (%s);", url_list)
         print(f"Rows affected {rows_affected}")
 
+    def myfunc(self, a):
+        return {
+            'a': a[0],
+            'b': a[1]
+        }
+
     def get_links_added_by_date(self):
-        rows_affected = self.db.execute_batch(
-            "INSERT INTO weblink (url) VALUES (%s);", url_list)
-        print(f"Rows affected {rows_affected}")
+        data = self.db.fetch_all(
+            """
+WITH dt AS
+(
+	SELECT COUNT(url) AS 'count', DATE(created_dt) AS 'created_dt' FROM weblink
+	GROUP BY DATE(created_dt)
+	ORDER BY DATE(created_dt) DESC
+  	LIMIT 5
+ )
+ SELECT * FROM dt ORDER BY created_dt
+""")
+        return list(map(lambda d : {'count':d[0], 'date':d[1]}, data))
 
     # Sql create table scripts
 

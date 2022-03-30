@@ -16,6 +16,12 @@ def forum_get():
     """GET /"""
     return render_template('forum_get.html')
 
+@app.route('/chart-examples')
+@login_required
+def chart_examples_get():
+    """GET /"""
+    return render_template('chart_examples_get.html')
+
 @app.route('/link-dump', methods=['GET', 'POST'])
 @login_required
 def link_dump_get():

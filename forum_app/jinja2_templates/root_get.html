@@ -7,87 +7,12 @@
 <link rel="stylesheet" href="/css/mdl/material.min.css" />{% endblock %}
 
 
-{% block tabs %}
-<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-  <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Latest topics</a>
-  <a href="#scroll-tab-2" class="mdl-layout__tab">Trending topics</a>
-  <a href="#scroll-tab-3" class="mdl-layout__tab">Tab 3</a>
-  <a href="#scroll-tab-4" class="mdl-layout__tab">Tab 4</a>
-</div>
-{% endblock %}
-
-
 {% block content %}
-<div class="mdl-grid mdl-color--brown-50 mdl-shadow--2dp">
-  <div class="mdl-cell mdl-cell--4-col">
-    <div id="pieChart"></div>
-  </div>
-  <div class="mdl-cell mdl-cell--4-col">
-    <div id="lineChart"></div>
-  </div>
-  <div class="mdl-cell mdl-cell--4-col">
-    <div id="radialChart"></div>
-  </div>
-</div>
-
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col" style="padding: 1em;">
 
-  <h1>Summary</h1>
-
-  <p>
-    Some notes.
-  </p>
+  <h1>Hello world</h1>
 
 </div>
-
-
-
 {% endblock %}
 
-{% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script>
-
-const lineChart = new ApexCharts(document.querySelector("#lineChart"), {
-  chart: {
-    type: 'line'
-  },
-  series: [{
-    name: 'sales',
-    data: [30,40,35,50,49,60,70,91,125]
-  }],
-  xaxis: {
-    categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
-  }
-});
-
-
-const pieChart = new ApexCharts(document.querySelector("#pieChart"), {
-  chart: {
-      type: 'donut'
-  },
-  series: [44, 55, 13, 33],
-  labels: ['Apple', 'Mango', 'Orange', 'Watermelon']
-});
-
-const radialChart = new ApexCharts(document.querySelector("#radialChart"), {
-    series: [70],
-    chart: {
-      type: 'radialBar',
-  },
-  plotOptions: {
-    radialBar: {
-      hollow: {
-        size: '70%',
-      }
-    },
-  },
-  labels: ['Cricket'],
-  });
-
-lineChart.render();
-pieChart.render();
-radialChart.render();
-
-</script>
-{% endblock %}
+{% block scripts %}{% endblock %}

@@ -47,7 +47,7 @@ class MySqlDatabase:
         return mycursor.fetchone()
 
 
-    def fetch_many(self, sql):
+    def fetch_all(self, sql):
         # With statements does not work on Python 3.7 :-(
         # with self.get_connection() as connection, connection.cursor() as mycursor:
         #     mycursor.execute(sql)
@@ -56,7 +56,7 @@ class MySqlDatabase:
         connection = self.get_connection()
         mycursor = connection.cursor()
         mycursor.execute(sql)
-        return mycursor.fetchone()
+        return mycursor.fetchall()
 
 
     def table_exists(self, table_name):

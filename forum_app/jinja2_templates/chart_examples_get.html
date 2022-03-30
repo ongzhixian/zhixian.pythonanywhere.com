@@ -1,0 +1,143 @@
+{% extends "_layouts/_home.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block head_link %}
+<link rel="stylesheet" href="/css/mdl/material.min.css" />
+<link rel="stylesheet" href="/css/mdl/material.min.css" />{% endblock %}
+
+
+{% block tabs %}
+<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+  <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Latest topics</a>
+  <a href="#scroll-tab-2" class="mdl-layout__tab">Trending topics</a>
+  <a href="#scroll-tab-3" class="mdl-layout__tab">Tab 3</a>
+  <a href="#scroll-tab-4" class="mdl-layout__tab">Tab 4</a>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="mdl-grid mdl-color--brown-50 mdl-shadow--2dp">
+    <div class="mdl-cell mdl-cell--12-col">
+      <div id="lineChart"></div>
+    </div>
+</div>
+
+&nbsp;
+  
+<div class="mdl-grid mdl-color--brown-50 mdl-shadow--2dp">
+  <div class="mdl-cell mdl-cell--4-col">
+    <div id="pieChart"></div>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col">
+    <div id="radialChart"></div>
+  </div>
+</div>
+
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col" style="padding: 1em;">
+
+  <h1>Summary</h1>
+
+  <p>
+    Some notes.
+  </p>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    var page = {
+
+        lineChart: null,
+        
+        drawLineChart : function(dat, cat) {
+            page.lineChart = new ApexCharts(document.querySelector("#lineChart"), {
+                chart: {
+                    type: 'line',
+                    height: 260,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                series: [],
+                title: {
+                    text: 'Links collected',
+                },
+                noData: {
+                    text: 'Loading...'
+                }
+            });
+            page.lineChart.render();
+        }
+
+    };
+
+// const lineChart = new ApexCharts(document.querySelector("#lineChart"), {
+//   chart: {
+//     type: 'line'
+//   },
+//   series: [{
+//     name: 'sales',
+//     data: [30,40,35,50,49,60,70,91,125]
+//   }],
+//   xaxis: {
+//     categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
+//   }
+// });
+
+const pieChart = new ApexCharts(document.querySelector("#pieChart"), {
+  chart: {
+      type: 'donut'
+  },
+  series: [44, 55, 13, 33],
+  labels: ['Apple', 'Mango', 'Orange', 'Watermelon']
+});
+
+const radialChart = new ApexCharts(document.querySelector("#radialChart"), {
+    series: [70],
+    chart: {
+      type: 'radialBar',
+  },
+  plotOptions: {
+    radialBar: {
+      hollow: {
+        size: '70%',
+      }
+    },
+  },
+  labels: ['Cricket'],
+  });
+
+//lineChart.render();
+pieChart.render();
+radialChart.render();
+
+(function($) {
+    $(document).ready(function () {
+        page.drawLineChart();
+
+        $.ajax({
+            method: "POST",
+            url: "/api/stats/weblink",
+        }).done(function( msg ) {
+            var json = JSON.parse(msg);
+            page.lineChart.updateSeries([{
+                name: 'Links',
+                data: json.map((data) => ({ x: data.date, y: data.count}))
+            }]);
+            // page.drawLineChart(d_count, d_date);
+            // debugger;
+            // alert( "Data Saved: " + msg );
+        });
+    });
+}(jQuery));
+
+</script>
+{% endblock %}
