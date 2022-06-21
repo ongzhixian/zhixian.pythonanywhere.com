@@ -16,26 +16,26 @@ Describe "/api/weblink" -Tags "unit" {
         }
     }
 
-    Context "When posting a list links using Invoke-WebRequest" {
-        $body = @(
-            "link1", "link2", "link3"
-        ) | ConvertTo-Json
+    # Context "When posting a list links using Invoke-WebRequest" {
+    #     $body = @(
+    #         "link1", "link2", "link3"
+    #     ) | ConvertTo-Json
 
-        $response = Invoke-WebRequest -Method Post -Uri "$base_url/api/weblink" -headers $headers -body $body
+    #     $response = Invoke-WebRequest -Method Post -Uri "$base_url/api/weblink" -headers $headers -body $body
 
-        It "should return a response of type BasicHtmlWebResponseObject" {
-            $response | Should BeOfType Microsoft.PowerShell.Commands.BasicHtmlWebResponseObject
+    #     It "should return a response of type BasicHtmlWebResponseObject" {
+    #         $response | Should BeOfType Microsoft.PowerShell.Commands.BasicHtmlWebResponseObject
             
-        }
+    #     }
 
-        It "should return a HTTP 201 (created)" {
-            $response.StatusCode | Should Be 201
-        }
+    #     It "should return a HTTP 201 (created)" {
+    #         $response.StatusCode | Should Be 201
+    #     }
 
-        It "should return content of '3 links processed'" {
-            $response.Content | Should Be "3 links processed"
-        }
-    }
+    #     It "should return content of '3 links processed'" {
+    #         $response.Content | Should Be "3 links processed"
+    #     }
+    # }
 
     # This example shows why Invoke-RestMethod is probably not a good choice for testing API
     # Main reason: The response object is a string/PsCustomObject instead of WebResponse object
