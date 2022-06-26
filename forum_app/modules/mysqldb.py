@@ -1,4 +1,3 @@
-from ast import Try
 import logging as log
 
 from os import environ
@@ -28,6 +27,7 @@ class MySqlDatabase:
     def get_connection(self):
         mydb = mysql.connector.connect(
             host=self.db_settings['HOST'],
+            port=self.db_settings['PORT'],
             user=self.db_settings['USERNAME'],
             password=self.db_settings['PASSWORD'],
             database=self.db_settings['DATABASE']
@@ -35,7 +35,7 @@ class MySqlDatabase:
         return mydb
 
 
-    def fetch_one(self, sql):
+    def fetch_one(self, sql, args):
         # With statements does not work on Python 3.7 :-(
         # with self.get_connection() as connection, connection.cursor() as mycursor:
         #     mycursor.execute(sql)
@@ -43,11 +43,11 @@ class MySqlDatabase:
         # The Python 3.7 compliant way
         connection = self.get_connection()
         mycursor = connection.cursor()
-        mycursor.execute(sql)
+        mycursor.execute(sql, args)
         return mycursor.fetchone()
 
 
-    def fetch_all(self, sql):
+    def fetch_all(self, sql, args=None):
         # With statements does not work on Python 3.7 :-(
         # with self.get_connection() as connection, connection.cursor() as mycursor:
         #     mycursor.execute(sql)
@@ -55,7 +55,7 @@ class MySqlDatabase:
         # The Python 3.7 compliant way
         connection = self.get_connection()
         mycursor = connection.cursor()
-        mycursor.execute(sql)
+        mycursor.execute(sql, args)
         return mycursor.fetchall()
 
 

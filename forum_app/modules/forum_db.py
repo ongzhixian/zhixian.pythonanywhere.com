@@ -1,4 +1,5 @@
 from os import environ
+import logging
 
 from forum_app import app, secrets
 
@@ -20,7 +21,8 @@ class ForumDb:
         # self.init_new_tables()
 
     def init_new_tables(self):
-        if not self.db.table_exists('weblink'): self.db.create_table(self.sql_create_weblink)
+        pass
+        #if not self.db.table_exists('weblink'): self.db.create_table(self.sql_create_weblink)
         #print('weblink2 table exists1') if self.db.table_exists('asdweblink2') else print('weblink2 table NOT exists')
         #print(f"result {result}")
         # for (table_name, scripts) in self.tables:
@@ -45,6 +47,33 @@ class ForumDb:
         rows_affected = self.db.execute_batch(
             "INSERT INTO weblink (url) VALUES (%s);", url_list)
         print(f"Rows affected {rows_affected}")
+
+    def add_db_migrate(self, file_path):
+        rows_affected = self.db.execute(
+            "INSERT INTO _db_migrate (file_path) VALUES (%s);", (file_path,))
+        logging.info(f"add_db_migrate (rows affected): [{rows_affected}]")
+        
+    def db_migrate_exists(self, file_path):
+        record = self.db.fetch_one(
+            "SELECT 1 FROM _db_migrate WHERE file_path = %s;", (file_path,))
+        record_exists = record is not None
+        logging.info(f"db_migrate_exists: [{record_exists}]")
+        return record_exists
+
+    def get_unapplied_db_migrate_count(self):
+        record = self.db.fetch_one(
+            "SELECT COUNT(id) AS 'COUNT' FROM _db_migrate WHERE apply_dt IS NULL;", None)
+        return record[0]
+
+    def get_unapplied_db_migrate_list(self):
+        records = self.db.fetch_all(
+            "SELECT id, file_path, cre_dt FROM _db_migrate WHERE apply_dt IS NULL;", None)
+        return records
+
+    def get_schema_object_count(self):
+        record = self.db.fetch_one(
+            "SELECT table_count, view_count, procedure_count, function_count FROM schema_object_count;", None)
+        return record
 
     def myfunc(self, a):
         return {

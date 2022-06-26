@@ -26,6 +26,67 @@ input.large-text {
     margin: 0;
 }
 
+.card-holder {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1em;
+}
+
+.action-card {
+    margin: 1.26em;
+}
+
+.action-card .mdl-card__title {
+    text-align: center;
+    width: 100%;
+    margin-top: 0.36em;
+    font-size: 2em;
+    flex-direction: column;
+}
+
+.action-card .mdl-card__supporting-text {
+    font-size: 1.46em; 
+    line-height: normal;
+}
+
+.display-card {
+    margin: 0 1em 1em 0;
+}
+
+.display-card .mdl-card__title {
+    align-self: center;
+    margin-top: 1.67em;
+    color: #757575;
+}
+
+.display-card .mdl-card__supporting-text {
+    line-height: normal;
+    text-align: center;
+}
+
+.display-card .counter-text {
+    font-size: 3em;
+}
+
+.mdl-navigation .header {
+    display: block;
+    flex-shrink: 0;
+    padding: 16px 40px;
+    margin: 0;
+    color: #757575;
+    font-weight: bold;
+}
+
+/* .action-card h3 {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.action-card h4 {
+    margin:0;
+} */
+
 /* ul.test-list
 *********************************/
 
