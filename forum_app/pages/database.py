@@ -3,7 +3,7 @@
 import os
 import logging
 from flask import redirect, render_template
-from forum_app import app, app_path
+from forum_app import app
 from forum_app.modules.forum_db import ForumDb
 from mysql.connector.errors import ProgrammingError
 
@@ -109,4 +109,4 @@ def get_schema_object_count():
 
 def initialize_database():
     mydb = ForumDb()
-    mydb.one_time_initialization(app_path)
+    mydb.one_time_initialization()

@@ -18,7 +18,7 @@ class ForumDb:
         # }
         # self.init_new_tables()
 
-    def one_time_initialization(self, app_path):
+    def one_time_initialization(self):
         # Discover scripts to run in data/database_init_scripts
         # /home/zhixian/website/run/forum_app/data/database_init_scripts
         # /home/zhixian/website/run/forum_app/data/database_init_scripts
