@@ -74,7 +74,6 @@ def database_apply_update_handler():
 @app.route('/database/help')
 def database_help_get():
     """Web page at '/database/help'"""
-    #return app.config
     return render_template('database/database_help_get.html')
 
 
@@ -92,8 +91,9 @@ def discover_database_scripts():
             # For each file_relative_path, insert it into _db_migrate table (if it does not exists)
             #print(os.path.join(dirpath, file_name))
             logging.info(f"Found file_relative_path [{file_relative_path}]")
-            if not mydb.db_migrate_exists(file_relative_path):
-                mydb.add_db_migrate(file_relative_path)
+            mydb.add_db_migrate(file_relative_path)
+            # if not mydb.db_migrate_exists(file_relative_path):
+            #     mydb.add_db_migrate(file_relative_path)
 
 def get_unapplied_db_migrate_count():
     mydb = ForumDb()

@@ -20,15 +20,10 @@ class ForumDb:
 
     def one_time_initialization(self, app_path):
         # Discover scripts to run in data/database_init_scripts
-        # /home/zhixian/website/run/forum_app/data/database_init_scripts
-        # /home/zhixian/website/run/forum_app/data/database_init_scripts
 
         DB_SCRIPTS_PATH = os.path.join(app_path, 'data', 'database_init_scripts')
 
         logging.info(f"Discovering database scripts in {DB_SCRIPTS_PATH}")
-
-        # self.db.execute("CREATE TABLE TestTable (`id` INT UNSIGNED NOT NULL, `message` VARCHAR(50) DEFAULT '')")
-        # self.db.execute("CREATE TABLE IF NOT EXISTS `_db_migrate` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `file_path` VARCHAR(2048) NOT NULL COLLATE 'utf8mb4_unicode_ci', `apply_dt` DATETIME NULL DEFAULT NULL, `cre_dt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(), `upd_dt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(), PRIMARY KEY (`id`) ) COLLATE='utf8mb4_unicode_ci'")
 
         for dirpath, _, files in os.walk(DB_SCRIPTS_PATH):
             for file_name in files:
@@ -40,16 +35,14 @@ class ForumDb:
                     with open(script_file_path) as db_script_file:
                         sql_script = db_script_file.read()
                     # Run script
-                    # logging.info(sql_script)
                     self.db.execute(sql_script)
-                    # self.db.execute_script(sql_script)
                     logging.info(f"Executed {file_relative_path}")
                 except Exception as e:
                     logging.info("Some error occurred", e)
         
 
-    def init_new_tables(self):
-        pass
+    # def init_new_tables(self):
+    #     pass
         #if not self.db.table_exists('weblink'): self.db.create_table(self.sql_create_weblink)
         #print('weblink2 table exists1') if self.db.table_exists('asdweblink2') else print('weblink2 table NOT exists')
         #print(f"result {result}")

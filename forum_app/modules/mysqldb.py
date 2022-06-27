@@ -109,33 +109,6 @@ class MySqlDatabase:
         # connection.commit()
         return mycursor.rowcount
 
-    def execute_script(self, sql):
-        # With statements does not work on Python 3.7 :-(
-        # with self.get_connection() as connection, connection.cursor() as mycursor:
-        #     mycursor.execute(sql, args)
-        #     connection.commit()
-        #     return mycursor.rowcount
-        # The Python 3.7 compliant way
-        connection = self.get_connection()
-        mycursor = connection.cursor()
-        for result in mycursor.execute(sql, None, multi=True):
-            log.info(result.statement)
-        connection.commit()
-        connection.close()
-    # do something useful with INSERT result
-        # mycursor = connection.cursor()
-        # mycursor.execute(sql)
-        # mycursor.execute(sql, args, multi)
-        # mycursor.execute(sql, args, multi=True)
-        # for result in mycursor.execute(sql, args, multi=True):
-        #     if result.with_rows:
-        #         log.info("Rows produced by statement '{}':".format(result.statement))
-        #         # print(result.fetchall())
-        #     else:
-        #         log.info("Number of rows affected by statement '{}': {}".format(result.statement, result.rowcount))
-        # connection.commit()
-        # return mycursor.rowcount
-    
     # def create_database(self):
     #     try:
     #         log.info(f"connection_string=[{self.connection_string}]")
