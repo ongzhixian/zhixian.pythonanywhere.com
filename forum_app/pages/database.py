@@ -20,7 +20,7 @@ def root_database_get():
 def database_initialization():
     """Web page at '/database/dashboard'"""
     initialize_database()
-    #return redirect('/database/dashboard')
+    return redirect('/database/dashboard')
 
 @app.route('/database/dashboard')
 def database_dashboard_page():
