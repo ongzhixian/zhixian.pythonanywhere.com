@@ -118,7 +118,9 @@ class MySqlDatabase:
         # The Python 3.7 compliant way
         connection = self.get_connection()
         mycursor = connection.cursor()
-        mycursor.execute(sql, None, multi=True)
+        for result in mycursor.execute(sql, None, multi=True):
+            log.info(result)
+            log.info(str(dir(result)))
         connection.commit()
         connection.close()
     # do something useful with INSERT result
