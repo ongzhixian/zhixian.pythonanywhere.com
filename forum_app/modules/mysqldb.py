@@ -109,15 +109,15 @@ class MySqlDatabase:
         # connection.commit()
         return mycursor.rowcount
 
-    def execute_script(self, sql, args = None):
+    def execute_script(self, sql):
         # With statements does not work on Python 3.7 :-(
         # with self.get_connection() as connection, connection.cursor() as mycursor:
         #     mycursor.execute(sql, args)
         #     connection.commit()
         #     return mycursor.rowcount
         # The Python 3.7 compliant way
-        connection = self.get_connection()
-        connection.cmd_query_iter(sql)
+        with self.get_connection() as connection:
+            connection.cmd_query_iter(sql)
         # for result in connection.cmd_query_iter(sql):
         #     if 'columns' in result:
         #         columns = result['columns']
