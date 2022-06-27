@@ -119,8 +119,7 @@ class MySqlDatabase:
         connection = self.get_connection()
         mycursor = connection.cursor()
         for result in mycursor.execute(sql, None, multi=True):
-            log.info(result)
-            log.info(str(dir(result)))
+            log.info(result.statement)
         connection.commit()
         connection.close()
     # do something useful with INSERT result
