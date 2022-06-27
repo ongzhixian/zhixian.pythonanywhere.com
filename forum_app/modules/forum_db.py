@@ -38,7 +38,7 @@ class ForumDb:
                 with open(script_file_path) as db_script_file:
                     sql_script = db_script_file.read()
                 # Run script
-                logging.info(sql_script)
+                # logging.info(sql_script)
                 self.db.execute_script(sql_script)
                 logging.info(f"Executed {file_relative_path}")
         
