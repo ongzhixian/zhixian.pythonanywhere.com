@@ -80,7 +80,7 @@ def database_help_get():
 
 def discover_database_scripts():
 
-    DB_SCRIPTS_PATH = os.path.join(os.getcwd(), 'forum_app', 'data', 'database_scripts')
+    DB_SCRIPTS_PATH = os.path.join(app_path, 'data', 'database_scripts')
 
     logging.info(f"Discovering database scripts in {DB_SCRIPTS_PATH}")
 
