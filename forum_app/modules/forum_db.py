@@ -28,6 +28,7 @@ class ForumDb:
         logging.info(f"Discovering database scripts in {DB_SCRIPTS_PATH}")
 
         # self.db.execute("CREATE TABLE TestTable (`id` INT UNSIGNED NOT NULL, `message` VARCHAR(50) DEFAULT '')")
+        self.db.execute("CREATE TABLE IF NOT EXISTS `_db_migrate` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `file_path` VARCHAR(2048) NOT NULL COLLATE 'utf8mb4_unicode_ci', `apply_dt` DATETIME NULL DEFAULT NULL, `cre_dt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(), `upd_dt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(), PRIMARY KEY (`id`) ) COLLATE='utf8mb4_unicode_ci'")
 
         for dirpath, _, files in os.walk(DB_SCRIPTS_PATH):
             for file_name in files:
