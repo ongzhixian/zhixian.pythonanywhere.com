@@ -41,15 +41,6 @@ def setup_logging():
     except Exception as e:
         logging.error(e)
 
-# def setup_app_path():
-#     # /home/zhixian/website/run/forum_app/data/database_init_scripts
-#     #         D:\src\github\any\forum_app\data\database_init_scripts
-#     # if 'PYTHONANYWHERE_DOMAIN' in os.environ:
-#     #     return os.path.join(os.getcwd(), 'forum_app')
-#     # elif 'USERPROFILE' in os.environ:
-#     #     return os.path.join(os.getcwd(), 'forum_app')
-#     return os.path.join(os.getcwd(), 'forum_app')
-
 
 ################################################################################
 # Define Flask application
