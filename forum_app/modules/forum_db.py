@@ -34,13 +34,16 @@ class ForumDb:
                 script_file_path = os.path.join(dirpath, file_name)
                 file_relative_path = os.path.relpath(script_file_path, DB_SCRIPTS_PATH)
                 logging.info(f"Found file_relative_path [{file_relative_path}]")
-                # Load script
-                with open(script_file_path) as db_script_file:
-                    sql_script = db_script_file.read()
-                # Run script
-                # logging.info(sql_script)
-                self.db.execute_script(sql_script)
-                logging.info(f"Executed {file_relative_path}")
+                try:
+                    # Load script
+                    with open(script_file_path) as db_script_file:
+                        sql_script = db_script_file.read()
+                    # Run script
+                    # logging.info(sql_script)
+                    self.db.execute_script(sql_script)
+                    logging.info(f"Executed {file_relative_path}")
+                except Exception as e:
+                    logging.info("Some error occurred", e)
         
 
     def init_new_tables(self):
