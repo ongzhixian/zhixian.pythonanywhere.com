@@ -116,8 +116,9 @@ class MySqlDatabase:
         #     connection.commit()
         #     return mycursor.rowcount
         # The Python 3.7 compliant way
-        with self.get_connection() as connection:
-            connection.cmd_query_iter(sql)
+        connection = self.get_connection()
+        connection.cmd_query_iter(sql)
+        connection.close()
         # for result in connection.cmd_query_iter(sql):
         #     if 'columns' in result:
         #         columns = result['columns']
