@@ -18,9 +18,11 @@ class ForumDb:
         # }
         # self.init_new_tables()
 
-    def one_time_initialization(self):
+    def one_time_initialization(self, app_path):
         # Discover scripts to run in data/database_init_scripts
-        DB_SCRIPTS_PATH = os.path.join(os.getcwd(), 'forum_app', 'data', 'database_init_scripts')
+        # /home/zhixian/website/run/forum_app/data/database_init_scripts
+        # /home/zhixian/website/run/forum_app/data/database_init_scripts
+        DB_SCRIPTS_PATH = os.path.join(app_path, 'data', 'database_init_scripts')
 
         logging.info(f"Discovering database scripts in {DB_SCRIPTS_PATH}")
 

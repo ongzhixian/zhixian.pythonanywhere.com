@@ -41,12 +41,21 @@ def setup_logging():
     except Exception as e:
         logging.error(e)
 
+def setup_app_path():
+    if 'PYTHONANYWHERE_DOMAIN' in os.environ:
+        # /home/zhixian/website/run/forum_app/data/database_init_scripts
+        return os.path.join(os.getcwd(), 'run', 'forum_app')
+    elif 'USERPROFILE' in os.environ:
+        return os.path.join(os.getcwd(), 'forum_app')
+
 
 ################################################################################
 # Define Flask application
 ################################################################################
 
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')
+
+app_path = setup_app_path()
 
 secrets = get_secrets()
 
