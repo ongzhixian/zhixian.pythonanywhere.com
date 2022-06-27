@@ -5,7 +5,7 @@ import logging
 from flask import redirect, render_template
 from forum_app import app
 from forum_app.modules.forum_db import ForumDb
-# from mysql.connector.errors import ProgrammingError
+from mysql.connector.errors import ProgrammingError
 
 from flask import render_template, session, request, redirect, url_for
 
