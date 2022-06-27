@@ -118,15 +118,16 @@ class MySqlDatabase:
         # The Python 3.7 compliant way
         connection = self.get_connection()
         mycursor = connection.cursor()
+        mycursor.execute(sql)
         # mycursor.execute(sql, args, multi)
         # mycursor.execute(sql, args, multi=True)
-        for result in mycursor.execute(sql, args, multi=True):
-            if result.with_rows:
-                log.info("Rows produced by statement '{}':".format(result.statement))
-                # print(result.fetchall())
-            else:
-                log.info("Number of rows affected by statement '{}': {}".format(result.statement, result.rowcount))
-        connection.commit()
+        # for result in mycursor.execute(sql, args, multi=True):
+        #     if result.with_rows:
+        #         log.info("Rows produced by statement '{}':".format(result.statement))
+        #         # print(result.fetchall())
+        #     else:
+        #         log.info("Number of rows affected by statement '{}': {}".format(result.statement, result.rowcount))
+        # connection.commit()
         # return mycursor.rowcount
     
     # def create_database(self):
