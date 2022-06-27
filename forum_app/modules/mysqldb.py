@@ -108,7 +108,20 @@ class MySqlDatabase:
         mycursor.executemany(sql, data)
         # connection.commit()
         return mycursor.rowcount
-            
+
+    def execute_script(self, sql, args = None):
+        # With statements does not work on Python 3.7 :-(
+        # with self.get_connection() as connection, connection.cursor() as mycursor:
+        #     mycursor.execute(sql, args)
+        #     connection.commit()
+        #     return mycursor.rowcount
+        # The Python 3.7 compliant way
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        # mycursor.execute(sql, args, multi)
+        mycursor.execute(sql, args, multi=True)
+        # connection.commit()
+        # return mycursor.rowcount
     
     # def create_database(self):
     #     try:

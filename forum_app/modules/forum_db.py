@@ -35,7 +35,7 @@ class ForumDb:
                 # Load script
                 with open(script_file_path) as db_script_file:
                     sql_script = db_script_file.read()
-                self.db.execute(sql_script, None)
+                self.db.execute_script(sql_script, None)
                 # Run script
 
     def init_new_tables(self):
