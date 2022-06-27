@@ -77,6 +77,12 @@ input.large-text {
     font-weight: bold;
 }
 
+.mdl-menu__item a {
+    text-decoration: inherit;
+    color: inherit;
+    font-weight: inherit;
+}
+
 /* .action-card h3 {
     text-align: center;
     width: 100%;
