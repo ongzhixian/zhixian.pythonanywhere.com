@@ -126,7 +126,7 @@ class MySqlDatabase:
                 # print(result.fetchall())
             else:
                 log.info("Number of rows affected by statement '{}': {}".format(result.statement, result.rowcount))
-        # connection.commit()
+        connection.commit()
         # return mycursor.rowcount
     
     # def create_database(self):
