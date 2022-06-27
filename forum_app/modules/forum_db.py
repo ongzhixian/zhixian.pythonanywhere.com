@@ -40,7 +40,7 @@ class ForumDb:
                 # Run script
                 logging.info(sql_script)
                 self.db.execute_script(sql_script)
-                logging(f"Executed {file_relative_path}")
+                logging.info(f"Executed {file_relative_path}")
         
 
     def init_new_tables(self):
