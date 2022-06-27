@@ -117,14 +117,9 @@ class MySqlDatabase:
         #     return mycursor.rowcount
         # The Python 3.7 compliant way
         connection = self.get_connection()
-        connection.cmd_query_iter(sql)
+        mycursor = connection.cursor()
+        mycursor.execute(sql, None, multi=True)
         connection.close()
-        # for result in connection.cmd_query_iter(sql):
-        #     if 'columns' in result:
-        #         columns = result['columns']
-        #         rows = connection.get_rows()
-        #     else:
-        #         pass
     # do something useful with INSERT result
         # mycursor = connection.cursor()
         # mycursor.execute(sql)
