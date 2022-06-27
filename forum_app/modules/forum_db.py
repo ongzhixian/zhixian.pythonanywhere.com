@@ -1,7 +1,5 @@
-from os import environ
+import os
 import logging
-
-from forum_app import app, secrets
 
 from forum_app.modules.mysqldb import MySqlDatabase
 
@@ -19,6 +17,23 @@ class ForumDb:
         #     #'table_version': {}
         # }
         # self.init_new_tables()
+
+    def one_time_initialization(self):
+        # Discover scripts to run in data/database_init_scripts
+        DB_SCRIPTS_PATH = os.path.join(os.getcwd(), 'forum_app', 'data', 'database_init_scripts')
+
+        logging.info(f"Discovering database scripts in {DB_SCRIPTS_PATH}")
+
+        for dirpath, _, files in os.walk(DB_SCRIPTS_PATH):
+            for file_name in files:
+                script_file_path = os.path.join(dirpath, file_name)
+                file_relative_path = os.path.relpath(script_file_path, DB_SCRIPTS_PATH)
+                logging.info(f"Found file_relative_path [{file_relative_path}]")
+                # Load script
+                with open(script_file_path) as db_script_file:
+                    sql_script = db_script_file.read()
+                self.db.execute(sql_script, None)
+                # Run script
 
     def init_new_tables(self):
         pass

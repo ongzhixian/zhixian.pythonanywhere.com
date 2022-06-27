@@ -5,6 +5,7 @@ import logging
 from flask import redirect, render_template
 from forum_app import app
 from forum_app.modules.forum_db import ForumDb
+from mysql.connector.errors import ProgrammingError
 
 from flask import render_template, session, request, redirect, url_for
 
@@ -15,17 +16,29 @@ def root_database_get():
     # return render_template('database/root_database_get.html')
     return redirect('/database/dashboard')
 
+@app.route('/database/init')
+def database_initialization():
+    """Web page at '/database/dashboard'"""
+    initialize_database()
+    #return redirect('/database/dashboard')
 
 @app.route('/database/dashboard')
 def database_dashboard_page():
     """Web page at '/database/dashboard'"""
     
-    discover_database_scripts()
+    try:
+        discover_database_scripts()
 
-    unapplied_db_migrate_count = get_unapplied_db_migrate_count()
+        unapplied_db_migrate_count = get_unapplied_db_migrate_count()
 
-    (table_count, view_count, procedure_count, function_count) = get_schema_object_count()
-    
+        (table_count, view_count, procedure_count, function_count) = get_schema_object_count()
+
+    except ProgrammingError as e:
+        if e.errno == 1146: # 1146 is MySql specific error code for 'no such table'
+            pass
+            initialize_database()
+            # Create table and any
+
     return render_template('database/database_dashboard.html', model = {
         'unapplied_db_migrate_count' : unapplied_db_migrate_count,
         'table_count' : table_count,
@@ -94,3 +107,7 @@ def get_unapplied_db_migrate_list():
 def get_schema_object_count():
     mydb = ForumDb()
     return mydb.get_schema_object_count()
+
+def initialize_database():
+    mydb = ForumDb()
+    mydb.one_time_initialization()

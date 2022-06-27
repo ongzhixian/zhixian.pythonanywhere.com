@@ -2,7 +2,8 @@ import logging as log
 
 from os import environ
 
-from forum_app import app, secrets
+from forum_app import secrets
+
 import mysql.connector
 
 # def create_database(db_path):
@@ -82,7 +83,7 @@ class MySqlDatabase:
         mycursor.execute(sql)
 
 
-    def execute(self, sql, args):
+    def execute(self, sql, args = None):
         # With statements does not work on Python 3.7 :-(
         # with self.get_connection() as connection, connection.cursor() as mycursor:
         #     mycursor.execute(sql, args)
@@ -92,7 +93,7 @@ class MySqlDatabase:
         connection = self.get_connection()
         mycursor = connection.cursor()
         mycursor.execute(sql, args)
-        connection.commit()
+        # connection.commit()
         return mycursor.rowcount
 
     def execute_batch(self, sql, data):
@@ -105,7 +106,7 @@ class MySqlDatabase:
         connection = self.get_connection()
         mycursor = connection.cursor()
         mycursor.executemany(sql, data)
-        connection.commit()
+        # connection.commit()
         return mycursor.rowcount
             
     

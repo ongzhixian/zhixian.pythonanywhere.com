@@ -12,7 +12,7 @@ COLLATE='utf8mb4_unicode_ci'
 ;
 
 
-CREATE TABLE IF NOT EXISTS `_versioning` (
+CREATE TABLE IF NOT EXISTS `_version` (
 	`id`        INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`version`   VARCHAR(50) NOT NULL,
 	`apply_dt`  DATETIME NULL DEFAULT NULL,
@@ -23,6 +23,17 @@ CREATE TABLE IF NOT EXISTS `_versioning` (
 COLLATE='utf8mb4_unicode_ci'
 ;
 
+CREATE TABLE IF NOT EXISTS `_feature` (
+	`id`        INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name`   	VARCHAR(128) NOT NULL,
+	`is_active`	BOOLEAN NOT NULL DEFAULT FALSE,
+	`apply_dt`  DATETIME NULL DEFAULT NULL,
+	`cre_dt`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+	`upd_dt`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8mb4_unicode_ci'
+;
 
 
 
