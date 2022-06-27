@@ -49,7 +49,7 @@ def setup_logging():
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')
 secrets = get_secrets()
 if "SESSION_SECRET_KEY" in secrets:
-    print("SETTING APP SECRET KEY")
+    # print("SETTING APP SECRET KEY")
     app.secret_key = secrets["SESSION_SECRET_KEY"]
 # print(secrets["SESSION_SECRET_KEY"])
 setup_logging()
