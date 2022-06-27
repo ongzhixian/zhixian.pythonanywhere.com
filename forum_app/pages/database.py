@@ -25,19 +25,12 @@ def database_initialization():
 @app.route('/database/dashboard')
 def database_dashboard_page():
     """Web page at '/database/dashboard'"""
-    
-    try:
-        discover_database_scripts()
+    # try:
+    discover_database_scripts()
 
-        unapplied_db_migrate_count = get_unapplied_db_migrate_count()
+    unapplied_db_migrate_count = get_unapplied_db_migrate_count()
 
-        (table_count, view_count, procedure_count, function_count) = get_schema_object_count()
-
-    except ProgrammingError as e:
-        if e.errno == 1146: # 1146 is MySql specific error code for 'no such table'
-            pass
-            initialize_database()
-            # Create table and any
+    (table_count, view_count, procedure_count, function_count) = get_schema_object_count()
 
     return render_template('database/database_dashboard.html', model = {
         'unapplied_db_migrate_count' : unapplied_db_migrate_count,
@@ -46,6 +39,12 @@ def database_dashboard_page():
         'procedure_count' : procedure_count,
         'function_count' : function_count
     })
+    # except ProgrammingError as e:
+    #     if e.errno == 1146: # 1146 is MySql specific error code for 'no such table'
+    #         pass
+    #         initialize_database()
+    #         # Create table and any
+    
 
 @app.route('/database/update')
 def database_update_page():
