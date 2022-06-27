@@ -27,6 +27,8 @@ class ForumDb:
 
         logging.info(f"Discovering database scripts in {DB_SCRIPTS_PATH}")
 
+        self.db.execute("CREATE TABLE TestTable (`id` INT UNSIGNED NOT NULL, `message` VARCHAR(50) DEFAULT '')")
+
         for dirpath, _, files in os.walk(DB_SCRIPTS_PATH):
             for file_name in files:
                 script_file_path = os.path.join(dirpath, file_name)
@@ -39,6 +41,7 @@ class ForumDb:
                 logging.info(sql_script)
                 self.db.execute_script(sql_script, None)
                 logging(f"Executed {file_relative_path}")
+        
 
     def init_new_tables(self):
         pass
