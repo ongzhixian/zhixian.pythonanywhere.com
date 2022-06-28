@@ -2,4 +2,4 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["root", "mysql", "test", "authentication", "database"]
+__all__ = ["root", "mysql", "test", "authentication", "database", "user", "feature"]

@@ -1,0 +1,110 @@
+{% extends "_layouts/_home.html" %}
+
+{% block title %}User dashboard{% endblock %}
+
+{% block head_link %}<link rel="stylesheet" href="/css/mdl/material.min.css" />
+<link rel="stylesheet" href="/css/mdl/material.min.css" />{% endblock %}
+
+{% block content %}
+
+<div class="page-content">
+
+  <div class="card-holder">
+
+    <div class="display-card mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <span class="mdl-card__title-text">Database version</span>
+      </div>
+      <div class="mdl-card__supporting-text mdl-card--expand">
+        <span class="counter-text">1</span>
+      </div>
+    </div>
+
+
+    <!-- 
+    <div class="display-card mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <span class="mdl-card__title-text">Database version 2</span>
+      </div>
+      <div class="mdl-card__supporting-text mdl-card--expand">
+        <span class="counter-text">1</span>
+      </div>
+    </div>
+    -->
+
+  </div>
+
+  <div class="card-holder">
+
+    <div class="display-card mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <span class="mdl-card__title-text">Pending database updates</span>
+      </div>
+      <div class="mdl-card__supporting-text mdl-card--expand">
+        <span class="counter-text">
+          asd
+        </span>
+        
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/database/update">
+          View updates
+        </a>
+        <!-- <form method="post" action="/database/update">
+          <button type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" value="discover-updates">Discover updates</button>
+        </form> -->
+      </div>
+    </div>
+
+    <!-- 
+    <div class="display-card mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <span class="mdl-card__title-text">Database version</span>
+      </div>
+      <div class="mdl-card__supporting-text mdl-card--expand">
+        There are currently 00 updates.
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Discover updates
+        </a>
+      </div>
+    </div> 
+    -->
+
+  </div>
+
+    <!-- Your content goes here -->
+
+    <!-- <h1>What is database module (and what is it suppose to do)?</h1>
+
+    <h3>What is this page suppose to do?</h3>
+
+    <p>Or rather what is the database module?</p>
+
+    <p>The database module is suppose to be a place where we apply database scripts.</p>
+
+    <p>Here's how it works.</p>
+
+    <p>We write scripts that we want to apply to database in app/data/database_scripts folder.
+        <br/>
+        Divided by create table/view/stored proc/functions etc... etc...
+    </p>
+
+    <p>
+        On application startup (or manual trigger), we scan the scripts in the folder and note them in applied scripts.
+
+    </p> -->
+
+    <!-- <div class="action-panel">
+        <form method="post" action="/api/test/mysql">
+            <h1>Test</h1>
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Test</button>
+        </form>
+    </div> -->
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}{% endblock %}
