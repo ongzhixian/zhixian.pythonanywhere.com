@@ -26,20 +26,13 @@ def chart_examples_get():
 @app.route('/qrcode')
 def qrcode_get():
     """GET /"""
-    # import pdb
-    # query_params = request.args
-    # if 'd' in query_params:
-    #     pass
-    #     import qrcode
-    #     data = query_params['d']
-    #     qr = qrcode.QRCode(version = 1, box_size = 10, border = 5)
-    #     qr.add_data(data)
-    #     qr.make(fit = True)
-    #     # img = qr.make_image(fill_color = 'red', back_color = 'white')
-    #     img = qr.make_image()
-    #     img.save('MyQRCode2.png')
-    #     pdb.set_trace()
-    data = "some qr code"
+    data = "dummy qr data"
+    
+    query_params = request.args
+
+    if 'd' in query_params:
+        data = query_params['d']
+        
     qrcode = QRCode()
     qr_img_base64 = qrcode.make_qr_image_as_base64(data)
     

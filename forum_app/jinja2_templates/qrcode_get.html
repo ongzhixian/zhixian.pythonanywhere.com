@@ -6,11 +6,15 @@
 <div class="page-content">
   <!-- Your content goes here -->
 
-  <img src="/api/qr?d=hello world 123" />
-
-  <!-- {{ model.qr_img_base64 }} -->
-
-  <img id="picture" src="data:image/jpeg;base64,{{ model.qr_img_base64 }}">
+  <div>
+    <img src="/api/qr?d=hello world 123" />
+    <p>hello world 123</p>
+  </div>
+  
+  <div>
+    <img id="picture" src="data:image/jpeg;base64,{{ model.qr_img_base64 }}">
+    <p>custom</p>
+  </div>
 
   <div class="card-holder">
     <!--
