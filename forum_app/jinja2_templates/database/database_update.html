@@ -14,7 +14,16 @@
     What do we want to do here on this page?
     1.  Display a list of unapplied updates
     2.  Click to apply updates
-  -->
+    -->
+    <div class="breadcrumb inline">
+        <a href="/database/dashboard"> Dashboard</a>
+        <span class="material-icons">chevron_right</span>
+        <span>Table updates</span>
+    </div>
+
+    <!-- <span class="material-icons">arrow_back</span> -->
+
+    <!-- <div>&nbsp;</div> -->
 
     <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
         <thead>
@@ -36,11 +45,13 @@
     <div>&nbsp;</div>
 
     <div class="action-panel">
-        <form method="post" action="/database/apply-update" onsubmit="applyUpdates()">
+        <form method="post" action="/database/apply-update" onsubmit="applyUpdates()" class="inline">
             <button type="submit" id="applyUpdatesButton" name="action" value="apply-update"
                 class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" disabled>Apply updates</button>
             <input type="hidden" name="updateIdList" id="updateIdList" value="" />
         </form>
+        
+        
     </div>
 
 </div>

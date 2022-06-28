@@ -21,9 +21,8 @@ class MySqlDatabase:
         if 'PYTHONANYWHERE_DOMAIN' not in environ:
             prefix = 'dev_'
         setting_name = f'{prefix}{database_name}'
-        
-        log.info(f"Init {database_name} using {setting_name} settings")
         self.db_settings = secrets['MYSQL'][setting_name]
+        # log.info(f"Init {database_name} using {setting_name} settings")
 
     def get_connection(self):
         mydb = mysql.connector.connect(
@@ -93,7 +92,7 @@ class MySqlDatabase:
         connection = self.get_connection()
         mycursor = connection.cursor()
         mycursor.execute(sql, args)
-        # connection.commit()
+        connection.commit()
         return mycursor.rowcount
 
     def execute_batch(self, sql, data):
@@ -106,7 +105,7 @@ class MySqlDatabase:
         connection = self.get_connection()
         mycursor = connection.cursor()
         mycursor.executemany(sql, data)
-        # connection.commit()
+        connection.commit()
         return mycursor.rowcount
 
     # def create_database(self):

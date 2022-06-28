@@ -83,6 +83,27 @@ input.large-text {
     font-weight: inherit;
 }
 
+form.inline {
+    display: inline-block;
+}
+
+.inline {
+    display: inline-block;
+    margin: 0 0 1em;
+}
+
+.breadcrumb {
+    display: inline-flex;
+    vertical-align: inherit;
+    line-height: 24px;
+}
+
+.breadcrumb a, .breadcrumb span {
+    text-decoration: inherit;
+    color: inherit;
+    font-weight: bold;
+}
+
 /* .action-card h3 {
     text-align: center;
     width: 100%;
