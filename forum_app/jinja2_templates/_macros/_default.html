@@ -72,3 +72,22 @@
       Features</a>
 </nav>
 {% endmacro %}
+
+
+
+{% macro application_dropdown(applicationName) %}
+<span id="selected_application">Current application appleGate</span>
+<div class="dropdown" id="application_dropdown">
+  <button id="application_selector" class="mdl-button mdl-js-button mdl-button--icon">
+    <i class="material-icons">arrow_drop_down</i>
+  </button>
+  <div class="mdl-menu__container is-upgraded">
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="application_selector">
+      <li class="mdl-menu__item">Application 1</li>
+      <li class="mdl-menu__item">Application 2</li>
+      <li disabled class="mdl-menu__item">Application 3</li>
+      <li class="mdl-menu__item">Application 4</li>
+    </ul>
+  </div>
+</div>
+{% endmacro %}

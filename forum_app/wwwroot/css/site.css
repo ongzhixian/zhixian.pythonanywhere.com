@@ -81,6 +81,7 @@ input.large-text {
     text-decoration: inherit;
     color: inherit;
     font-weight: inherit;
+    display: block;
 }
 
 form.inline {
@@ -104,6 +105,21 @@ form.inline {
     font-weight: bold;
 }
 
+.dropdown {
+    position: relative;
+}
+.dropdown .is-visible {
+    /* position:sticky; */
+    top: 0 !important;
+}
+
+.mdl-mini-footer.fab{
+    background-color: inherit;
+    /* border: 1px solid #213; */
+    position: absolute;
+    bottom: 2em;
+    right: 2em;
+}
 /* .action-card h3 {
     text-align: center;
     width: 100%;

@@ -59,6 +59,20 @@ class MySqlDatabase:
         return mycursor.fetchall()
 
 
+    def fetch_batch(self, sql, args=None):
+        # With statements does not work on Python 3.7 :-(
+        # with self.get_connection() as connection, connection.cursor() as mycursor:
+        #     mycursor.execute(sql)
+        #     return mycursor.fetchone()
+        # The Python 3.7 compliant way
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        result_sets = mycursor.execute(sql, args, multi=True)
+        for rs in result_sets:
+            if rs.with_rows:
+                return rs.fetchall()
+
+
     def table_exists(self, table_name):
         sql = """SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = %s;"""
         # With statements does not work on Python 3.7 :-(

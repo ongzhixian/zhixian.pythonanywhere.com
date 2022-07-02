@@ -7,7 +7,6 @@ def before_each_request():
     if "username" in session:
         g.username = session["username"]
 
-
 # @app.errorhandler(Exception)
 # def all_exception_handler(error):
 #     return 'Error:' + str(error), 500

@@ -54,18 +54,42 @@
           </nav>
         </div>
 
-        <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-button">
-          <span class="material-icons">more_vert</span>
-        </button>
+        {{ macros.application_dropdown() }}
 
-        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
-          <li class="mdl-menu__item">Profile ({{ g.username }})</li>
-          <li class="mdl-menu__item">Change password</li>
-          <li disabled class="mdl-menu__item">Settings</li>
-          <li class="mdl-menu__item"><a href="/logout">Log out</a></li>
-        </ul>
+        <!-- 
+        <div class="dropdown" id="application_dropdown">
+          <button id="application_selector_xc" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">arrow_drop_down</i>
+          </button>
+
+          <div class="mdl-menu__container is-upgraded">
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="application_selector_xc">
+              <li class="mdl-menu__item">Application 11</li>
+              <li class="mdl-menu__item">Application 12</li>
+              <li disabled class="mdl-menu__item">Application 13</li>
+              <li class="mdl-menu__item">Application 14</li>
+            </ul>
+          </div>
+        </div> 
+        -->
+
+        <div class="dropdown" id="application_dropdown3">
+          <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-button">
+            <span class="material-icons">more_vert</span>
+          </button>
+
+          <div class="mdl-menu__container is-upgraded">
+            <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
+              <li class="mdl-menu__item">Profile ({{ g.username }})</li>
+              <li class="mdl-menu__item">Change password</li>
+              <li disabled class="mdl-menu__item">Settings</li>
+              <li class="mdl-menu__item"><a href="/logout">Log out</a></li>
+            </ul>
+          </div>
+        </div>
 
       </div>
+
     </header>
 
     <div class="mdl-layout__drawer">

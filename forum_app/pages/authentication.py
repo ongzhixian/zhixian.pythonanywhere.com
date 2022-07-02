@@ -1,5 +1,6 @@
 from flask import render_template, session, request, redirect, url_for
 from forum_app import app
+from forum_app.modules.user import User
 
 # @app.route('/login')
 # def login_get():
@@ -16,18 +17,23 @@ from forum_app import app
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    message = None
     if request.method == 'POST':
         # import pdb
         # pdb.set_trace()
         username = request.form.get("username_field")
         password = request.form.get("password_field")
-        session['username'] = username
-        return redirect('/')
+        user = User()
+        if user.is_valid_credential(username, password):
+            session['username'] = username
+            return redirect('/')
+        message = "Invalid credentials."
+
         #return redirect(url_for('/'))
         #session['username'] = request.form['username_field']
         #return redirect(url_for('index'))
 
-    return render_template('authentication/login_get.html')
+    return render_template('authentication/login_get.html', message = message)
 
 @app.route('/logout')
 def logout():
