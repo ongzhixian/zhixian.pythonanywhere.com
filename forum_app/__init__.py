@@ -32,7 +32,18 @@ def get_secrets():
 
 def setup_logging():
     try:
-        logging_format = logging.Formatter('%(levelname).3s|%(module)-12s|%(funcName)-20s|%(message)s')
+        werkzeug_logger = logging.getLogger('werkzeug')
+        werkzeug_logger.setLevel(logging.WARNING)
+
+        git_logger = logging.getLogger('git')
+        git_logger.setLevel(logging.WARNING)
+
+        # Use "%(pathname)s" to figure out underlying module
+        # logging_format = logging.Formatter('%(levelname).3s|%(module)-12s|%(message)s -- %(pathname)s')
+        # Logging with function name
+        # logging_format = logging.Formatter('%(levelname).3s|%(module)-12s|%(funcName)-20s|%(message)s')
+        
+        logging_format = logging.Formatter('%(levelname).3s|%(module)-12s|%(message)s')
         root_logger = logging.getLogger()
         root_logger.setLevel(logging.NOTSET)
         console_logger = logging.StreamHandler()

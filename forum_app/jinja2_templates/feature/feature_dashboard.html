@@ -9,99 +9,74 @@
 
 <div class="page-content">
 
-  <div class="card-holder">
-
-    <div class="display-card mdl-card mdl-shadow--2dp">
-      <div class="mdl-card__title">
-        <span class="mdl-card__title-text">Database version</span>
-      </div>
-      <div class="mdl-card__supporting-text mdl-card--expand">
-        <span class="counter-text">1</span>
-      </div>
-    </div>
-
-
-    <!-- 
-    <div class="display-card mdl-card mdl-shadow--2dp">
-      <div class="mdl-card__title">
-        <span class="mdl-card__title-text">Database version 2</span>
-      </div>
-      <div class="mdl-card__supporting-text mdl-card--expand">
-        <span class="counter-text">1</span>
-      </div>
-    </div>
-    -->
-
-  </div>
-
-  <div class="card-holder">
-
-    <div class="display-card mdl-card mdl-shadow--2dp">
-      <div class="mdl-card__title">
-        <span class="mdl-card__title-text">Pending database updates</span>
-      </div>
-      <div class="mdl-card__supporting-text mdl-card--expand">
-        <span class="counter-text">
-          asd
-        </span>
+  <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp user" style="margin: 1em;">
+    <thead>
+      <tr>
+        <th>s/n</th>
+        <th class="mdl-data-table__cell--non-numeric">Name</th>
+        <th class="mdl-data-table__cell--non-numeric">Description</th>
+        <th class="mdl-data-table__cell--non-numeric">Toggle</th>
         
-      </div>
-      <div class="mdl-card__actions mdl-card--border">
-        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/database/update">
-          View updates
-        </a>
-        <!-- <form method="post" action="/database/update">
-          <button type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" value="discover-updates">Discover updates</button>
-        </form> -->
-      </div>
-    </div>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <a href="#">Authentication</a>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+          Enables authentication module
+        </td>
+        <td>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+              <input type="checkbox" id="switch-1" class="mdl-switch__input">
+              <span class="mdl-switch__label"></span>
+            </label>
+          </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <a href="#">Login</a>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+          Enables login module
+        </td>
+        <td>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
+              <input type="checkbox" id="switch-2" class="mdl-switch__input">
+              <span class="mdl-switch__label"></span>
+            </label>
+          </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2" style="text-align: left;">
+          <button class="mdl-button mdl-js-button mdl-button--icon">
+            <span class="material-icons">navigate_before</span>
+          </button>
+          
+          <button class="mdl-button mdl-js-button mdl-button--icon">
+            <span class="material-icons">navigate_next</span>
+          </button>
 
-    <!-- 
-    <div class="display-card mdl-card mdl-shadow--2dp">
-      <div class="mdl-card__title">
-        <span class="mdl-card__title-text">Database version</span>
-      </div>
-      <div class="mdl-card__supporting-text mdl-card--expand">
-        There are currently 00 updates.
-      </div>
-      <div class="mdl-card__actions mdl-card--border">
-        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Discover updates
-        </a>
-      </div>
-    </div> 
-    -->
+          <span>Page 1 of 2 (record 1 to 25)</span>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
 
+  <div class="action-panel">
+    <a href="/feature/register" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Register</a>
+
+    <!-- <form method="post" action="/database/apply-update" onsubmit="applyUpdates()" class="inline">
+        <button type="submit" id="applyUpdatesButton" name="action" value="apply-update"
+            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" disabled>Register222</button>
+        <input type="hidden" name="updateIdList" id="updateIdList" value="" />
+    </form> -->
   </div>
-
-    <!-- Your content goes here -->
-
-    <!-- <h1>What is database module (and what is it suppose to do)?</h1>
-
-    <h3>What is this page suppose to do?</h3>
-
-    <p>Or rather what is the database module?</p>
-
-    <p>The database module is suppose to be a place where we apply database scripts.</p>
-
-    <p>Here's how it works.</p>
-
-    <p>We write scripts that we want to apply to database in app/data/database_scripts folder.
-        <br/>
-        Divided by create table/view/stored proc/functions etc... etc...
-    </p>
-
-    <p>
-        On application startup (or manual trigger), we scan the scripts in the folder and note them in applied scripts.
-
-    </p> -->
-
-    <!-- <div class="action-panel">
-        <form method="post" action="/api/test/mysql">
-            <h1>Test</h1>
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Test</button>
-        </form>
-    </div> -->
 
 </div>
 

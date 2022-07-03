@@ -49,6 +49,32 @@ input.large-text {
     line-height: normal;
 }
 
+.action-panel {
+    display: flex;
+}
+
+.action-panel.column {
+    flex-direction: column;
+    gap: 1em;
+}
+
+.action-panel.column form {
+    flex-direction: column;
+    gap: 1em;
+}
+
+form.column {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+
+.action-panel.column h2,
+.action-panel.column h3 {
+    margin:0;
+}
+
 .display-card {
     margin: 0 1em 1em 0;
 }
@@ -120,6 +146,13 @@ form.inline {
     bottom: 2em;
     right: 2em;
 }
+
+
+table.user tbody tr td a {
+    text-decoration: inherit;
+    color: inherit;
+}
+
 /* .action-card h3 {
     text-align: center;
     width: 100%;
