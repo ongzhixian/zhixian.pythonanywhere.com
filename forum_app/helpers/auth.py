@@ -14,9 +14,10 @@ def login_required(f):
             is_enabled = app_settings[dependent_feature_name]["is_enable"]
             if (is_enabled and 'username' in g) or (not is_enabled):
                 # Authentication is not switched on -OR- is on and is authenticated; display whatever
+                logging.info(f"OK {app_settings}")
                 return f(*args, **kwargs)
         
-        logging.info(f"In {app_settings}")
+        logging.info(f"NG {app_settings}")
         
         return redirect(url_for('login', next=request.url))
     return decorated_function

@@ -12,34 +12,46 @@ from time import time
 
 from flask import request, make_response, abort
 
-from forum_app import app, secrets
+from forum_app import app, secrets, app_settings
 from forum_app.modules.forum_db import ForumDb
+
+from forum_app.features import BaseFeatureInterface
+
+import pdb
 
 
 @app.route('/api/feature/toggle', methods=['POST'])
 def api_feature_post():
-    # If content is not json, its a bad request
-    import pdb
-    pdb.set_trace()
-    if not request.is_json:
+    content = get_validated_toggle_content(request)
+    if not content:
         return "Bad request", 400
     
-    content = request.json
+    base_feature = BaseFeatureInterface()
+    change_saved = base_feature.toggle_enable(content['feature_name'], content['is_enable'])
+    if change_saved:
+        enabled_message = "enabled" if content['is_enable'] else "disabled"
+        return f"{content['feature_name']} {enabled_message}", 200
+    else:
+        return "Changes not saved", 200
 
-    return "OKOK", 200
-    # # If content is not a list of strings, its a bad request
-    # if type(content) is not list:
-    #     return "Bad request", 400
-    
-    # data = []
 
-    # count = 0
-    # for url in content:
-    #     data.append((url, ))
-    #     count = count + 1
+def get_validated_toggle_content(request):
+    # If content is not json, its a bad request
+    if not request.is_json:
+        return None
 
-    # print("data len is", len(data))
+    # Note: is_json just checks if the request's HTTP header Content-Type is "application/json"!
+    #       It is possible to set the header as json but send form data, at which then the following request.json will break :-(
+    request_content = request.json
 
-    # logging.info("In api_weblink_post()")
-    # return f"{count} links processed", 201
-    
+    # # If content does not contain 'feature_name' or 'value', then its a bad request
+    if 'feature_name' not in request_content or 'value' not in request_content:
+        return None
+
+    if request_content['value'] not in (True, False):
+        return None
+
+    return {
+        "feature_name": request_content['feature_name'],
+        "is_enable": request_content['value']
+    }

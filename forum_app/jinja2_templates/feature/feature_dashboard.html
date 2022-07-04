@@ -93,6 +93,11 @@
     </form> -->
   </div>
 
+  <div id="notification-toast" class="mdl-js-snackbar mdl-snackbar">
+    <div class="mdl-snackbar__text"></div>
+    <button class="mdl-snackbar__action" type="button" title="notification-toast"></button>
+  </div>
+
 </div>
 
 {% endblock %}
@@ -102,59 +107,27 @@
 <script type="text/javascript">
     "use strict";
 
-    // function applyUpdates() {
-    //     var selectedIds = $(".mdl-checkbox__input:checked")
-    //         .toArray()
-    //         .filter(ele => ele.hasAttribute("value"))
-    //         .map(ele => {
-    //             return ele.value;
-    //         }).join(",");
-    //     if (selectedIds.length > 0) {
-    //         console.info("selectedIds", selectedIds);
-    //         $("#updateIdList").val(selectedIds);
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
     (function ($) {
+      var snackbarContainer = document.querySelector('#notification-toast');
 
-        function updateFeatureToggle(event) {
-            // Enable apply button if something is checked
-            // Disable apply button if nothing is checked
+      function updateFeatureToggle(event) {
+          $.ajax({
+            method: "POST",
+            url: '/api/feature/toggle',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ 
+              "feature_name": event.target.dataset["featureName"], 
+              "value": event.target.checked
+            })
+          }).done(function( msg ) {
+            snackbarContainer.MaterialSnackbar.showSnackbar({ message: msg });
+          }).fail(function(a, b, c) {
+            snackbarContainer.MaterialSnackbar.showSnackbar({ message: "An error has occurred" });
+          }).always(function (a, b, c) {
+          });
+      }
 
-            // let isSomethingChecked = $(".mdl-checkbox__input:checked").length > 0;
-            // let applyUpdatesButton = $("#applyUpdatesButton")[0].MaterialButton;
-
-            // isSomethingChecked ? applyUpdatesButton.enable() : applyUpdatesButton.disable();
-            // event.target.checked	
-            // Make AJAX call to update feature-toggle
-
-            $.ajax({
-              method: "POST",
-              url: '/api/feature/toggle',
-              contentType: "application/json; charset=utf-8",
-              data: JSON.stringify({ 
-                "feature_name": event.target.dataset["featureName"], 
-                "value": event.target.checked 
-              })
-            }).done(function( msg ) {
-              alert( "Data Saved: " + msg );
-            }).fail(function(a, b, c) {
-
-            }).always(function (a, b, c) {
-
-            });
-
-            
-        }
-
-        $(document).on("change", ".mdl-switch__input", updateFeatureToggle);
-
-        // $("#applyUpdatesButton").on("click", function(e) {
-        //     debugger;
-        // });
-
+      $(document).on("change", ".mdl-switch__input", updateFeatureToggle);
 
     }(jQuery));
 

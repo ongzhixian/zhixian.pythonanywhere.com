@@ -29,12 +29,13 @@ class AuthenticationFeature(BaseFeatureInterface):
         
 
     def get_enable_setting(self):
-        record = self.db.fetch_one(
-            "SELECT 1 FROM _feature WHERE module_name = %s;", 
-            (__name__,))
-        if record is None:
-            return False
-        return True
+        return super().get_enable_setting(__name__)
+        # record = self.db.fetch_one(
+        #     "SELECT is_enable FROM _feature WHERE module_name = %s;", 
+        #     (__name__,))
+        # if record is None:
+        #     return False
+        # return record[0] == 1
 
     def update_app_settings(self, app_settings):
         """Define/Set app_settings """
