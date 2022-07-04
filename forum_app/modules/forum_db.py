@@ -1,7 +1,10 @@
 import os
 import logging
 
+from forum_app.modules import BaseDatabaseInterface
 from forum_app.modules.mysqldb import MySqlDatabase
+
+import pdb
 
 class ForumDb:
     def __init__(self):
@@ -17,6 +20,11 @@ class ForumDb:
         #     #'table_version': {}
         # }
         # self.init_new_tables()
+
+    def create_database_if_not_exists(self) -> bool:
+        """Create database if not exists"""
+        pdb.set_trace()
+        return
 
     def one_time_initialization(self, app_path):
         # Discover scripts to run in data/database_init_scripts

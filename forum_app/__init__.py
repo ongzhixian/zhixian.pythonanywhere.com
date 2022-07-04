@@ -51,6 +51,19 @@ def load_feature_settings(app_settings):
                 feature_instance.load_app_settings(app_settings)
     return app_settings
 
+def initialize_databases():
+    import importlib, inspect
+    from forum_app.databases import __all__ as database_name_list, BaseDatabaseInterface
+    for database_name in database_name_list:
+        database_module = importlib.import_module(f"forum_app.databases.{database_name}")
+        database_class_list = inspect.getmembers(database_module, inspect.isclass)
+        for database_class_member in database_class_list:
+            database_class = database_class_member[1]
+            is_database = issubclass(database_class, BaseDatabaseInterface)
+            if is_database:
+                database_instance = database_class()
+                database_instance.create_database_if_not_exists()
+
 def parse_logging_level_string(logging_level_string):
     # CRITICAL = 50
     # FATAL = CRITICAL
@@ -120,6 +133,8 @@ def setup_app_path():
 app_path = setup_app_path()
 
 secrets = get_secrets()
+
+initialize_databases()
 
 app_settings = get_app_settings(app_path)
 
