@@ -1,1 +1,6 @@
-{}
+{
+    "logging": {
+        "werkzeug" : "WARNING",
+        "git" : "WARNING"
+    }
+}

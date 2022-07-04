@@ -30,13 +30,51 @@ def get_secrets():
     return app_secrets
 
 
-def setup_logging():
-    try:
-        werkzeug_logger = logging.getLogger('werkzeug')
-        werkzeug_logger.setLevel(logging.WARNING)
+def get_app_settings(app_path):
+    app_settings = {}
+    pythonanywhere_settings_path = os.path.join(app_path, 'app-settings.json')
+    with open(pythonanywhere_settings_path) as app_settings_file:
+        app_settings = json.load(app_settings_file)
+    return app_settings
 
-        git_logger = logging.getLogger('git')
-        git_logger.setLevel(logging.WARNING)
+
+def parse_logging_level_string(logging_level_string):
+    # CRITICAL = 50
+    # FATAL = CRITICAL
+    # ERROR = 40
+    # WARNING = 30
+    # WARN = WARNING
+    # INFO = 20
+    # DEBUG = 10
+    # NOTSET = 0
+    available_logging_levels = {
+        "CRITICAL": logging.CRITICAL,
+        "FATAL": logging.FATAL,
+        "ERROR": logging.ERROR,
+        "WARNING": logging.WARNING,
+        "WARN": logging.WARN,
+        "INFO": logging.INFO,
+        "DEBUG": logging.DEBUG,
+        "NOTSET": logging.NOTSET
+    }
+    logging_level = logging_level_string.upper()
+    
+    if logging_level in available_logging_levels:
+        return available_logging_levels[logging_level]
+
+    raise ValueError(f"Invalid logging level {logging_level_string} specified.")
+
+def setup_logging(app_settings):
+    try:
+        if 'logging' in app_settings:
+            logging_settings = app_settings['logging']
+            for logger_name in logging_settings:
+                try:    
+                    logging_level = parse_logging_level_string(logging_settings[logger_name])
+                    logger = logging.getLogger(logger_name)
+                    logger.setLevel(logging_level)
+                except ValueError as ve:
+                    logging.warning(ve)
 
         # Use "%(pathname)s" to figure out underlying module
         # logging_format = logging.Formatter('%(levelname).3s|%(module)-12s|%(message)s -- %(pathname)s')
@@ -51,6 +89,7 @@ def setup_logging():
         root_logger.addHandler(console_logger)
     except Exception as e:
         logging.error(e)
+
 
 def setup_app_path():
     # /home/zhixian/website/run/forum_app/data/database_init_scripts
@@ -71,10 +110,12 @@ app_path = setup_app_path()
 
 secrets = get_secrets()
 
+app_settings = get_app_settings(app_path)
+
 if "SESSION_SECRET_KEY" in secrets:
     app.secret_key = secrets["SESSION_SECRET_KEY"]
 
-setup_logging()
+setup_logging(app_settings)
 
 logging.info("[APPLICATION START]")
 
