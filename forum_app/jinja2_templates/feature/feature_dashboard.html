@@ -9,89 +9,96 @@
 
 <div class="page-content">
 
-  {% if feature_list %}
-
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--3-col"></div>
+    <div class="mdl-cell mdl-cell--6-col">
+      {% if feature_list %}
   
-  <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp user" style="margin: 1em;">
-    <thead>
-      <tr>
-        <th>s/n</th>
-        <th class="mdl-data-table__cell--non-numeric">Name</th>
-        <th class="mdl-data-table__cell--non-numeric">Description</th>
-        <th class="mdl-data-table__cell--non-numeric">Is enable</th>
-        
-      </tr>
-    </thead>
-    <tbody>
-      {% for feature in feature_list %}
-      <tr>
-        <td>{{loop.index}}</td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <a href="#">{{feature[1]}}</a>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          {{feature[2]}}
-        </td>
-        <td>
-            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="{{feature[1]|lower}}-enable" title="{%- if feature[4] %} Feature enabled {% else %} Feature disabled {% endif %}">
-              <input type="checkbox" id="{{feature[1]|lower}}-enable" class="mdl-switch__input" name="{{feature[1]|lower}}-enable" 
-              {%- if feature[4] %} checked {% endif %} data-feature-name="{{feature[1]}}" />
-            </label>
-          </td>
-      </tr>
-      {% endfor %}
-      
-      <!-- 
-      <tr>
-        <td>1x</td>
-        <td class="mdl-data-table__cell--non-numeric">
-          <a href="#">Authentication</a>
-        </td>
-        <td class="mdl-data-table__cell--non-numeric">
-          Enables authentication module
-        </td>
-        <td>
-            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
-              <input type="checkbox" id="switch-1" class="mdl-switch__input">
-              <span class="mdl-switch__label"></span>
-            </label>
-          </td>
-      </tr> 
-      -->
-
-    </tbody>
-    <!--
-    <tfoot>
-      <tr>
-        <td colspan="2" style="text-align: left;">
-          <button class="mdl-button mdl-js-button mdl-button--icon">
-            <span class="material-icons">navigate_before</span>
-          </button>
+      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp user full-width" style="margin: 1em;">
+        <thead>
+          <tr>
+            <th>s/n</th>
+            <th class="mdl-data-table__cell--non-numeric">Name</th>
+            <th class="mdl-data-table__cell--non-numeric">Description</th>
+            <th class="mdl-data-table__cell--non-numeric">Is enable</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% for feature in feature_list %}
+          <tr>
+            <td>{{loop.index}}</td>
+            <td class="mdl-data-table__cell--non-numeric">
+              <a href="#">{{feature[1]}}</a>
+            </td>
+            <td class="mdl-data-table__cell--non-numeric">
+              {{feature[2]}}
+            </td>
+            <td>
+                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="{{feature[1]|lower}}-enable" title="{%- if feature[4] %} Feature enabled {% else %} Feature disabled {% endif %}">
+                  <input type="checkbox" id="{{feature[1]|lower}}-enable" class="mdl-switch__input" name="{{feature[1]|lower}}-enable" 
+                  {%- if feature[4] %} checked {% endif %} data-feature-name="{{feature[1]}}" />
+                </label>
+              </td>
+          </tr>
+          {% endfor %}
           
-          <button class="mdl-button mdl-js-button mdl-button--icon">
-            <span class="material-icons">navigate_next</span>
-          </button>
+          <!-- 
+          <tr>
+            <td>1x</td>
+            <td class="mdl-data-table__cell--non-numeric">
+              <a href="#">Authentication</a>
+            </td>
+            <td class="mdl-data-table__cell--non-numeric">
+              Enables authentication module
+            </td>
+            <td>
+                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+                  <input type="checkbox" id="switch-1" class="mdl-switch__input">
+                  <span class="mdl-switch__label"></span>
+                </label>
+              </td>
+          </tr> 
+          -->
+    
+        </tbody>
+        <!--
+        <tfoot>
+          <tr>
+            <td colspan="2" style="text-align: left;">
+              <button class="mdl-button mdl-js-button mdl-button--icon">
+                <span class="material-icons">navigate_before</span>
+              </button>
+              
+              <button class="mdl-button mdl-js-button mdl-button--icon">
+                <span class="material-icons">navigate_next</span>
+              </button>
+    
+              <span>Page 1 of 2 (record 1 to 25)</span>
+            </td>
+          </tr>
+        </tfoot>
+        -->
+      </table>
+      {% else %}
+      <p>No features registered.</p>
+      {% endif %}
+    
+    
+      <div class="action-panel" style="margin: 1em;">
+        <a href="/feature/register" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Register</a>
+        <!-- <form method="post" action="/database/apply-update" onsubmit="applyUpdates()" class="inline">
+            <button type="submit" id="applyUpdatesButton" name="action" value="apply-update"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" disabled>Register222</button>
+            <input type="hidden" name="updateIdList" id="updateIdList" value="" />
+        </form> -->
+      </div>
 
-          <span>Page 1 of 2 (record 1 to 25)</span>
-        </td>
-      </tr>
-    </tfoot>
-    -->
-  </table>
-  {% else %}
-  <p>No features registered.</p>
-  {% endif %}
-
-
-  <div class="action-panel">
-    <a href="/feature/register" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Register</a>
-
-    <!-- <form method="post" action="/database/apply-update" onsubmit="applyUpdates()" class="inline">
-        <button type="submit" id="applyUpdatesButton" name="action" value="apply-update"
-            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" disabled>Register222</button>
-        <input type="hidden" name="updateIdList" id="updateIdList" value="" />
-    </form> -->
+    </div>
+    <div class="mdl-cell mdl-cell--3-col"></div>
   </div>
+
+
 
   <div id="notification-toast" class="mdl-js-snackbar mdl-snackbar">
     <div class="mdl-snackbar__text"></div>

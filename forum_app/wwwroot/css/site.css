@@ -153,6 +153,10 @@ table.user tbody tr td a {
     color: inherit;
 }
 
+.full-width {
+    width: 100%;
+}
+
 /* .action-card h3 {
     text-align: center;
     width: 100%;

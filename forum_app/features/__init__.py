@@ -38,7 +38,6 @@ UPDATE  _feature
 SET		is_enable = %s
 WHERE	name = %s;
 """, (enable, feature_name))
-        logging.debug(f"Rows affected {rows_affected}")
 
         changes_saved = rows_affected > 0
 
@@ -49,6 +48,7 @@ WHERE	name = %s;
                 app_settings[module_name] = {}
             app_settings[module_name]["is_enable"] = is_enable
 
+        logging.debug(f"{feature_name} is_enable set to {enable} {changes_saved} ")
         return changes_saved
 
     def get_enable_setting(self, module_name):
