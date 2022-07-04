@@ -48,7 +48,7 @@ def load_feature_settings(app_settings):
             is_feature = issubclass(feature_class, BaseFeatureInterface)
             if is_feature:
                 feature_instance = feature_class()
-                feature_instance.update_app_settings(app_settings)
+                feature_instance.load_app_settings(app_settings)
     return app_settings
 
 def parse_logging_level_string(logging_level_string):

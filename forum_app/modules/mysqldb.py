@@ -34,6 +34,28 @@ class MySqlDatabase:
         )
         return mydb
 
+    # TODO: Re-think the whole fetching mechanism
+    # There are 2 fetch (fetchone, fetchall)
+    # To change to:
+    # 1. fetch_value        -- return a single value
+    # 2. fetch_record       -- return a single record (tuple)
+    # 3. fetch_list         -- return a list of records (tuples)
+    # 4. fetch_record_sets  -- return result_sets
+
+    def fetch_list(self, sql, args=None):
+        try:
+            connection = self.get_connection()
+            mycursor = connection.cursor()
+            mycursor.execute(sql, args)
+            results = mycursor.fetchall()
+            mycursor.close()
+            connection.close()
+            return results
+        except Exception as e:
+            log.error(e)
+            return []
+
+    # Obsolete; keeping until the above to-do is implemented
 
     def fetch_one(self, sql, args):
         # With statements does not work on Python 3.7 :-(
@@ -86,6 +108,8 @@ class MySqlDatabase:
         return False if mycursor.fetchone() == None else True
 
 
+    # TODO: Also need to re-think about this mess on execute()
+
     def create_table(self, sql):
         # With statements does not work on Python 3.7 :-(
         # with self.get_connection() as connection, connection.cursor() as mycursor:
@@ -94,7 +118,6 @@ class MySqlDatabase:
         connection = self.get_connection()
         mycursor = connection.cursor()
         mycursor.execute(sql)
-
 
     def execute(self, sql, args = None):
         # With statements does not work on Python 3.7 :-(

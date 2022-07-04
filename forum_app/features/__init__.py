@@ -22,11 +22,11 @@ class BaseFeatureInterface:
             return False
         return True
 
-    def register_feature(self, feature_name, feature_description) -> bool:
+    def register_feature(self, feature_name, feature_description, module_name) -> bool:
         """Register feature into system"""
         rows_affected = self.db.execute(
-            "INSERT INTO _feature (name, description) VALUES (%s, %s);", 
-            (feature_name, feature_description))
+            "INSERT INTO _feature (name, description, module_name) VALUES (%s, %s, %s);", 
+            (feature_name, feature_description, module_name))
         print(f"Rows affected {rows_affected}")
         return rows_affected > 0
 

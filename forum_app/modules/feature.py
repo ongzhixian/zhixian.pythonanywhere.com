@@ -50,6 +50,16 @@ class Feature:
         # password_hash = m.hexdigest()
         # return password_hash == stored_password_hash
 
+    def get_registered_feature_list(self):
+        records = self.db.fetch_list(
+            "SELECT * FROM _feature;", None)
+        
+        if records is None:
+            return []
+    
+        return records
+    
+
     # def add(self, username, password):
     #     print("Executing add_weblink")
     #     # Need to generate salt and hash

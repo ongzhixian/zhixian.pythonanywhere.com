@@ -1,6 +1,7 @@
 from flask import render_template, session, request, redirect, url_for
 from forum_app import app
 from forum_app.modules.feature import Feature
+import pdb
 
 @app.route('/feature/')
 def root_feature_get():
@@ -10,7 +11,10 @@ def root_feature_get():
 @app.route('/feature/dashboard')
 def feature_dashboard_page():
     """Web page at '/feature/dashboard'"""
-    return render_template('feature/feature_dashboard.html')
+    # Get list of registered features
+    feature = Feature()
+    feature_list = feature.get_registered_feature_list()
+    return render_template('feature/feature_dashboard.html', feature_list = feature_list)
 
 @app.route('/feature/register')
 def feature_register_page():

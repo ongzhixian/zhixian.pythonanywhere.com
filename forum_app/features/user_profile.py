@@ -11,4 +11,4 @@ class UserProfileFeature(BaseFeatureInterface):
         if self.is_registered(feature_name):
             return
 
-        self.register_feature(feature_name, feature_description)
+        self.register_feature(feature_name, feature_description, __name__)
