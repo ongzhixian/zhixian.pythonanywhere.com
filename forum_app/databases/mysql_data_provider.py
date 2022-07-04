@@ -39,7 +39,7 @@ class MySqlDataProvider(BaseDataProviderInterface):
         mycursor = connection.cursor()
 
         self.run_create_table_scripts(mycursor, database_name)
-        # self.run_create_view_scripts(cursor, database_name)
+        self.run_create_view_scripts(mycursor, database_name)
 
         mycursor.close()
         connection.close()
@@ -50,10 +50,11 @@ class MySqlDataProvider(BaseDataProviderInterface):
         database_scripts_path = path.join(app_path, 'data', 'database_initialization_scripts', database_name, 'tables')
         self.run_scripts_in_path(cursor, database_scripts_path)
         
-    # def run_create_view_scripts(self, cursor, database_name):
-    #     database_scripts_path = path.join(app_path, 'data', 'database_initialization_scripts', database_name, 'views')
-    #     self.run_scripts_in_path(cursor, database_scripts_path)
-    #     logging.info("run_create_view_scripts")
+    def run_create_view_scripts(self, cursor, database_name):
+        logging.info("run_create_view_scripts")
+        database_scripts_path = path.join(app_path, 'data', 'database_initialization_scripts', database_name, 'views')
+        self.run_scripts_in_path(cursor, database_scripts_path)
+        
 
     def run_scripts_in_path(self, cursor, database_scripts_path):
         for dirpath, _, files in walk(database_scripts_path):
@@ -71,7 +72,8 @@ class MySqlDataProvider(BaseDataProviderInterface):
                     with open(script_file_path) as db_script_file:
                         sql_script = db_script_file.read()
                         print(sql_script)
-                    result_sets = cursor.execute(sql_script, None, multi=True)
+                    cursor.execute(sql_script, None, multi=True)
+                    # result_sets = cursor.execute(sql_script, None, multi=True)
                     # for result_set in result_sets:
                     #     pass
                     # pdb.set_trace()
