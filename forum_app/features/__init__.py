@@ -11,6 +11,7 @@ class BaseFeatureInterface:
 
     def __init__(self):
         self.db = MySqlDatabase('forum')
+        self.is_enable = False
     
     def is_registered(self, feature_name) -> bool:
         """Register feature into system"""
@@ -29,7 +30,19 @@ class BaseFeatureInterface:
         print(f"Rows affected {rows_affected}")
         return rows_affected > 0
 
+    def load(self):
+        """Things to do whenever feature is loaded"""
+        pass
+
     def register(self):
         """Register feature into system"""
+        pass
+
+    def load_app_settings(self, app_settings):
+        """Load app_settings (from storage) """
+        pass
+
+    def update_app_settings(self, app_settings):
+        """Define/Set app_settings """
         pass
     

@@ -3,15 +3,22 @@ import logging
 from functools import wraps
 from flask import g, request, redirect, url_for
 from flask import session, redirect, request, abort
-
+from forum_app import app_settings
 
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not 'username' in g:
-            logging.info("Username not in g")
-            return redirect(url_for('login', next=request.url))
-        return f(*args, **kwargs)
+        dependent_feature_name = 'forum_app.features.authentication'
+        
+        if dependent_feature_name in app_settings and "is_enable" in app_settings[dependent_feature_name]:
+            is_enabled = app_settings[dependent_feature_name]["is_enable"]
+            if (is_enabled and 'username' in g) or (not is_enabled):
+                # Authentication is not switched on -OR- is on and is authenticated; display whatever
+                return f(*args, **kwargs)
+        
+        logging.info(f"In {app_settings}")
+        
+        return redirect(url_for('login', next=request.url))
     return decorated_function
 
 

@@ -37,6 +37,19 @@ def get_app_settings(app_path):
         app_settings = json.load(app_settings_file)
     return app_settings
 
+def load_feature_settings(app_settings):
+    import importlib, inspect
+    from forum_app.features import __all__ as feature_list, BaseFeatureInterface
+    for feature in feature_list:
+        feature_module = importlib.import_module(f"forum_app.features.{feature}")
+        class_member_list = inspect.getmembers(feature_module, inspect.isclass)
+        for class_member in class_member_list:
+            feature_class = class_member[1]
+            is_feature = issubclass(feature_class, BaseFeatureInterface)
+            if is_feature:
+                feature_instance = feature_class()
+                feature_instance.update_app_settings(app_settings)
+    return app_settings
 
 def parse_logging_level_string(logging_level_string):
     # CRITICAL = 50
@@ -104,20 +117,23 @@ def setup_app_path():
 # Define Flask application
 ################################################################################
 
-app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')
-
 app_path = setup_app_path()
 
 secrets = get_secrets()
 
 app_settings = get_app_settings(app_path)
 
-if "SESSION_SECRET_KEY" in secrets:
-    app.secret_key = secrets["SESSION_SECRET_KEY"]
+app_settings = load_feature_settings(app_settings)
 
 setup_logging(app_settings)
 
 logging.info("[APPLICATION START]")
+
+app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')
+
+if "SESSION_SECRET_KEY" in secrets:
+    app.secret_key = secrets["SESSION_SECRET_KEY"]
+
 
 ################################################################################
 # Import pages and API for application
