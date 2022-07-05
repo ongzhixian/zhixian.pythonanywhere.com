@@ -14,6 +14,18 @@ class ForumDatabase(BaseDatabaseInterface):
         self.db.create_database_if_not_exists()
         return
 
+    def is_missing_key_tables(self):
+        """Checks if database is missing key tables"""
+        # Application should have minimally 2 tables
+        # 1.    _db_migrate
+        # 2.    _feature
+        records = self.db.fetch_list(
+            "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'forum' AND TABLE_NAME IN ('_db_migrate', '_feature');", None)
+        if len(records) == 2:
+            return
+        # Carry out recovery action here
+        self.db.initialize_database()
+
     # _db_migrate
 
     def add_db_migrate(self, file_path):

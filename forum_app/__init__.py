@@ -37,6 +37,16 @@ def get_app_settings(app_path):
         app_settings = json.load(app_settings_file)
     return app_settings
 
+
+def setup_app_path():
+    # /home/zhixian/website/run/forum_app/data/database_init_scripts
+    #         D:\src\github\any\forum_app\data\database_init_scripts
+    if 'PYTHONANYWHERE_DOMAIN' in os.environ:
+        return '/home/zhixian/website/forum_app'
+    elif 'USERPROFILE' in os.environ:
+        return os.path.join(os.getcwd(), 'forum_app')
+
+
 def load_feature_settings(app_settings):
     import importlib, inspect
     from forum_app.features import __all__ as feature_list, BaseFeatureInterface
@@ -63,6 +73,8 @@ def initialize_databases():
             if is_database:
                 database_instance = database_class()
                 database_instance.create_database_if_not_exists()
+                database_instance.is_missing_key_tables()
+
 
 def parse_logging_level_string(logging_level_string):
     # CRITICAL = 50
@@ -122,13 +134,21 @@ def configure_logging(app_settings):
         logging.error(e)
 
 
-def setup_app_path():
-    # /home/zhixian/website/run/forum_app/data/database_init_scripts
-    #         D:\src\github\any\forum_app\data\database_init_scripts
-    if 'PYTHONANYWHERE_DOMAIN' in os.environ:
-        return '/home/zhixian/website/forum_app'
-    elif 'USERPROFILE' in os.environ:
-        return os.path.join(os.getcwd(), 'forum_app')
+# def checkup():
+#     # Application should have minimally 2 tables
+#     # 1.    _db_migrate
+#     # 2.    _feature
+#     import importlib, inspect
+#     from forum_app.databases import __all__ as database_name_list, BaseDatabaseInterface
+#     for database_name in database_name_list:
+#         database_module = importlib.import_module(f"forum_app.databases.{database_name}")
+#         database_class_list = inspect.getmembers(database_module, inspect.isclass)
+#         for database_class_member in database_class_list:
+#             database_class = database_class_member[1]
+#             is_database = issubclass(database_class, BaseDatabaseInterface)
+#             if is_database:
+#                 database_instance = database_class()
+#                 database_instance.ensure()
 
 
 ################################################################################

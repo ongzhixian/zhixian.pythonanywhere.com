@@ -45,9 +45,7 @@ class BaseDatabaseInterface:
     def create_database_if_not_exists(self):
         """Create database if not exists"""
         return
-        # record = self.db.fetch_one(
-        #     "SELECT 1 FROM _feature WHERE name = %s;", 
-        #     (feature_name,))
-        # if record is None:
-        #     return False
-        # return True
+
+    def is_missing_key_tables(self):
+        """Checks if database is missing key tables"""
+        return

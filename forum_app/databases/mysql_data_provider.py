@@ -35,7 +35,10 @@ class MySqlDataProvider(BaseDataProviderInterface):
         if is_database_missing:
             self.initialize_database(database_name)
 
-    def initialize_database(self, database_name):
+    def initialize_database(self, database_name = None):
+        if database_name is None:
+            database_name = self.db_settings['DATABASE']
+            
         connection = self.get_connection()
         mycursor = connection.cursor()
 
