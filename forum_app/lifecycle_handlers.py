@@ -1,5 +1,5 @@
 import logging
-from flask import g, request, session, redirect, url_for, abort
+from flask import g, current_app, request, session, redirect, url_for, abort
 from forum_app import app
 
 @app.before_request
@@ -13,6 +13,16 @@ def before_each_request():
     g.app_menu = [
         ("Oub", "/oub/dashboard", "table_rows")
     ]
+    
+
+@app.context_processor
+def inject_feature_menu_items():
+    # get feature menu items
+    menu_items = [
+        ("Inv xxxxxx", "/inv/dashboard", "table_rows"),
+        ("Inv yyyyyy", "/inv/dashboard", "table_rows"),
+    ]
+    return dict(feature_menu_items=menu_items)
 
 # @app.errorhandler(Exception)
 # def all_exception_handler(error):

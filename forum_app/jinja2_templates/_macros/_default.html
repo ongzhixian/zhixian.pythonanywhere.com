@@ -83,6 +83,16 @@
       {{menuitem[0]}}</a>
     {% endfor %}
 
+    {% for menu_item in feature_menu_items %}
+    <a class="mdl-navigation__link" href="{{menu_item[1]}}">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">{{menu_item[2]}}</i>
+      {{menu_item[0]}}</a>
+    {% endfor %}
+
+    
+
+    
+
 </nav>
 {% endmacro %}
 

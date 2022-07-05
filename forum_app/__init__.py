@@ -11,7 +11,8 @@ __all__ = ["pages", "api"]
 import json
 import logging
 import os
-from flask import Flask
+from flask import Flask, current_app
+import pdb
 
 
 ################################################################################
@@ -46,8 +47,8 @@ def setup_app_path():
     elif 'USERPROFILE' in os.environ:
         return os.path.join(os.getcwd(), 'forum_app')
 
-
-def load_feature_settings(app_settings):
+def get_feature_instance_list():
+    feature_instance_list = []
     import importlib, inspect
     from forum_app.features import __all__ as feature_list, BaseFeatureInterface
     for feature in feature_list:
@@ -58,7 +59,13 @@ def load_feature_settings(app_settings):
             is_feature = issubclass(feature_class, BaseFeatureInterface)
             if is_feature:
                 feature_instance = feature_class()
-                feature_instance.load_app_settings(app_settings)
+                feature_instance_list.append(feature_instance)
+    return feature_instance_list
+
+def load_feature_settings(app_settings):
+    feature_instance_list = get_feature_instance_list()
+    for feature_instance in feature_instance_list:
+        feature_instance.load_app_settings(app_settings)
     return app_settings
 
 def initialize_databases():
@@ -172,6 +179,15 @@ configure_logging(app_settings)
 logging.info("[APPLICATION START]")
 
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')
+
+menu_items = [
+    ("Inv 111", "/inv/dashboard", "table_rows"),
+    ("Inv 222", "/inv/dashboard", "table_rows"),
+]
+
+with app.app_context():
+    current_app.feature_instance_list = menu_items
+
 
 if "SESSION_SECRET_KEY" in secrets:
     app.secret_key = secrets["SESSION_SECRET_KEY"]
