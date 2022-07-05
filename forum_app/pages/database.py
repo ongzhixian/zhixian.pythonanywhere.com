@@ -18,18 +18,18 @@ def root_database_get():
     # return render_template('database/root_database_get.html')
     return redirect('/database/dashboard')
 
-@app.route('/database/init')
-def database_initialization():
-    """Web page at '/database/dashboard'"""
-    initialize_database()
-    return redirect('/database/dashboard')
+# @app.route('/database/init')
+# def database_initialization():
+#     """Web page at '/database/dashboard'"""
+#     initialize_database()
+#     return redirect('/database/dashboard')
 
 @app.route('/database/dashboard')
 @login_required
 def database_dashboard_page():
     """Web page at '/database/dashboard'"""
     # try:
-    discover_database_scripts()
+    # discover_database_scripts()
 
     unapplied_db_migrate_count = get_unapplied_db_migrate_count()
 
@@ -91,7 +91,7 @@ def discover_database_scripts():
     for dirpath, _, files in os.walk(DB_SCRIPTS_PATH):
         for file_name in files:
             file_relative_path = os.path.relpath(os.path.join(dirpath, file_name), DB_SCRIPTS_PATH)
-            # For each file_relative_path, insert it into _db_migrate table (if it does not exists)
+            # For each file_relative_path, insert it i`nto _db_migrate table (if it does not exists)
             #print(os.path.join(dirpath, file_name))
             # logging.info(f"Found file_relative_path [{file_relative_path}]")
             if not mydb.db_migrate_exists(file_relative_path):
@@ -109,6 +109,6 @@ def get_schema_object_count():
     mydb = ForumDatabase()
     return mydb.get_schema_object_count()
 
-def initialize_database():
-    mydb = ForumDatabase()
-    mydb.one_time_initialization(app_path)
+# def initialize_database():
+#     mydb = ForumDatabase()
+#     mydb.one_time_initialization(app_path)
