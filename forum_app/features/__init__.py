@@ -17,7 +17,7 @@ class BaseFeatureInterface:
     
     def is_registered(self, feature_name) -> bool:
         """Register feature into system"""
-        record = self.db.fetch_one(
+        record = self.db.fetch_record(
             "SELECT 1 FROM _feature WHERE name = %s;", 
             (feature_name,))
         if record is None:

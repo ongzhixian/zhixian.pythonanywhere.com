@@ -34,7 +34,7 @@ class Feature:
         pass
 
     def get_registered_feature_count(self):
-        record = self.db.fetch_one(
+        record = self.db.fetch_record(
             "SELECT COUNT(*) AS 'count' FROM _feature;", None)
         
         if record is None:

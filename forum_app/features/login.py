@@ -11,10 +11,11 @@ class LoginFeature(BaseFeatureInterface):
         feature_name = "Login"
         feature_description = "Enable login module"
         
-        # if self.is_registered(feature_name):
-        #     return
+        if self.is_registered(feature_name):
+            return
 
-        # self.register_feature(feature_name, feature_description, __name__)
+        self.register_feature(feature_name, feature_description, __name__)
+
         # Run table scripts (if any)
         DB_SCRIPTS_PATH = os.path.join(app_path, 'data', 'feature_database_scripts', "login")
         for dirpath, _, files in os.walk(DB_SCRIPTS_PATH):
@@ -27,7 +28,7 @@ class LoginFeature(BaseFeatureInterface):
                     with open(script_file_path) as db_script_file:
                         sql_script = db_script_file.read()
                     # Run script
-                    self.db.execute(sql_script)
+                    self.db.execute_script(sql_script)
                     logging.info(f"Executed {file_relative_path}")
                 except Exception as e:
                     logging.info("Some error occurred", e)

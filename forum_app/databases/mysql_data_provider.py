@@ -21,7 +21,7 @@ class MySqlDataProvider(BaseDataProviderInterface):
         """Create database if not exists"""
         database_name = self.db_settings['DATABASE']
 
-        connection = self.get_connection(None)
+        connection = self.get_server_connection()
         mycursor = connection.cursor()
 
         is_database_missing = self.is_database_missing(mycursor, database_name)
@@ -35,7 +35,7 @@ class MySqlDataProvider(BaseDataProviderInterface):
             self.initialize_database(database_name)
 
     def initialize_database(self, database_name):
-        connection = self.get_connection(database_name)
+        connection = self.get_connection()
         mycursor = connection.cursor()
 
         self.run_create_table_scripts(mycursor, database_name)
@@ -104,16 +104,24 @@ class MySqlDataProvider(BaseDataProviderInterface):
         record = cursor.fetchone()
         return record is None
 
-    def get_connection(self, database_name=None):
+    def get_connection(self):
         mydb = mysql.connector.connect(
             host=self.db_settings['HOST'],
             port=self.db_settings['PORT'],
             user=self.db_settings['USERNAME'],
             password=self.db_settings['PASSWORD'],
-            database="mysql" if database_name is None else self.db_settings['DATABASE']
+            database=self.db_settings['DATABASE']
         )
         return mydb
 
+    def get_server_connection(self):
+        mydb = mysql.connector.connect(
+            host=self.db_settings['HOST'],
+            port=self.db_settings['PORT'],
+            user=self.db_settings['USERNAME'],
+            password=self.db_settings['PASSWORD']
+        )
+        return mydb
 
     # Note:
     # With statements does not work on Python 3.7 :-(
@@ -123,28 +131,56 @@ class MySqlDataProvider(BaseDataProviderInterface):
 
     def fetch_value(self, sql, args=None):
         """Return a single value"""
-        pass
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        mycursor.execute(sql, args)
+        result = mycursor.fetchone()
+        mycursor.close()
+        connection.close()
+        return None if result is None else result[0]
 
     def fetch_record(self, sql, args=None):
         """Return a single record"""
-        pass
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        mycursor.execute(sql, args)
+        result = mycursor.fetchone()
+        mycursor.close()
+        connection.close()
+        return result
 
     def fetch_list(self, sql, args=None):
         """Return a single list"""
-        pass
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        mycursor.execute(sql, args)
+        results = mycursor.fetchall()
+        mycursor.close()
+        connection.close()
+        return results
 
     def fetch_record_sets(self, sql, args=None):
         """Return a single record_sets"""
         pass
 
     def execute(self, sql, args=None):
-        pdb.set_trace()
         connection = self.get_connection()
         mycursor = connection.cursor()
-        result = mycursor.execute(sql, args)
+        mycursor.execute(sql, args)
+        mycursor.close()
+        connection.commit()
+        connection.close()
+        return mycursor.rowcount
+        
+    def execute_script(self, sql_script):
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        result_sets = mycursor.execute(sql_script, None, multi=True)
+        for result_set in result_sets:
+            pass
         mycursor.close()
         connection.close()
-        
+        return mycursor.rowcount
         
 
         
