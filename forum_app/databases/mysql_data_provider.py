@@ -1,6 +1,7 @@
 import logging
 from os import environ, path, walk
 import pdb
+from statistics import multimode
 
 from forum_app import secrets, app_path
 from forum_app.databases import BaseDataProviderInterface
@@ -161,7 +162,16 @@ class MySqlDataProvider(BaseDataProviderInterface):
 
     def fetch_record_sets(self, sql, args=None):
         """Return a single record_sets"""
-        pass
+        results = []
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        result_sets = mycursor.execute(sql, None, multi=True)
+        for result_set in result_sets:
+            if result_set.with_rows:
+                results.append(result_set.fetchall())
+        mycursor.close()
+        connection.close()
+        return results
 
     def execute(self, sql, args=None):
         connection = self.get_connection()
@@ -182,5 +192,20 @@ class MySqlDataProvider(BaseDataProviderInterface):
         connection.close()
         return mycursor.rowcount
         
+    def execute_script_files_in_folder(self, scripts_folder_path):
+        for dirpath, _, files in walk(scripts_folder_path):
+            for file_name in files:
+                script_file_path = path.join(dirpath, file_name)
+                file_relative_path = path.relpath(script_file_path, scripts_folder_path)
+                logging.info(f"Found file_relative_path [{file_relative_path}]")
+                try:
+                    # Load script
+                    with open(script_file_path) as db_script_file:
+                        sql_script = db_script_file.read()
+                    # Run script
+                    self.db.execute_script(sql_script)
+                    logging.info(f"Executed {file_relative_path}")
+                except Exception as e:
+                    logging.error(e)
 
         

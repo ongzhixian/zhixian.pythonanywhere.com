@@ -2,11 +2,12 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["authentication", "login"]
+__all__ = ["authentication", "login", "rbac"]
 
 import logging
 from forum_app import app_settings
 from forum_app.databases.mysql_data_provider import MySqlDataProvider
+
 
 class BaseFeatureInterface:
     """Defines interface for feature"""

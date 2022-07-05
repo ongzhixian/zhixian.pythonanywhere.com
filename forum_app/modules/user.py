@@ -55,5 +55,9 @@ FROM	login
 ORDER BY username
 LIMIT 25;
         """
-        return self.db.fetch_batch(sql)
+        result_sets = self.db.fetch_record_sets(sql)
+        if len(result_sets) > 0:
+            return result_sets[0]
+        else:
+            return []
         

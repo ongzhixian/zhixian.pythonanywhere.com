@@ -9,40 +9,51 @@
 
 <div class="page-content">
 
-  <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp user" style="margin: 1em;">
-    <thead>
-      <tr>
-        <th>s/n</th>
-        <th class="mdl-data-table__cell--non-numeric">Username</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for user in users %}
-      <tr>
-        <td>{{user[0]}}</td>
-        <td class="mdl-data-table__cell--non-numeric" data-id="{{user[1]}}">
-          <a href="#">{{user[2]}}</a>
-          </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="2" style="text-align: left;">
-          <button class="mdl-button mdl-js-button mdl-button--icon">
-            <span class="material-icons">navigate_before</span>
-          </button>
-          
-          <button class="mdl-button mdl-js-button mdl-button--icon">
-            <span class="material-icons">navigate_next</span>
-          </button>
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--3-col"></div>
+    <div class="mdl-cell mdl-cell--6-col">
+      {% if users %}
 
-          <span>Page 1 of 2 (record 1 to 25)</span>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp user full-width" style="margin: 1em;">
+        <thead>
+          <tr>
+            <th>s/n</th>
+            <th class="mdl-data-table__cell--non-numeric full-width">Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{user[0]}}</td>
+            <td class="mdl-data-table__cell--non-numeric" data-id="{{user[1]}}"><a href="#">{{user[2]}}</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <!-- <tfoot>
+          <tr>
+            <td colspan="2" style="text-align: left;">
+              
+              <button class="mdl-button mdl-js-button mdl-button--icon">
+                <span class="material-icons">navigate_before</span>
+              </button>
+              
+              <button class="mdl-button mdl-js-button mdl-button--icon">
+                <span class="material-icons">navigate_next</span>
+              </button>
+    
+              <span>Page 1 of 2 (record 1 to 25)</span>
+            </td>
+          </tr>
+        </tfoot> -->
+      </table>
 
+      {% else %}
+      <p>No users registered.</p>
+      {% endif %}
+
+    </div>
+    <div class="mdl-cell mdl-cell--3-col"></div>
+  </div>
   
   <div class="card-holder">
 
