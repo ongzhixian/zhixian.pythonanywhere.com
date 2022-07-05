@@ -6,11 +6,11 @@ import logging
 import pdb
 
 
-from forum_app.modules.mysqldb import MySqlDatabase
+from forum_app.databases.mysql_data_provider import MySqlDataProvider
 
 class User:
     def __init__(self):
-        self.db = MySqlDatabase('forum')
+        self.db = MySqlDataProvider('forum')
 
     def add(self, username, password):
         print("Executing add_weblink")

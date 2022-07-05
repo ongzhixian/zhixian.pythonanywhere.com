@@ -13,7 +13,9 @@ from time import time
 from flask import request, make_response, abort
 
 from forum_app import app, secrets
-from forum_app.modules.forum_db import ForumDb
+
+from forum_app.databases.forum_database import ForumDatabase
+
 
 def defaultConverter(o):
     # import pdb
@@ -25,7 +27,7 @@ def defaultConverter(o):
 
 @app.route('/api/stats/weblink', methods=['GET', 'POST'])
 def api_stats_weblink_post():
-    mydb = ForumDb()
+    mydb = ForumDatabase()
     rec = mydb.get_links_added_by_date()
     logging.info("In api_weblink_post()")
     return json.dumps(rec, default = defaultConverter), 200

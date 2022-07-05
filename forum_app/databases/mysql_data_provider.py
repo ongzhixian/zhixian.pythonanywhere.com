@@ -71,12 +71,10 @@ class MySqlDataProvider(BaseDataProviderInterface):
                 try: # Load script
                     with open(script_file_path) as db_script_file:
                         sql_script = db_script_file.read()
-                        print(sql_script)
-                    cursor.execute(sql_script, None, multi=True)
-                    # result_sets = cursor.execute(sql_script, None, multi=True)
-                    # for result_set in result_sets:
-                    #     pass
-                    # pdb.set_trace()
+                    
+                    result_sets = cursor.execute(sql_script, None, multi=True)
+                    for result_set in result_sets:
+                        pass
                     logging.info(f"Executed {file_relative_path}")
                     
                     

@@ -90,18 +90,9 @@ def parse_logging_level_string(logging_level_string):
 
     raise ValueError(f"Invalid logging level {logging_level_string} specified.")
 
-def setup_logging(app_settings):
-    try:
-        if 'logging' in app_settings:
-            logging_settings = app_settings['logging']
-            for logger_name in logging_settings:
-                try:    
-                    logging_level = parse_logging_level_string(logging_settings[logger_name])
-                    logger = logging.getLogger(logger_name)
-                    logger.setLevel(logging_level)
-                except ValueError as ve:
-                    logging.warning(ve)
 
+def setup_default_logging():
+    try:
         # Use "%(pathname)s" to figure out underlying module
         # logging_format = logging.Formatter('%(levelname).3s|%(module)-12s|%(message)s -- %(pathname)s')
         # Logging with function name
@@ -113,6 +104,20 @@ def setup_logging(app_settings):
         console_logger = logging.StreamHandler()
         console_logger.setFormatter(logging_format)
         root_logger.addHandler(console_logger)
+    except Exception as e:
+        logging.error(e)
+
+def configure_logging(app_settings):
+    try:
+        if 'logging' in app_settings:
+            logging_settings = app_settings['logging']
+            for logger_name in logging_settings:
+                try:    
+                    logging_level = parse_logging_level_string(logging_settings[logger_name])
+                    logger = logging.getLogger(logger_name)
+                    logger.setLevel(logging_level)
+                except ValueError as ve:
+                    logging.warning(ve)
     except Exception as e:
         logging.error(e)
 
@@ -130,6 +135,8 @@ def setup_app_path():
 # Define Flask application
 ################################################################################
 
+setup_default_logging()
+
 app_path = setup_app_path()
 
 secrets = get_secrets()
@@ -140,7 +147,7 @@ app_settings = get_app_settings(app_path)
 
 app_settings = load_feature_settings(app_settings)
 
-setup_logging(app_settings)
+configure_logging(app_settings)
 
 logging.info("[APPLICATION START]")
 

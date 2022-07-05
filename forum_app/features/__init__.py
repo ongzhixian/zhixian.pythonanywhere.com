@@ -6,13 +6,13 @@ __all__ = ["authentication", "login"]
 
 import logging
 from forum_app import app_settings
-from forum_app.modules.mysqldb import MySqlDatabase
+from forum_app.databases.mysql_data_provider import MySqlDataProvider
 
 class BaseFeatureInterface:
     """Defines interface for feature"""
 
     def __init__(self):
-        self.db = MySqlDatabase('forum')
+        self.db = MySqlDataProvider('forum')
         self.is_enable = False
     
     def is_registered(self, feature_name) -> bool:
@@ -52,7 +52,7 @@ WHERE	name = %s;
         return changes_saved
 
     def get_enable_setting(self, module_name):
-        record = self.db.fetch_one(
+        record = self.db.fetch_record(
             "SELECT is_enable FROM _feature WHERE module_name = %s;", 
             (module_name,))
         if record is None:
@@ -60,7 +60,7 @@ WHERE	name = %s;
         return record[0] == 1
 
     def get_enable_setting_by_name(self, name):
-        record = self.db.fetch_one(
+        record = self.db.fetch_record(
             "SELECT is_enable, module_name FROM _feature WHERE name = %s;", 
             (name,))
         if record is None:

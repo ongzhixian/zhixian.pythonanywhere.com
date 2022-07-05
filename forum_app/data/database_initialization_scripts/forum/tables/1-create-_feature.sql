@@ -1,3 +1,5 @@
+SET sql_notes = 0; -- suppress warnings
+
 CREATE TABLE IF NOT EXISTS `_feature` (
 	`id`        	INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name`   		VARCHAR(128) NOT NULL,
@@ -9,3 +11,5 @@ CREATE TABLE IF NOT EXISTS `_feature` (
 	`upd_dt`    	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	PRIMARY KEY (`id`)
 ) COLLATE='utf8mb4_unicode_ci';
+
+SET sql_notes = 1; -- enable warnings

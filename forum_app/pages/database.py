@@ -4,7 +4,7 @@ import os
 import logging
 from flask import redirect, render_template
 from forum_app import app, app_path
-from forum_app.modules.forum_db import ForumDb
+from forum_app.databases.forum_database import ForumDatabase
 from mysql.connector.errors import ProgrammingError
 from forum_app.helpers.auth import login_required
 
@@ -86,7 +86,7 @@ def discover_database_scripts():
 
     logging.info(f"Discovering database scripts in {DB_SCRIPTS_PATH}")
 
-    mydb = ForumDb()
+    mydb = ForumDatabase()
 
     for dirpath, _, files in os.walk(DB_SCRIPTS_PATH):
         for file_name in files:
@@ -98,17 +98,17 @@ def discover_database_scripts():
                 mydb.add_db_migrate(file_relative_path)
 
 def get_unapplied_db_migrate_count():
-    mydb = ForumDb()
+    mydb = ForumDatabase()
     return mydb.get_unapplied_db_migrate_count()
 
 def get_unapplied_db_migrate_list():
-    mydb = ForumDb()
+    mydb = ForumDatabase()
     return mydb.get_unapplied_db_migrate_list()
 
 def get_schema_object_count():
-    mydb = ForumDb()
+    mydb = ForumDatabase()
     return mydb.get_schema_object_count()
 
 def initialize_database():
-    mydb = ForumDb()
+    mydb = ForumDatabase()
     mydb.one_time_initialization(app_path)

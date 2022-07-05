@@ -9,11 +9,12 @@ import importlib
 import inspect
 
 from forum_app.features import BaseFeatureInterface
-from forum_app.modules.mysqldb import MySqlDatabase
+
+from forum_app.databases.mysql_data_provider import MySqlDataProvider
 
 class Feature:
     def __init__(self):
-        self.db = MySqlDatabase('forum')
+        self.db = MySqlDataProvider('forum')
 
     def register_built_in_features(self):
         logging.info("Register built-in feature")

@@ -1,7 +1,7 @@
 import logging as log
 from flask import render_template, request
 from forum_app import app
-from forum_app.modules.sqlitedb import SqliteDatabase
+# from forum_app.modules.ZZZ_sqlitedb import SqliteDatabase
 
 @app.route('/test/')
 def test_get():
@@ -40,18 +40,18 @@ def test_add_post():
 @app.route('/test/init')
 def test_init_get():
     """Web page at '/test/init'"""
-    try:
-        db = SqliteDatabase('./forum_app/data/xxxforums.db')
-        db.create_database()
-        db.create_table("""CREATE TABLE "test_topic" (
-	"id"	INTEGER PRIMARY KEY AUTOINCREMENT,
-	"title"	TEXT NOT NULL UNIQUE,
-	"content"	TEXT NOT NULL,
-	"cre_dt"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	"upd_dt"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-);""")  
-    except Exception as ex:
-        log.error(f"[{ex}];")
+#     try:
+#         db = SqliteDatabase('./forum_app/data/xxxforums.db')
+#         db.create_database()
+#         db.create_table("""CREATE TABLE "test_topic" (
+# 	"id"	INTEGER PRIMARY KEY AUTOINCREMENT,
+# 	"title"	TEXT NOT NULL UNIQUE,
+# 	"content"	TEXT NOT NULL,
+# 	"cre_dt"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+# 	"upd_dt"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+# );""")  
+#     except Exception as ex:
+#         log.error(f"[{ex}];")
     return render_template('test_add_get.html')
 
 # @app.route('/test/add', methods=['POST'])

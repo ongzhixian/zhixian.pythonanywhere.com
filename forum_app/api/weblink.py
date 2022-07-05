@@ -13,8 +13,8 @@ from time import time
 from flask import request, make_response, abort
 
 from forum_app import app, secrets
-from forum_app.modules.forum_db import ForumDb
 
+from forum_app.databases.forum_database import ForumDatabase
 
 @app.route('/api/weblink', methods=['GET', 'POST'])
 def api_weblink_post():
@@ -27,7 +27,7 @@ def api_weblink_post():
     if type(content) is not list:
         return "Bad request", 400
     
-    mydb = ForumDb()
+    mydb = ForumDatabase()
     data = []
 
     count = 0

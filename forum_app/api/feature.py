@@ -13,7 +13,9 @@ from time import time
 from flask import request, make_response, abort
 
 from forum_app import app, secrets, app_settings
-from forum_app.modules.forum_db import ForumDb
+
+from forum_app.databases.forum_database import ForumDatabase
+
 
 from forum_app.features import BaseFeatureInterface
 

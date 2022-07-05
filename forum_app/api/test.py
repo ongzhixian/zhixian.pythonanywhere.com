@@ -13,7 +13,7 @@ from time import time
 from flask import request, make_response, abort
 
 from forum_app import app, secrets
-from forum_app.modules.forum_db import ForumDb
+from forum_app.databases.forum_database import ForumDatabase
 
 
 
@@ -22,7 +22,7 @@ def api_test_mysql():
 
     logging.info("In api_test_mysql()")
 
-    mydb = ForumDb()
+    mydb = ForumDatabase()
     mydb.init_new_tables()
     # mydb.getDatabase()
     # mydb.create_table('create_weblink')
