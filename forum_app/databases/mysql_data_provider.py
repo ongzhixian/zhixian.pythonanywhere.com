@@ -11,12 +11,13 @@ import mysql.connector
 class MySqlDataProvider(BaseDataProviderInterface):
     """Data provider for MySql"""
 
-    def __init__(self, database_name):
+    def __init__(self, database_setting_name):
         prefix = ''
         if 'PYTHONANYWHERE_DOMAIN' not in environ:
             prefix = 'dev_'
-        setting_name = f'{prefix}{database_name}'
+        setting_name = f'{prefix}{database_setting_name}'
         self.db_settings = secrets['MYSQL'][setting_name]
+        self.database_name = self.db_settings['DATABASE']
 
     def create_database_if_not_exists(self):
         """Create database if not exists"""
@@ -38,7 +39,7 @@ class MySqlDataProvider(BaseDataProviderInterface):
     def initialize_database(self, database_name = None):
         if database_name is None:
             database_name = self.db_settings['DATABASE']
-            
+
         connection = self.get_connection()
         mycursor = connection.cursor()
 

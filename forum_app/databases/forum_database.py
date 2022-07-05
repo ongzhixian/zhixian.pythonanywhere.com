@@ -19,8 +19,10 @@ class ForumDatabase(BaseDatabaseInterface):
         # Application should have minimally 2 tables
         # 1.    _db_migrate
         # 2.    _feature
-        records = self.db.fetch_list(
-            "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'forum' AND TABLE_NAME IN ('_db_migrate', '_feature');", None)
+        required_table_list = ('_db_migrate', '_feature')
+        format_strings = ','.join(['%s'] * len(required_table_list))
+        sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'forum' AND TABLE_NAME IN ({0});".format(format_strings)
+        records = self.db.fetch_list(sql, required_table_list)
         if len(records) == 2:
             return
         # Carry out recovery action here
