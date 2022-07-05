@@ -47,6 +47,12 @@
     <a class="mdl-navigation__link" href="/">
       <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>
       Home</a>
+
+    {% for menuitem in g.app_menu %}
+    <a class="mdl-navigation__link" href="{{menuitem[1]}}">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">{{menuitem[2]}}</i>
+      {{menuitem[0]}}</a>
+    {% endfor %}
     <!--
     <a class="mdl-navigation__link" href="/mysql">
       <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">table_rows</i>
@@ -64,12 +70,19 @@
     <a class="mdl-navigation__link" href="/database/dashboard">
       <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">table_rows</i>
       Database</a>
-    <a class="mdl-navigation__link" href="/user/dashboard">
-      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">table_rows</i>
-      Users</a>
     <a class="mdl-navigation__link" href="/feature/dashboard">
       <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">table_rows</i>
       Features</a>
+    <a class="mdl-navigation__link" href="/user/dashboard">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">table_rows</i>
+      Users</a>
+
+    {% for menuitem in g.admin_menu %}
+    <a class="mdl-navigation__link" href="{{menuitem[1]}}">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">{{menuitem[2]}}</i>
+      {{menuitem[0]}}</a>
+    {% endfor %}
+
 </nav>
 {% endmacro %}
 

@@ -6,6 +6,13 @@ from forum_app import app
 def before_each_request():
     if "username" in session:
         g.username = session["username"]
+    # admin menu syntax: <display-text>, <href>, <icon>
+    g.admin_menu = [
+        ("Inb", "/inb/dashboard", "table_rows")
+    ]
+    g.app_menu = [
+        ("Oub", "/oub/dashboard", "table_rows")
+    ]
 
 # @app.errorhandler(Exception)
 # def all_exception_handler(error):

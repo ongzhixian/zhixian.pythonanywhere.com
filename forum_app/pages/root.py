@@ -1,5 +1,5 @@
 import logging
-from flask import render_template, request, session, redirect
+from flask import g, render_template, request, session, redirect
 from forum_app import app
 from forum_app.helpers.auth import login_required
 from forum_app.modules.barcode import QRCode
