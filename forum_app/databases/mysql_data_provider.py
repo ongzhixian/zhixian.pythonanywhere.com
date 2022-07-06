@@ -1,7 +1,6 @@
 import logging
 from os import environ, path, walk
 import pdb
-from statistics import multimode
 
 from forum_app import secrets, app_path
 from forum_app.databases import BaseDataProviderInterface
