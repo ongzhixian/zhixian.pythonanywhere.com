@@ -43,6 +43,24 @@ minikube kubectl -- set env deployment/mysql-minikube MYSQL_ROOT_PASSWORD=pass12
 minikube kubectl -- expose deployment mysql-minikube --type=NodePort --port=3306
 
 
+# Running tests
+
+tldr; this is the preferred way to execute
+
+python -m unittest discover tests
+
+Syntax reference (assuming running from `D:\src\github\proj\`)
+
+1.  Run all tests; Not ideal because this will also trigger `flask_app.py`
+`python -m unittest discover`
+`python -m unittest` (this is same as above)
+
+2.  Run all tests in selected directory; this is the preferred approach
+`python -m unittest discover <test_directory>`
+
+3.  Run all tests in selected directory that match specified filename pattern
+`python -m unittest discover -s <directory> -p '*_test.py'`
+
 # Notes PythonAnywhere
 
 Latest version of Python supported is 3.7
