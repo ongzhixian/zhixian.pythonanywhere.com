@@ -15,6 +15,7 @@ class MySqlDataProvider(BaseDataProviderInterface):
         if 'PYTHONANYWHERE_DOMAIN' not in environ:
             prefix = 'dev_'
         setting_name = f'{prefix}{database_setting_name}'
+        self.database_setting_name = database_setting_name
         self.db_settings = secrets['MYSQL'][setting_name]
         self.database_name = self.db_settings['DATABASE']
 
@@ -27,17 +28,17 @@ class MySqlDataProvider(BaseDataProviderInterface):
 
         is_database_missing = self.is_database_missing(mycursor, database_name)
         if is_database_missing:
-            self.run_create_database_script(mycursor, database_name)
+            self.run_create_database_script(mycursor, self.database_setting_name)
 
         mycursor.close()
         connection.close()
 
         if is_database_missing:
-            self.initialize_database(database_name)
+            self.initialize_database(self.database_setting_name)
 
     def initialize_database(self, database_name = None):
         if database_name is None:
-            database_name = self.db_settings['DATABASE']
+            database_name = self.database_setting_name
 
         connection = self.get_connection()
         mycursor = connection.cursor()
@@ -56,7 +57,7 @@ class MySqlDataProvider(BaseDataProviderInterface):
         
     def run_create_view_scripts(self, cursor, database_name):
         database_scripts_path = path.join(app_path, 'data', 'database_initialization_scripts', database_name, 'views')
-        logging.info("run_create_view_scripts in {database_scripts_path}")
+        logging.info(f"run_create_view_scripts in {database_scripts_path}")
         self.run_scripts_in_path(cursor, database_scripts_path)
         
 
