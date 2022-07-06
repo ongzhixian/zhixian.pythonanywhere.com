@@ -50,13 +50,13 @@ class MySqlDataProvider(BaseDataProviderInterface):
 
 
     def run_create_table_scripts(self, cursor, database_name):
-        logging.info("run_create_table_scripts")
         database_scripts_path = path.join(app_path, 'data', 'database_initialization_scripts', database_name, 'tables')
+        logging.info(f"run_create_table_scripts in {database_scripts_path}")
         self.run_scripts_in_path(cursor, database_scripts_path)
         
     def run_create_view_scripts(self, cursor, database_name):
-        logging.info("run_create_view_scripts")
         database_scripts_path = path.join(app_path, 'data', 'database_initialization_scripts', database_name, 'views')
+        logging.info("run_create_view_scripts in {database_scripts_path}")
         self.run_scripts_in_path(cursor, database_scripts_path)
         
 
