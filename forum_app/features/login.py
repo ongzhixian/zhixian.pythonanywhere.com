@@ -6,15 +6,15 @@ from forum_app.features import BaseFeatureInterface
 class LoginFeature(BaseFeatureInterface):
     def __init__(self):
         super().__init__()
+        self.feature_name = "Login"
+        self.feature_description = "Enable login module"
 
     def register(self):
-        feature_name = "Login"
-        feature_description = "Enable login module"
         
-        if self.is_registered(feature_name):
+        if self.is_registered(self.feature_name):
             return
 
-        self.register_feature(feature_name, feature_description, __name__)
+        self.register_feature(self.feature_name, self.feature_description, __name__)
 
         # Run table scripts (if any)
         DB_SCRIPTS_PATH = os.path.join(app_path, 'data', 'feature_database_scripts', "login")

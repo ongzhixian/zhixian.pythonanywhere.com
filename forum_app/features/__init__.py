@@ -5,9 +5,13 @@
 __all__ = ["authentication", "login", "rbac"]
 
 import logging
-from forum_app import app_settings
+from forum_app import app_settings, app_state
 from forum_app.databases.mysql_data_provider import MySqlDataProvider
 
+import pdb
+
+def get_feature_instances():
+    return {}
 
 class BaseFeatureInterface:
     """Defines interface for feature"""
@@ -15,6 +19,8 @@ class BaseFeatureInterface:
     def __init__(self):
         self.db = MySqlDataProvider('forum')
         self.is_enable = False
+        self.feature_name = None
+        self.feature_description = None
     
     def is_registered(self, feature_name) -> bool:
         """Register feature into system"""
@@ -48,8 +54,13 @@ WHERE	name = %s;
             if module_name not in app_settings:
                 app_settings[module_name] = {}
             app_settings[module_name]["is_enable"] = is_enable
+            # Apply UI changes depending on 
+            feature_map = app_state('feature_map')
+            if feature_name in feature_map:
+                feature_instance = feature_map[feature_name]
+                feature_instance.state_changed()
 
-        logging.debug(f"{feature_name} is_enable set to {enable} {changes_saved} ")
+        logging.debug(f"{feature_name} is_enable set to {enable}, changes_saved={changes_saved} ")
         return changes_saved
 
     def get_enable_setting(self, module_name):
@@ -82,5 +93,9 @@ WHERE	name = %s;
 
     def update_app_settings(self, app_settings):
         """Define/Set app_settings """
+        pass
+
+    def state_changed(self):
+        """Signals a state changed event"""
         pass
     

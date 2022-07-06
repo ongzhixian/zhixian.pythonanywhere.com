@@ -11,13 +11,29 @@ __all__ = ["pages", "api"]
 import json
 import logging
 import os
+from stat import FILE_ATTRIBUTE_OFFLINE
 from flask import Flask, current_app
+
 import pdb
 
 
 ################################################################################
 # Define application helper functions
 ################################################################################
+
+def cache(key, value=None):
+    if value is not None:
+        cache.items[key] = value
+    return cache.items[key] if key in cache.items else None
+
+cache.items = {}
+
+def app_state(key, value=None):
+    if value is not None:
+        app_state.items[key] = value
+    return app_state.items[key] if key in app_state.items else None
+
+app_state.items = {}
 
 def get_secrets():
     app_secrets = {}
@@ -48,7 +64,7 @@ def setup_app_path():
         return os.path.join(os.getcwd(), 'forum_app')
 
 def get_feature_instance_list():
-    feature_instance_list = []
+    feature_instance_list = []    
     import importlib, inspect
     from forum_app.features import __all__ as feature_list, BaseFeatureInterface
     for feature in feature_list:
@@ -61,6 +77,25 @@ def get_feature_instance_list():
                 feature_instance = feature_class()
                 feature_instance_list.append(feature_instance)
     return feature_instance_list
+
+def get_features_map():
+    map = {}
+    import importlib, inspect
+    from forum_app.features import __all__ as feature_list, BaseFeatureInterface
+    for feature in feature_list:
+        feature_module = importlib.import_module(f"forum_app.features.{feature}")
+        class_member_list = inspect.getmembers(feature_module, inspect.isclass)
+        for class_member in class_member_list:
+            feature_class = class_member[1]
+            is_feature = issubclass(feature_class, BaseFeatureInterface)
+            if is_feature:
+                feature_instance = feature_class()
+                if feature_instance.feature_name is None or feature_instance.feature_name in map:
+                    continue
+                map[feature_instance.feature_name] = feature_instance
+    return map
+
+
 
 def load_feature_settings(app_settings):
     feature_instance_list = get_feature_instance_list()
@@ -158,6 +193,15 @@ def configure_logging(app_settings):
 #                 database_instance.ensure()
 
 
+event_callbacks = {}
+def subscribe_to_event(event_name, callback):
+    if event_name not in event_callbacks:
+        event_callbacks[event_name] = []
+    
+
+
+
+
 ################################################################################
 # Define Flask application
 ################################################################################
@@ -173,6 +217,8 @@ initialize_databases()
 app_settings = get_app_settings(app_path)
 
 app_settings = load_feature_settings(app_settings)
+
+app_state('feature_map', get_features_map())
 
 configure_logging(app_settings)
 

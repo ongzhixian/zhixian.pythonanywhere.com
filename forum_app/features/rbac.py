@@ -6,15 +6,15 @@ from forum_app.features import BaseFeatureInterface
 class RbacFeature(BaseFeatureInterface):
     def __init__(self):
         super().__init__()
+        self.feature_name = "Role-based access control"
+        self.feature_description = "Enable role-based access control module"
 
     def register(self):
-        feature_name = "Role-based access control"
-        feature_description = "Enable role-based access control module"
         
-        if self.is_registered(feature_name):
+        if self.is_registered(self.feature_name):
             return
 
-        self.register_feature(feature_name, feature_description, __name__)
+        self.register_feature(self.feature_name, self.feature_description, __name__)
 
         # Run table scripts (if any)
         DB_SCRIPTS_PATH = os.path.join(app_path, 'data', 'feature_database_scripts', "login")

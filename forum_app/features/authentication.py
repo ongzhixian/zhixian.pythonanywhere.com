@@ -5,15 +5,15 @@ class AuthenticationFeature(BaseFeatureInterface):
 
     def __init__(self):
         super().__init__()
+        self.feature_name = "Authentication"
+        self.feature_description = "Enables authentication module"
 
     def register(self):
-        feature_name = "Authentication"
-        feature_description = "Enables authentication module"
         
-        if self.is_registered(feature_name):
+        if self.is_registered(self.feature_name):
             return
 
-        self.register_feature(feature_name, feature_description, __name__)
+        self.register_feature(self.feature_name, self.feature_description, __name__)
 
     def load_app_settings(self, app_settings):
         logging.info(f"load_app_settings for {__name__}")
@@ -45,3 +45,6 @@ class AuthenticationFeature(BaseFeatureInterface):
                 "is_enable": self.is_enable
             }
         
+    def state_changed(self):
+        """Signals a state changed event"""
+        print("YA Auth state change")
