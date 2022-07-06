@@ -114,3 +114,24 @@
   </div>
 </div>
 {% endmacro %}
+
+
+{% macro login_dropdown() %}
+<div class="dropdown" id="login_dropdown">
+  <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="login-dropdown-button">
+    <span class="material-icons">more_vert</span>
+  </button>
+
+  <div class="mdl-menu__container is-upgraded">
+    <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="login-dropdown-button">
+      {% for menu_item in login_menu_items %}
+      <li class="mdl-menu__item">{{ menu_item[0]}}</li>
+      {% endfor %}
+      <li class="mdl-menu__item">Profile ({{ g.username }})</li>
+      <li class="mdl-menu__item">Change password</li>
+      <li class="mdl-menu__item" disabled >Settings</li>
+      <li class="mdl-menu__item"><a href="/logout">Log out</a></li>
+    </ul>
+  </div>
+</div>
+{% endmacro %}

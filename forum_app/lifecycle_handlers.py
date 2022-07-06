@@ -24,6 +24,21 @@ def inject_feature_menu_items():
     ]
     return dict(feature_menu_items=menu_items)
 
+
+@app.context_processor
+def inject_login_menu_items():
+    # get login menu items
+    # Menu item tuple format:
+    # (display-text, href, disabled)
+    # ("Profile ()", "/dummy", False)
+    menu_items = [
+        ("Profile", "/dummy", False),
+        ("Change password", "/dummy", False),
+        ("Settings", "/dummy", True),
+        ("Log out", "/dummy", False)
+    ]
+    return dict(login_menu_items=menu_items)
+
 # @app.errorhandler(Exception)
 # def all_exception_handler(error):
 #     return 'Error:' + str(error), 500
