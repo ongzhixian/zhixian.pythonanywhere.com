@@ -12,7 +12,7 @@ from time import time
 
 from flask import request, make_response, abort
 
-from forum_app import app, secrets, app_settings, app_state
+from forum_app import app, app_settings, app_state
 
 from forum_app.databases.forum_database import ForumDatabase
 

@@ -79,6 +79,10 @@ WHERE	name = %s;
             return (None, None)
         return (record[0], record[1])
 
+    def initialize(self):
+        """Things to do whenever feature is loaded"""
+        pass
+
     def load(self):
         """Things to do whenever feature is loaded"""
         pass

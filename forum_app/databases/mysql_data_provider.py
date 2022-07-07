@@ -1,8 +1,7 @@
 import logging
 from os import environ, path, walk
-import pdb
 
-from forum_app import secrets, app_path
+from forum_app import app_secrets, app_path
 from forum_app.databases import BaseDataProviderInterface
 
 import mysql.connector
@@ -16,7 +15,7 @@ class MySqlDataProvider(BaseDataProviderInterface):
             prefix = 'dev_'
         setting_name = f'{prefix}{database_setting_name}'
         self.database_setting_name = database_setting_name
-        self.db_settings = secrets['MYSQL'][setting_name]
+        self.db_settings = app_secrets['MYSQL'][setting_name]
         self.database_name = self.db_settings['DATABASE']
 
     def create_database_if_not_exists(self):

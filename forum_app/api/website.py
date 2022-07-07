@@ -14,7 +14,7 @@ from time import time
 
 from flask import request, make_response, abort
 
-from forum_app import app, secrets
+from forum_app import app
 
 import git
 import os

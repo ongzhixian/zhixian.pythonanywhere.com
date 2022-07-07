@@ -1,12 +1,20 @@
 import logging
 from flask import g, current_app, request, session, redirect, url_for, abort
-from forum_app import app
+from forum_app import app, app_state
 
 @app.before_request
 def before_each_request():
     if "username" in session:
         g.username = session["username"]
+    
     # admin menu syntax: <display-text>, <href>, <icon>
+    if 'drawer_sitemap_menu' in app_state:
+        g.drawer_sitemap_menu = app_state['drawer_sitemap_menu']
+    if 'drawer_admin_menu' in app_state:
+        g.drawer_admin_menu = app_state['drawer_admin_menu']
+    if 'drawer_sitemap_menu' in app_state:
+        g.drawer_sitemap_menu = app_state['drawer_sitemap_menu']
+
     g.admin_menu = [
         ("Inb", "/inb/dashboard", "table_rows")
     ]
