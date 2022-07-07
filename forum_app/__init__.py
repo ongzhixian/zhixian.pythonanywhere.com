@@ -122,6 +122,7 @@ def setup_app_path():
     # PythonAnywhere note: `os.getcwd()` will point to the working directory 
     # app_path = os.path.join(os.getcwd(), 'forum_app')
     app_path = path.dirname(path.abspath(__file__))
+    print(f"app_path is {app_path}")
     return app_path
 
 
