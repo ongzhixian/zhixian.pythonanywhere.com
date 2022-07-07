@@ -67,6 +67,8 @@ def setup_app_path():
     # elif 'USERPROFILE' in os.environ:
     app_path = os.path.join(os.getcwd(), 'forum_app')
     print(f"app_path is {app_path}")
+    alt_app_path = os.path.dirname(os.path.abspath(__file__))
+    print(f"alt_app_path is {alt_app_path}")
     return app_path
 
 def get_feature_instance_list():
