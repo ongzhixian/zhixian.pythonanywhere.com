@@ -14,7 +14,7 @@ from time import time
 
 from flask import request, make_response, abort
 
-from forum_app import app
+from forum_app import app, app_secrets
 
 import git
 import os
@@ -30,7 +30,7 @@ def api_website_env():
     # app_secrets_file = open('/home/zhixian/.app-secrets.json')
     # app_secrets = json.load(app_secrets_file)
     # return str(app_secrets)
-    return secrets['GIT_SECRET']
+    return app_secrets['GIT_SECRET']
 
     # return str(os.environ)
     #return str(sec1) + ' -- ' + str(sec2)
@@ -95,11 +95,11 @@ def api_website_change_notification():
 
     is_post = request.method == 'POST'
     has_x_hub_signature = "X-Hub-Signature" in request.headers
-    has_git_webhook_secret = 'GIT_WEBHOOK_SECRET' in secrets
+    has_git_webhook_secret = 'GIT_WEBHOOK_SECRET' in app_secrets
 
     if is_post and has_x_hub_signature and has_git_webhook_secret:
         signature = request.headers["X-Hub-Signature"]
-        encoded_git_webhook_secret = secrets['GIT_WEBHOOK_SECRET'].encode("utf8")
+        encoded_git_webhook_secret = app_secrets['GIT_WEBHOOK_SECRET'].encode("utf8")
         hash_algorithm, hash_value = signature.split("=")
 
         logging.info(f"github_hash_key:{hash_algorithm}, github_hash:{hash_value}")
