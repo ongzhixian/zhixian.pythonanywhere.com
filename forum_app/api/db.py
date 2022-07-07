@@ -12,6 +12,7 @@ from forum_app.databases.forum_database import ForumDatabase
 
 @app.route('/api/db/init', methods=['GET', 'POST'])
 def api_db_init():
+    """Obsolete; Originally use to initialize database"""
     mydb = ForumDatabase()
     # mydb.init_new_tables()
     # logging.info("ForumDb initialized.")

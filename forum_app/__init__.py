@@ -279,6 +279,7 @@ def setup_header_menu():
 
 def initialize_app_state():
     app_state = {}
+    app_state['feature'] = {}
     app_state['drawer_sitemap_menu'] = setup_drawer_sitemap_menu()
     app_state['drawer_admin_menu'] = setup_drawer_admin_menu()
     app_state['header_menu'] = setup_header_menu()

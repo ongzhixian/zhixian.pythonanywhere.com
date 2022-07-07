@@ -1,13 +1,29 @@
 import logging
 import os
-from forum_app import app_path
+from forum_app import app_path, app_state
 from forum_app.features import BaseFeatureInterface
 
 class RbacFeature(BaseFeatureInterface):
     def __init__(self):
         super().__init__()
-        self.feature_name = "Role-based access control"
-        self.feature_description = "Enable role-based access control module"
+
+    @property
+    def feature_name(self):
+        """feature_name getter property. (required)"""
+        return "Role-based access control"
+
+    @property
+    def feature_description(self):
+        """feature_description getter property. (required)"""
+        return "Enable role-based access control module"
+
+    def initialize(self):
+        """Things to do when feature is initialized (on initialize_features)"""
+        app_state['feature'][self.feature_name] = {
+            "is_enable" : False
+        }
+        self.is_enable = False
+
 
     def register(self):
         

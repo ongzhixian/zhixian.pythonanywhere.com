@@ -1,18 +1,34 @@
 import logging
 from forum_app.features import BaseFeatureInterface
+from forum_app import app_state
+
 import pdb
+
 class AuthenticationFeature(BaseFeatureInterface):
 
     def __init__(self):
         super().__init__()
-        self.feature_name = "Authentication"
-        self.feature_description = "Enables authentication module"
+
+    @property
+    def feature_name(self):
+        """feature_name getter property. (required)"""
+        return "Authentication"
+
+    @property
+    def feature_description(self):
+        """feature_description getter property. (required)"""
+        return "Enables authentication module"
+
+    def initialize(self):
+        """Things to do when feature is initialized (on initialize_features)"""
+        app_state['feature'][self.feature_name] = {
+            "is_enable" : False
+        }
+        self.is_enable = False
 
     def register(self):
-        
         if self.is_registered(self.feature_name):
             return
-
         self.register_feature(self.feature_name, self.feature_description, __name__)
 
     def load_app_settings(self, app_settings):
