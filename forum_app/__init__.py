@@ -48,6 +48,10 @@ def get_secrets():
 
 
 def get_app_settings(app_path):
+    for k, v in sorted(os.environ.items()):
+        print(k+':', v)
+        print('\n')
+
     app_settings = {}
     pythonanywhere_settings_path = os.path.join(app_path, 'app-settings.json')
     with open(pythonanywhere_settings_path) as app_settings_file:
