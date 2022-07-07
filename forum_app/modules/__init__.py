@@ -2,4 +2,4 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["data_access", "mysqldb", "sqlitedb", "barcode", "user", "feature"]
+__all__ = ["feature", "barcode", "user"]

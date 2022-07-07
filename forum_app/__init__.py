@@ -58,10 +58,12 @@ def get_app_settings(app_path):
 def setup_app_path():
     # /home/zhixian/website/run/forum_app/data/database_init_scripts
     #         D:\src\github\any\forum_app\data\database_init_scripts
-    if 'PYTHONANYWHERE_DOMAIN' in os.environ:
-        return '/home/zhixian/website/forum_app'
-    elif 'USERPROFILE' in os.environ:
-        return os.path.join(os.getcwd(), 'forum_app')
+    # if 'PYTHONANYWHERE_DOMAIN' in os.environ:
+    #     return '/home/zhixian/website/forum_app'
+    # elif 'USERPROFILE' in os.environ:
+    app_path = os.path.join(os.getcwd(), 'forum_app')
+    print(f"app_path is {app_path}")
+    return app_path
 
 def get_feature_instance_list():
     feature_instance_list = []    
@@ -158,6 +160,7 @@ def setup_default_logging():
         console_logger = logging.StreamHandler()
         console_logger.setFormatter(logging_format)
         root_logger.addHandler(console_logger)
+        logging.debug("Default logging configured.")
     except Exception as e:
         logging.error(e)
 
@@ -199,28 +202,26 @@ def subscribe_to_event(event_name, callback):
         event_callbacks[event_name] = []
     
 
-
+def discovery_phase():
+    pass
 
 
 ################################################################################
 # Define Flask application
 ################################################################################
 
-setup_default_logging()
-
 app_path = setup_app_path()
-
-secrets = get_secrets()
-
-initialize_databases()
 
 app_settings = get_app_settings(app_path)
 
-app_settings = load_feature_settings(app_settings)
+setup_default_logging()
 
-app_state('feature_map', get_features_map())
 
-configure_logging(app_settings)
+secrets = get_secrets()
+# initialize_databases()
+# app_settings = load_feature_settings(app_settings)
+# app_state('feature_map', get_features_map())
+# configure_logging(app_settings)
 
 logging.info("[APPLICATION START]")
 
@@ -234,9 +235,8 @@ menu_items = [
 with app.app_context():
     current_app.feature_instance_list = menu_items
 
-
-if "SESSION_SECRET_KEY" in secrets:
-    app.secret_key = secrets["SESSION_SECRET_KEY"]
+# if "SESSION_SECRET_KEY" in secrets:
+#     app.secret_key = secrets["SESSION_SECRET_KEY"]
 
 
 ################################################################################
