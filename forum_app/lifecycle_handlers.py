@@ -6,31 +6,37 @@ from forum_app import app, app_state
 def before_each_request():
     if "username" in session:
         g.username = session["username"]
-    
-    # admin menu syntax: <display-text>, <href>, <icon>
-    if 'drawer_sitemap_menu' in app_state:
-        g.drawer_sitemap_menu = app_state['drawer_sitemap_menu']
-    if 'drawer_admin_menu' in app_state:
-        g.drawer_admin_menu = app_state['drawer_admin_menu']
-    if 'drawer_sitemap_menu' in app_state:
-        g.drawer_sitemap_menu = app_state['drawer_sitemap_menu']
 
-    g.admin_menu = [
-        ("Inb", "/inb/dashboard", "table_rows")
-    ]
-    g.app_menu = [
-        ("Oub", "/oub/dashboard", "table_rows")
-    ]
-    
+# Defining menu items for various menus
+# Note: It is possible to define menu on g as well like so:
+# g.admin_menu = [
+#     ("Inb", "/inb/dashboard", "table_rows")
+# ]
 
 @app.context_processor
-def inject_feature_menu_items():
-    # get feature menu items
-    menu_items = [
-        ("Inv xxxxxx", "/inv/dashboard", "table_rows"),
-        ("Inv yyyyyy", "/inv/dashboard", "table_rows"),
-    ]
-    return dict(feature_menu_items=menu_items)
+def inject_drawer_sitemap_menu():
+    menu_items = app_state['drawer_sitemap_menu'] if 'drawer_sitemap_menu' in app_state else []
+    return dict(drawer_sitemap_menu=menu_items)
+
+@app.context_processor
+def inject_drawer_admin_menu():
+    menu_items = app_state['drawer_admin_menu'] if 'drawer_admin_menu' in app_state else []
+    return dict(drawer_admin_menu=menu_items)
+
+@app.context_processor
+def inject_header_menu():
+    menu_items = app_state['header_menu'] if 'header_menu' in app_state else []
+    return dict(header_menu=menu_items)
+
+
+# @app.context_processor
+# def inject_feature_menu_items():
+#     # get feature menu items
+#     menu_items = [
+#         ("Inv xxxxxx", "/inv/dashboard", "table_rows"),
+#         ("Inv yyyyyy", "/inv/dashboard", "table_rows"),
+#     ]
+#     return dict(feature_menu_items=menu_items)
 
 
 @app.context_processor

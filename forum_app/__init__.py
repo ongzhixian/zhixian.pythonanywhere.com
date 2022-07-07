@@ -258,28 +258,26 @@ def initialize_features():
 
 def setup_drawer_sitemap_menu():
     return [
-        ("Inb", "/inb/dashboard", "table_rows")
+        ("Sitemap item", "/sample/sitemap-item", "table_rows")
     ]
 
 def setup_drawer_admin_menu():
     return [
-        ("Inb", "/inb/dashboard", "table_rows")
+        # ("Admin item", "/sample/admin-item", "table_rows")
     ]
 
-def setup_header_menu_bar():
+def setup_header_menu():
     return [
-        ("Inb", "/inb/dashboard", "table_rows")
+        ("Header item", "/sample/header-item", "table_rows")
     ]
 
 def initialize_app_state():
     app_state = {}
     app_state['drawer_sitemap_menu'] = setup_drawer_sitemap_menu()
     app_state['drawer_admin_menu'] = setup_drawer_admin_menu()
-    app_state['header_menu_bar'] = setup_header_menu_bar()
+    app_state['header_menu'] = setup_header_menu()
     return app_state
     
-
-
 
 ################################################################################
 # Define Flask application
