@@ -3,27 +3,14 @@
 # Modules and functions import statements
 ################################################################################
 
-import json
 import logging
-
-from os import environ
-from datetime import datetime
-from time import time
-
-from flask import request, make_response, abort
-
-from forum_app import app, app_settings, app_state
-
-from forum_app.databases.forum_database import ForumDatabase
-
-
+from flask import request
+from forum_app import app
 from forum_app.features import BaseFeatureInterface
-
-import pdb
-
 
 @app.route('/api/feature/toggle', methods=['POST'])
 def api_feature_post():
+    response_message = "Changes not saved"
     content = get_validated_toggle_content(request)
     if not content:
         return "Bad request", 400
@@ -31,9 +18,9 @@ def api_feature_post():
     change_saved = base_feature.toggle_enable(content['feature_name'], content['is_enable'])
     if change_saved:
         enabled_message = "enabled" if content['is_enable'] else "disabled"
-        return f"{content['feature_name']} {enabled_message}", 200
-    else:
-        return "Changes not saved", 200
+        response_message = f"{content['feature_name']} {enabled_message}"
+    logging.info(response_message)
+    return response_message, 200
 
 
 def get_validated_toggle_content(request):

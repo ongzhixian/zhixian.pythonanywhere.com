@@ -149,6 +149,11 @@ def setup_default_logging():
         console_logger = logging.StreamHandler()
         console_logger.setFormatter(console_logging_format)
 
+        # for h in root_logger.handlers:
+        #     logging.info(str(h))
+        #     # logging.info(str(h.level))
+        #     # logging.info(str(h.name))
+
         root_logger = logging.getLogger()
         root_logger.setLevel(logging.NOTSET)
         root_logger.addHandler(console_logger)

@@ -142,6 +142,14 @@ Syntax reference (assuming running from `D:\src\github\proj\`)
 3.  Run all tests in selected directory that match specified filename pattern
 `python -m unittest discover -s <directory> -p '*_test.py'`
 
+## Running coverage
+
+ coverage run -m unittest discover tests
+
+ coverage report
+-- OR --
+ coverage html
+
 # Notes PythonAnywhere
 
 Latest version of Python supported is 3.7

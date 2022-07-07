@@ -4,3 +4,4 @@ mysql-connector-python==8.0.28
 qrcode==7.3.1
 Pillow==9.1.1
 Faker==13.14.0
+coverage==6.4.1

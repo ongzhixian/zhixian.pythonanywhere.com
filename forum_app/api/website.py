@@ -21,75 +21,30 @@ import os
 
 @app.route('/api/website/env', methods=['GET', 'POST'])
 def api_website_env():
-
-    logging.info("In api_website_env()")
-
-    # sec1 = os.getenv('BASH_SECRET')
-    # sec2 = os.getenv('OTHER_SECRET')
-
-    # app_secrets_file = open('/home/zhixian/.app-secrets.json')
-    # app_secrets = json.load(app_secrets_file)
-    # return str(app_secrets)
-    return app_secrets['GIT_SECRET']
-
-    # return str(os.environ)
-    #return str(sec1) + ' -- ' + str(sec2)
-
-
-@app.route('/api/website/datetime', methods=['GET', 'POST'])
-def api_datetime():
-    logging.info("In api_datetime()")
-    # root_logger = logging.getLogger()
     try:
-        # logging.info(len(root_logger.handlers))
-
-        # logging.info((str(root_logger.handlers[0])))
-        # logging.info((str(root_logger.handlers[1])))
-
-        # for h in root_logger.handlers:
-        #     logging.info(str(h))
-        #     # logging.info(str(h.level))
-        #     # logging.info(str(h.name))
-        
-        # logging_format = logging.Formatter('%(asctime)-15s %(levelname)-8s %(funcName)-20s %(message)s')
-        # default_console_logger = root_logger.handlers[0]
-        # default_console_logger.setFormatter(logging_format)
-
-        # logging.info("OK SZET")
-
-        # x = root_logger.handlers[0]
-        # logging.info(x.name)
-        # logging.info(x.level)
-        # logging.info(str(type(x)))
-        # x.setFormatter(logging_format)
-
-        # y = root_logger.handlers[1]
-        # logging.info(y.name)
-        # logging.info(y.level)
-        # logging.info(str(type(y)))
-        # y.setFormatter(logging_format)
-
-        logging.info('asdzxc')
-
-        #logging.info(str(dir(logging.getLogger().handlers[0])))
-
-        # logging.info(str(logging.getLogger().handlers[0]))
-        # logging.info(str(logging.getLogger().handlers[1]))
-
-        # logging.info(root_logger.handlers[0].name)
-        # logging.info(root_logger.handlers[1].name)
-        # logging.info(root_logger.handlers[0].level)
-        # logging.info(root_logger.handlers[1].level)
+        response_message = f"UTC date-time is {datetime.utcnow()}"
+        logging.info(response_message)
+        return response_message
     except Exception as e:
         logging.info("ERROR----------ERROR----------")
         logging.error(e)
 
-    logging.info("In api_datetime() END")
-    return str(datetime.utcnow())
+
+@app.route('/api/website/datetime', methods=['GET', 'POST'])
+def api_datetime():
+    """Simple api that returns server's UTC datetime"""
+    try:
+        response_message = f"UTC date-time is {datetime.utcnow()}"
+        logging.info(response_message)
+        return response_message
+    except Exception as e:
+        logging.info("ERROR----------ERROR----------")
+        logging.error(e)
 
 
 @app.route('/api/website/change-notification', methods=['POST'])
 def api_website_change_notification():
+    """This is github webhook endpoint"""
 
     logging.info("In api_website_change_notification()")
 
