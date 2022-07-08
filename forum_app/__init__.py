@@ -19,6 +19,7 @@ from flask import Flask, current_app
 import pdb
 
 
+
 ################################################################################
 # Define application helper functions
 ################################################################################
@@ -250,7 +251,8 @@ def discover_feature_classes():
         feature_module = import_module(f"forum_app.features.{feature}")
         module_feature_list = getmembers(feature_module, predicate=is_feature_class)
         for module_feature in module_feature_list:
-            feature_class_map[module_feature[0]] = module_feature[1]
+            feature_instance = module_feature[1]()
+            feature_class_map[feature_instance.feature_name] = module_feature[1]
     return feature_class_map
 
 def initialize_features():
@@ -286,6 +288,42 @@ def initialize_app_state():
     return app_state
     
 
+def broadcast_app_state_changed(app_state, event_data=None):
+    """Broadcast app_state_change event to all features; its up to feature to decide what to update"""
+    for feature_name in feature_class_map:
+        feature_instance = feature_class_map[feature_name]()
+        feature_instance.app_state_changed(app_state, event_data)
+
+def initialize_app_events():
+    notification_event_map = {
+        'app_state_changed': lambda event_data : broadcast_app_state_changed(app_state, event_data)
+    }
+    return notification_event_map
+
+def add_menu_item(menu_name, menu_item):
+    """Use to dynamically add menu item"""
+    # TODO: Add some validation for menu_item
+
+    if menu_name not in app_state:
+        return
+    menu = app_state[menu_name]
+    logging.info(f"Add {menu_item[3]} to {menu_name}")
+    menu.append(menu_item)
+    
+
+def remove_menu_item(menu_name, menu_item_id):
+    """Use to dynamically remove menu item"""
+    if menu_name not in app_state:
+        return
+    menu = app_state[menu_name]
+    for menu_item in menu:
+        if menu_item[3] == menu_item_id:
+            menu.remove(menu_item)
+            logging.info(f"Remove {menu_item_id} from {menu_name}")
+            break
+            
+
+
 ################################################################################
 # Define Flask application
 ################################################################################
@@ -298,24 +336,19 @@ app_settings = get_app_settings(app_path)
 
 app_state = initialize_app_state()
 
+app_events = initialize_app_events()
+
 configure_logging(app_settings)
 
 database_class_map = initialize_databases()
 
 feature_class_map = initialize_features()
 
-# app_settings = load_feature_settings(app_settings)
-# app_state('feature_map', get_features_map())
+app_events['app_state_changed']('initialize') # Apply all state changes
 
 logging.info("Starting application.")
 
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')
-
-
-# menu_items = [
-#     ("Inv 111", "/inv/dashboard", "table_rows"),
-#     ("Inv 222", "/inv/dashboard", "table_rows"),
-# ]
 
 # with app.app_context():
 #     current_app.feature_instance_list = menu_items

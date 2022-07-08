@@ -128,7 +128,7 @@ Then run:
 
 tldr; this is the preferred way to execute
 
-python -m unittest discover tests
+`python -m unittest discover tests`
 
 Syntax reference (assuming running from `D:\src\github\proj\`)
 
@@ -144,11 +144,19 @@ Syntax reference (assuming running from `D:\src\github\proj\`)
 
 ## Running coverage
 
- coverage run -m unittest discover tests
+Use this to discover uncovered files.
 
- coverage report
+`coverage run --source="./forum_app,tests" -m unittest discover tests`
+
+Use this to only calculate coverage for tested files.
+
+`coverage run -m unittest discover tests `
+
+Then use one of the following to generate a report.
+
+ `coverage report`
 -- OR --
- coverage html
+`coverage html`
 
 # Notes PythonAnywhere
 

@@ -1,9 +1,10 @@
 import logging
-import os
-from forum_app import app_path, app_state
+
+from forum_app import add_menu_item, remove_menu_item
 from forum_app.features import BaseFeatureInterface
 
 class RbacFeature(BaseFeatureInterface):
+
     def __init__(self):
         super().__init__()
 
@@ -18,34 +19,25 @@ class RbacFeature(BaseFeatureInterface):
         return "Enable role-based access control module"
 
     def initialize(self):
-        """Things to do when feature is initialized (on initialize_features)"""
-        app_state['feature'][self.feature_name] = {
-            "is_enable" : False
-        }
-        self.is_enable = False
+        """Things to do when feature is initialized (eg. restore state from persistence storage) (on initialize_features)"""
+        super().initialize()
 
 
     def register(self):
-        
         if self.is_registered(self.feature_name):
             return
-
         self.register_feature(self.feature_name, self.feature_description, __name__)
 
-        # Run table scripts (if any)
-        DB_SCRIPTS_PATH = os.path.join(app_path, 'data', 'feature_database_scripts', "login")
-        self.db.execute_script_files_in_folder(DB_SCRIPTS_PATH)
-        # for dirpath, _, files in os.walk(DB_SCRIPTS_PATH):
-        #     for file_name in files:
-        #         script_file_path = os.path.join(dirpath, file_name)
-        #         file_relative_path = os.path.relpath(script_file_path, DB_SCRIPTS_PATH)
-        #         logging.info(f"Found file_relative_path [{file_relative_path}]")
-        #         try:
-        #             # Load script
-        #             with open(script_file_path) as db_script_file:
-        #                 sql_script = db_script_file.read()
-        #             # Run script
-        #             self.db.execute_script(sql_script)
-        #             logging.info(f"Executed {file_relative_path}")
-        #         except Exception as e:
-        #             logging.info("Some error occurred", e)
+
+    def app_state_changed(self, app_state, event_data=None):
+        """Things to do whenever app_state changed"""
+        menu_item_id = "roles-menu-item"
+        # We want to selective add/remove logins menu item to admin menu in drawer
+        logging.debug(f"{self.feature_name} is_enable: {self.is_enable}")
+        if self.is_enable:
+            logging.debug("Add to drawer_admin_menu")
+            add_menu_item('drawer_admin_menu', ("Roles", "/sample/role-item", "table_rows", menu_item_id))
+        else:
+            # Remove login menu item to admin menu in drawer
+            logging.debug("Remove drawer_admin_menu")
+            remove_menu_item('drawer_admin_menu', menu_item_id)

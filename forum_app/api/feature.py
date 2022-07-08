@@ -7,6 +7,7 @@ import logging
 from flask import request
 from forum_app import app
 from forum_app.features import BaseFeatureInterface
+import pdb
 
 @app.route('/api/feature/toggle', methods=['POST'])
 def api_feature_post():

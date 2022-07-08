@@ -6,12 +6,14 @@ from flask import redirect, render_template
 from forum_app import app, app_path
 from forum_app.databases.forum_database import ForumDatabase
 from mysql.connector.errors import ProgrammingError
-from forum_app.helpers.auth import login_required
+# from forum_app.helpers.auth import login_required
+
+from forum_app.features.authentication import authentication_check
 
 from flask import render_template, session, request, redirect, url_for
 
 @app.route('/database/')
-@login_required
+@authentication_check
 def root_database_get():
     """Web page at '/database'"""
     # Need a rethink on navigation; for now redirect to dashboard
@@ -25,7 +27,7 @@ def root_database_get():
 #     return redirect('/database/dashboard')
 
 @app.route('/database/dashboard')
-@login_required
+@authentication_check
 def database_dashboard_page():
     """Web page at '/database/dashboard'"""
     # try:

@@ -8,6 +8,8 @@ import pdb
 import importlib
 import inspect
 
+from forum_app import feature_class_map
+
 from forum_app.features import BaseFeatureInterface
 
 from forum_app.databases.mysql_data_provider import MySqlDataProvider

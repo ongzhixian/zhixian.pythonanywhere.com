@@ -4,6 +4,7 @@ from forum_app import app_path
 from forum_app.features import BaseFeatureInterface
 
 class LoginFeature(BaseFeatureInterface):
+    """OBSOLETE; to delete after review"""
     def __init__(self):
         super().__init__()
         self.feature_name = "Login"
