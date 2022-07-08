@@ -1,0 +1,110 @@
+{% extends "_layouts/_home.html" %}
+
+{% block title %}Shared-data dashboard{% endblock %}
+
+{% block head_link %}<link rel="stylesheet" href="/css/mdl/material.min.css" />
+<link rel="stylesheet" href="/css/mdl/material.min.css" />{% endblock %}
+
+{% block content %}
+
+<div class="page-content">
+
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--3-col"></div>
+    <div class="mdl-cell mdl-cell--6-col">
+      {% if users %}
+
+      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp user full-width" style="margin: 1em;">
+        <thead>
+          <tr>
+            <th>s/n</th>
+            <th class="mdl-data-table__cell--non-numeric full-width">Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{user[0]}}</td>
+            <td class="mdl-data-table__cell--non-numeric" data-id="{{user[1]}}"><a href="#">{{user[2]}}</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <!-- <tfoot>
+          <tr>
+            <td colspan="2" style="text-align: left;">
+              
+              <button class="mdl-button mdl-js-button mdl-button--icon">
+                <span class="material-icons">navigate_before</span>
+              </button>
+              
+              <button class="mdl-button mdl-js-button mdl-button--icon">
+                <span class="material-icons">navigate_next</span>
+              </button>
+    
+              <span>Page 1 of 2 (record 1 to 25)</span>
+            </td>
+          </tr>
+        </tfoot> -->
+      </table>
+
+      {% else %}
+      <p>No shared data registered.</p>
+      {% endif %}
+
+    </div>
+    <div class="mdl-cell mdl-cell--3-col"></div>
+  </div>
+  
+  <div class="card-holder">
+
+    <!-- 
+    <div class="display-card mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <span class="mdl-card__title-text">Database version</span>
+      </div>
+      <div class="mdl-card__supporting-text mdl-card--expand">
+        <span class="counter-text">1</span>
+      </div>
+    </div> 
+    -->
+
+
+    <!-- 
+    <div class="display-card mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <span class="mdl-card__title-text">Database version 2</span>
+      </div>
+      <div class="mdl-card__supporting-text mdl-card--expand">
+        <span class="counter-text">1</span>
+      </div>
+    </div>
+    -->
+
+  </div>
+
+  <div class="mdl-mini-footer fab">
+    <div class="mdl-mini-footer--left-section">
+      <!--
+      <button class="mdl-mini-footer--social-btn social-btn social-btn__twitter">
+        <span class="visuallyhidden">Twitter</span>
+      </button>
+      <button class="mdl-mini-footer--social-btn social-btn social-btn__blogger">
+        <span class="visuallyhidden">Facebook</span>
+      </button>
+      <button class="mdl-mini-footer--social-btn social-btn social-btn__gplus">
+        <span class="visuallyhidden">Google Plus</span>
+      </button>
+      -->
+    </div>
+    <div class="mdl-mini-footer--right-section">
+      <a href="/shared-data/add" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+        <i class="material-icons">add</i>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}{% endblock %}

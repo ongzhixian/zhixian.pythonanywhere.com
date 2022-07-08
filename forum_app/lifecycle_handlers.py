@@ -28,15 +28,16 @@ def inject_header_menu():
     menu_items = app_state['header_menu'] if 'header_menu' in app_state else []
     return dict(header_menu=menu_items)
 
+@app.context_processor
+def inject_selected_application():
+    """App state value for selected application"""
+    app_state_value = app_state['selected_application'] if 'selected_application' in app_state else None
+    return dict(selected_application=app_state_value)
 
-# @app.context_processor
-# def inject_feature_menu_items():
-#     # get feature menu items
-#     menu_items = [
-#         ("Inv xxxxxx", "/inv/dashboard", "table_rows"),
-#         ("Inv yyyyyy", "/inv/dashboard", "table_rows"),
-#     ]
-#     return dict(feature_menu_items=menu_items)
+@app.context_processor
+def inject_application_menu_items():
+    menu_items = app_state['application_menu'] if 'application_menu' in app_state else []
+    return dict(application_menu_items=menu_items)
 
 
 @app.context_processor

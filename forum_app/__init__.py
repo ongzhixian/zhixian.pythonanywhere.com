@@ -279,12 +279,24 @@ def setup_header_menu():
         ("Header item", "/sample/header-item", "table_rows")
     ]
 
+def setup_application_menu():
+    # (Display      , href-url              , icon        , menu-item-id  , Disabled)
+    # ("Header item", "/sample/header-item" , "table_rows", "id"          , False)
+    return [
+        ("Application 1", "/sample/app1-item", "table_rows", "app1-id", False),
+        ("Application 2", "/sample/app2-item", "table_rows", "app2-id", False),
+        ("Application 3", "/sample/app3-item", "table_rows", "app3-id", True),
+        ("Application 4", "/sample/app4-item", "table_rows", "app4-id", False)
+    ]
+
 def initialize_app_state():
     app_state = {}
     app_state['feature'] = {}
     app_state['drawer_sitemap_menu'] = setup_drawer_sitemap_menu()
     app_state['drawer_admin_menu'] = setup_drawer_admin_menu()
     app_state['header_menu'] = setup_header_menu()
+    app_state['selected_application'] = None
+    app_state['application_menu'] = setup_application_menu()
     return app_state
     
 

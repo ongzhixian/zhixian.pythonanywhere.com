@@ -3,10 +3,10 @@ from flask import g, render_template, request, session, redirect
 from forum_app import app
 from forum_app.helpers.auth import login_required
 from forum_app.modules.barcode import QRCode
-# from forum_app.modules.ZZZ_forum_db import ForumDb
+from forum_app.features.authentication import authentication_check
 
 @app.route('/')
-@login_required
+@authentication_check
 def root_get():
     """GET /"""
     return render_template('root_get.html')
