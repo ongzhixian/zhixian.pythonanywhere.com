@@ -1,6 +1,6 @@
 import logging
 
-# from forum_app import add_menu_item, remove_menu_item
+from forum_app.modules import app_state, log
 from forum_app.features import BaseFeatureInterface
 
 class RbacFeature(BaseFeatureInterface):
@@ -29,17 +29,21 @@ class RbacFeature(BaseFeatureInterface):
         self.register_feature(self.feature_name, self.feature_description, __name__)
 
 
-    def app_state_changed(self, app_state, event_data=None):
-        """Things to do whenever app_state changed"""
-        if not self.is_my_event(event_data):
-            return
-        menu_item_id = "roles-menu-item"
+    def update_ui(self):
         # We want to selective add/remove logins menu item to admin menu in drawer
-        logging.debug(f"{self.feature_name} is_enable: {self.is_enable}")
+        menu_item_id = "rbac-dashboard"
+        
         if self.is_enable:
             logging.debug("Add to drawer_admin_menu")
-            # add_menu_item('drawer_admin_menu', ("Roles", "/sample/role-item", "table_rows", menu_item_id))
+            app_state.add_to_menu('drawer_admin_menu', menu_item_id, "Roles", "/rbac/dashboard", False, "table_rows",)
         else:
             # Remove login menu item to admin menu in drawer
             logging.debug("Remove drawer_admin_menu")
-            # remove_menu_item('drawer_admin_menu', menu_item_id)
+            app_state.remove_from_menu('drawer_admin_menu', menu_item_id)
+
+    def app_state_changed(self, event_data=None):
+        """Things to do whenever app_state changed"""
+        if not self.is_my_event(event_data):
+            return
+        log.debug(f"{self.feature_name} is_enable: {self.is_enable} event_data {event_data}")
+        self.update_ui()

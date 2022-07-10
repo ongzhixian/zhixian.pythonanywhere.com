@@ -14,7 +14,7 @@ import pdb
 
 def is_feature_enable(feature_name):
     """Check if feature is enable"""
-    if feature_name not in app_state.feature['feature']:
+    if feature_name not in app_state.feature:
         return False
     return app_state.feature[feature_name]['is_enable']
 

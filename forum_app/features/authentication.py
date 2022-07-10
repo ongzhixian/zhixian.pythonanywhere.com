@@ -2,7 +2,6 @@ import logging
 from functools import wraps
 from flask import redirect, url_for, g, request
 from forum_app.features import BaseFeatureInterface, is_feature_enable
-# from forum_app import add_menu_item, remove_menu_item
 from forum_app.pages import menu
 from forum_app.modules import app_state, log
 
@@ -48,13 +47,12 @@ class AuthenticationFeature(BaseFeatureInterface):
         if self.is_enable:
             logging.debug("Add to drawer_admin_menu")
             app_state.add_to_menu('drawer_admin_menu', 
-                authentication_login_menu_item_id, "Logins", "/sample/app1-item", False, "table_rows",)
+                authentication_login_menu_item_id, "Logins", "/user/dashboard", False, "table_rows",)
         else:
             # Remove login menu item to admin menu in drawer
             logging.debug("Remove drawer_admin_menu")
             app_state.remove_from_menu('drawer_admin_menu', 
                 authentication_login_menu_item_id)
-            #remove_menu_item('drawer_admin_menu', 'logins-menu-item')
             
 
     # def load_app_settings(self, app_settings):
