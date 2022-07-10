@@ -1,6 +1,7 @@
 from flask import render_template, session, request, redirect, url_for
 from forum_app import app
 from forum_app.modules.feature import Feature
+from forum_app.features import __all__ as available_features_count
 import pdb
 
 @app.route('/feature/')
@@ -22,7 +23,8 @@ def feature_register_page():
     feature = Feature()
     registered_feature_count = feature.get_registered_feature_count()
     return render_template('feature/feature_register.html', 
-        registered_feature_count = registered_feature_count)
+        registered_feature_count = registered_feature_count, 
+        available_features_count = len(available_features_count))
     
 @app.route('/feature/register', methods=['POST'])
 def feature_register_post():
@@ -42,7 +44,8 @@ def feature_register_post():
     registered_feature_count = feature.get_registered_feature_count()
 
     return render_template('feature/feature_register.html', 
-            registered_feature_count = registered_feature_count)
+            registered_feature_count = registered_feature_count,
+            available_features_count = len(available_features_count))
 
     # return render_template('feature/feature_register.html', 
     #     registered_feature_count = registered_feature_count)

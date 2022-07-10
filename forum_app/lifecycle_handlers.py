@@ -1,6 +1,8 @@
 import logging
 from flask import g, current_app, request, session, redirect, url_for, abort
-from forum_app import app, app_state
+from forum_app import app
+# from forum_app.pages import menu
+from forum_app.modules import app_state
 
 @app.before_request
 def before_each_request():
@@ -13,30 +15,34 @@ def before_each_request():
 #     ("Inb", "/inb/dashboard", "table_rows")
 # ]
 
+def get_menu_items(menu_name):
+    """Get menu items from app_state (if exists); else return []"""
+    return app_state.menu[menu_name].menu_items.values() if menu_name in app_state.menu else []
+
 @app.context_processor
 def inject_drawer_sitemap_menu():
-    menu_items = app_state['drawer_sitemap_menu'] if 'drawer_sitemap_menu' in app_state else []
+    menu_items = get_menu_items('drawer_sitemap_menu')
     return dict(drawer_sitemap_menu=menu_items)
 
 @app.context_processor
 def inject_drawer_admin_menu():
-    menu_items = app_state['drawer_admin_menu'] if 'drawer_admin_menu' in app_state else []
+    menu_items = get_menu_items('drawer_admin_menu')
     return dict(drawer_admin_menu=menu_items)
 
 @app.context_processor
 def inject_header_menu():
-    menu_items = app_state['header_menu'] if 'header_menu' in app_state else []
+    menu_items = get_menu_items('header_menu')
     return dict(header_menu=menu_items)
 
 @app.context_processor
 def inject_selected_application():
     """App state value for selected application"""
-    app_state_value = app_state['selected_application'] if 'selected_application' in app_state else None
+    app_state_value = app_state.value['selected_application'] if 'selected_application' in app_state.value else None
     return dict(selected_application=app_state_value)
 
 @app.context_processor
 def inject_application_menu_items():
-    menu_items = app_state['application_menu'] if 'application_menu' in app_state else []
+    menu_items = get_menu_items('application_menu')
     return dict(application_menu_items=menu_items)
 
 
@@ -46,12 +52,13 @@ def inject_login_menu_items():
     # Menu item tuple format:
     # (display-text, href, disabled)
     # ("Profile ()", "/dummy", False)
-    menu_items = [
-        ("Profile", "/dummy", False),
-        ("Change password", "/dummy", False),
-        ("Settings", "/dummy", True),
-        ("Log out", "/dummy", False)
-    ]
+    menu_items = get_menu_items('login_menu')
+    # menu_items = [
+    #     ("Profile", "/dummy", False),
+    #     ("Change password", "/dummy", False),
+    #     ("Settings", "/dummy", True),
+    #     ("Log out", "/dummy", False)
+    # ]
     return dict(login_menu_items=menu_items)
 
 # @app.errorhandler(Exception)

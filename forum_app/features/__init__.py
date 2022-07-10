@@ -2,20 +2,21 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["authentication", "rbac"]
+__all__ = ["authentication", "rbac", "shared_data"]
 
 import logging
 from operator import is_
-from forum_app import app_state, app_events
+# from forum_app import app_state, app_events
+from forum_app.modules import app_state
 from forum_app.databases.mysql_data_provider import MySqlDataProvider
 
 import pdb
 
 def is_feature_enable(feature_name):
     """Check if feature is enable"""
-    if feature_name not in app_state['feature']:
+    if feature_name not in app_state.feature['feature']:
         return False
-    return app_state['feature'][feature_name]['is_enable']
+    return app_state.feature[feature_name]['is_enable']
 
 class BaseFeatureInterface:
     """Defines interface for feature"""
@@ -53,9 +54,10 @@ WHERE	name = %s;
         rows_affected = self.update_is_enable(feature_name, enable)
         changes_saved = rows_affected > 0
         if changes_saved:
-            app_state['feature'][feature_name]['is_enable'] = enable
-            app_events['app_state_changed']('toggle_enable')
-        logging.debug(f"{feature_name} is_enable set to {enable}, changes_saved={changes_saved} ")
+            app_state.enable_feature(feature_name, enable)
+            # app_state.feature[feature_name]['is_enable'] = enable
+            # app_events['app_state_changed']('toggle_enable')
+            logging.debug(f"{feature_name} is_enable set to {enable}, changes_saved={changes_saved} ")
         return changes_saved
 
 
@@ -78,14 +80,22 @@ WHERE	name = %s;
         (is_enable, _) = self.get_enable_setting_by_name(self.feature_name)
         if is_enable is None:
             is_enable = False
-        app_state['feature'][self.feature_name] = {
+        app_state.feature[self.feature_name] = {
             "is_enable" : is_enable
         }
 
-    def app_state_changed(self, app_state, event_data=None):
+    def app_state_changed(self, event_data=None):
         """Things to do whenever app_state changed"""
         pass
 
+    def is_my_event(self, event_data=None):
+        if event_data is None:
+            return False # Only handle when there's event_data
+        if 'feature_name' not in event_data:
+            return False # Only handle when we identify source
+        if event_data['feature_name'] != self.feature_name:
+            return False # Only handle events when it concerns us
+        return True
 
     # def get_enable_setting(self, module_name):
     #     record = self.db.fetch_record(
@@ -129,12 +139,12 @@ WHERE	name = %s;
     @property
     def is_enable(self):
         """is_enable getter property. (inherited)"""
-        return app_state['feature'][self.feature_name]['is_enable']
+        return app_state.feature[self.feature_name]['is_enable']
 
     @is_enable.setter
     def is_enable(self, value):
         """is_enable setter property. (inherited)"""
-        app_state['feature'][self.feature_name]['is_enable'] = value
+        app_state.feature[self.feature_name]['is_enable'] = value
 
     # @is_enable.deleter
     # def is_enable(self):

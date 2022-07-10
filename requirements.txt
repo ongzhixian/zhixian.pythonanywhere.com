@@ -5,3 +5,4 @@ qrcode==7.3.1
 Pillow==9.1.1
 Faker==13.14.0
 coverage==6.4.1
+websockets==10.3

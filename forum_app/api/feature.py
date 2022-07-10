@@ -15,8 +15,9 @@ def api_feature_post():
     content = get_validated_toggle_content(request)
     if not content:
         return "Bad request", 400
+    # logging.info(f"content {content}")
+
     base_feature = BaseFeatureInterface()
-    logging.info(f"content {content}")
     change_saved = base_feature.toggle_enable(content['feature_name'], content['is_enable'])
     if change_saved:
         enabled_message = "enabled" if content['is_enable'] else "disabled"

@@ -15,6 +15,8 @@ from os import environ, path
 from importlib import import_module
 from inspect import getmembers, isclass
 from flask import Flask, current_app
+from forum_app.pages import menu, menu_item
+from forum_app.modules import app_state
 
 import pdb
 
@@ -265,74 +267,79 @@ def initialize_features():
 
 
 def setup_drawer_sitemap_menu():
-    return [
-        ("Sitemap item", "/sample/sitemap-item", "table_rows")
-    ]
+    return menu('drawer_sitemap_menu', True)
 
 def setup_drawer_admin_menu():
-    return [
-        # ("Admin item", "/sample/admin-item", "table_rows")
-    ]
+    application_menu = menu('drawer_admin_menu', True)
+    # application_menu.add_menu_item("app1-id", "Application 1", False, "/sample/app1-item", "table_rows", )
+    return application_menu
 
 def setup_header_menu():
-    return [
-        ("Header item", "/sample/header-item", "table_rows")
-    ]
+    return menu('header_menu', True)
 
 def setup_application_menu():
-    # (Display      , href-url              , icon        , menu-item-id  , Disabled)
-    # ("Header item", "/sample/header-item" , "table_rows", "id"          , False)
-    return [
-        ("Application 1", "/sample/app1-item", "table_rows", "app1-id", False),
-        ("Application 2", "/sample/app2-item", "table_rows", "app2-id", False),
-        ("Application 3", "/sample/app3-item", "table_rows", "app3-id", True),
-        ("Application 4", "/sample/app4-item", "table_rows", "app4-id", False)
-    ]
+    return menu('application_menu', True)
+
+def setup_login_menu():
+    login_menu = menu('drawer_admin_menu', True)
+    login_menu.add_menu_item("app1-id", "Profile", False, "/sample/app1-item", "table_rows", )
+    login_menu.add_menu_item("app2-id", "Change password", False, "/sample/app1-item", "table_rows", )
+    login_menu.add_menu_item("app3-id", "Settings", True, "/sample/app1-item", "table_rows", )
+    login_menu.add_menu_item("app4-id", "Log out", False, "/sample/app1-item", "table_rows", )
+    return login_menu
 
 def initialize_app_state():
-    app_state = {}
-    app_state['feature'] = {}
-    app_state['drawer_sitemap_menu'] = setup_drawer_sitemap_menu()
-    app_state['drawer_admin_menu'] = setup_drawer_admin_menu()
-    app_state['header_menu'] = setup_header_menu()
-    app_state['selected_application'] = None
-    app_state['application_menu'] = setup_application_menu()
-    return app_state
+    # app_state = appl_state()
+    app_state.add_menu_callback('drawer_sitemap_menu', setup_drawer_sitemap_menu)
+    app_state.add_menu_callback('drawer_admin_menu', setup_drawer_admin_menu)
+    app_state.add_menu_callback('header_menu', setup_header_menu)
+    app_state.add_menu_callback('application_menu', setup_application_menu)
+    app_state.add_menu_callback('login_menu', setup_login_menu)
+    app_state.add_value('selected_application', None)
+    # return app_state
+    app_state.add_event_callback('app_state_changed', 
+        lambda event_data : broadcast_app_state_changed(event_data))
     
 
-def broadcast_app_state_changed(app_state, event_data=None):
+def broadcast_app_state_changed(event_data=None):
     """Broadcast app_state_change event to all features; its up to feature to decide what to update"""
     for feature_name in feature_class_map:
         feature_instance = feature_class_map[feature_name]()
-        feature_instance.app_state_changed(app_state, event_data)
+        feature_instance.app_state_changed(event_data)
 
-def initialize_app_events():
-    notification_event_map = {
-        'app_state_changed': lambda event_data : broadcast_app_state_changed(app_state, event_data)
-    }
-    return notification_event_map
+# def initialize_app_events():
+#     notification_event_map = {
+#         # 'app_state_changed': lambda event_data : broadcast_app_state_changed(app_state, event_data)
+#     }
+#     return notification_event_map
 
-def add_menu_item(menu_name, menu_item):
-    """Use to dynamically add menu item"""
-    # TODO: Add some validation for menu_item
+# def menu_item_in_menu(menu_item_id, menu):
+#     for menu_item in menu:
+#         if menu_item[3] == menu_item_id:
+#             pass
 
-    if menu_name not in app_state:
-        return
-    menu = app_state[menu_name]
-    logging.info(f"Add {menu_item[3]} to {menu_name}")
-    menu.append(menu_item)
+# def add_menu_item(menu_name, menu_item):
+#     """Use to dynamically add menu item"""
+#     # TODO: Add some validation for menu_item
+
+#     if menu_name not in app_state:
+#         return
+
+#     # menu = app_state[menu_name]
+#     # logging.info(f"Add {menu_item[3]} to {menu_name}")
+#     # menu.append(menu_item)
     
 
-def remove_menu_item(menu_name, menu_item_id):
-    """Use to dynamically remove menu item"""
-    if menu_name not in app_state:
-        return
-    menu = app_state[menu_name]
-    for menu_item in menu:
-        if menu_item[3] == menu_item_id:
-            menu.remove(menu_item)
-            logging.info(f"Remove {menu_item_id} from {menu_name}")
-            break
+# def remove_menu_item(menu_name, menu_item_id):
+#     """Use to dynamically remove menu item"""
+#     if menu_name not in app_state:
+#         return
+#     # menu = app_state[menu_name]
+#     # for menu_item in menu:
+#     #     if menu_item[3] == menu_item_id:
+#     #         menu.remove(menu_item)
+#     #         logging.info(f"Remove {menu_item_id} from {menu_name}")
+#     #         break
             
 
 
@@ -346,9 +353,9 @@ app_secrets = get_app_secrets()
 
 app_settings = get_app_settings(app_path)
 
-app_state = initialize_app_state()
+initialize_app_state()
 
-app_events = initialize_app_events()
+# app_events = initialize_app_events()
 
 configure_logging(app_settings)
 
@@ -356,7 +363,7 @@ database_class_map = initialize_databases()
 
 feature_class_map = initialize_features()
 
-app_events['app_state_changed']('initialize') # Apply all state changes
+# app_events['app_state_changed']('initialize') # Apply all state changes
 
 logging.info("Starting application.")
 
