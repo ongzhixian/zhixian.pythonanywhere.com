@@ -11,6 +11,15 @@ import pdb
 
 @app.route('/api/feature/toggle', methods=['POST'])
 def api_feature_post():
+    """This allows user to toggle feature flags from UI.
+
+    **Discouraged usage**
+
+    But UI changes are not update (when there are UI changes),
+    (user has to refresh page manually to see changes).
+    Favouring a post-back approach for now, until UI 
+    is changed to use something else (webhooks, websockets or better)
+    """
     response_message = "Changes not saved"
     content = get_validated_toggle_content(request)
     if not content:

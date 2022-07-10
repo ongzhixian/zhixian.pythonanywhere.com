@@ -99,14 +99,17 @@
     <div class="mdl-cell mdl-cell--3-col"></div>
   </div>
 
-
-
   <div id="notification-toast" class="mdl-js-snackbar mdl-snackbar">
     <div class="mdl-snackbar__text"></div>
     <button class="mdl-snackbar__action" type="button" title="notification-toast"></button>
   </div>
 
 </div>
+
+<form method="post" id="toggle_update_form">
+  <input type="hidden" name="toggle_name" value="" id="toggle_update_form__toggle_name" />
+  <input type="hidden" name="toggle_value" value="" id="toggle_update_form__toggle_value" />
+</form>
 
 {% endblock %}
 
@@ -116,6 +119,7 @@
     "use strict";
 
     (function ($) {
+      var form_sent = false;
       var snackbarContainer = document.querySelector('#notification-toast');
 
       function updateFeatureToggle(event) {
@@ -135,7 +139,24 @@
           });
       }
 
+      function postToggleUpdateForm(event) {
+        console.debug("form_sent", form_sent);
+        if (form_sent)
+          return;
+
+        var toggle_name = document.querySelector('#toggle_update_form__toggle_name');
+        var toggle_value = document.querySelector('#toggle_update_form__toggle_value');
+        toggle_name.value = event.target.dataset['featureName'];
+        toggle_value.value = event.target.checked;
+        document.getElementById("toggle_update_form").submit();
+        form_sent = true;
+      }
+
+      // Need we figure out a better way refresh UI
       $(document).on("change", ".mdl-switch__input", updateFeatureToggle);
+      
+      // Kept for reference:
+      // $(document).on("change", ".mdl-switch__input", postToggleUpdateForm);
 
     }(jQuery));
 
