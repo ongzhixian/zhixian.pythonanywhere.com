@@ -323,6 +323,10 @@ database_class_map = initialize_databases()
 
 feature_class_map = initialize_features()
 
+broadcast_app_state_changed({
+    'feature_name': '__ALL_FEATURES__'
+})
+
 logging.info("Starting application.")
 
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja2_templates')

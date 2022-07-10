@@ -37,7 +37,6 @@ class AuthenticationFeature(BaseFeatureInterface):
         """Things to do whenever app_state changed"""
         is_my_event = self.is_my_event(event_data)
         log.debug(f"is_my_event {is_my_event}")
-        
         if not self.is_my_event(event_data):
             return
 

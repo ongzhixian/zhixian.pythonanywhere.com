@@ -5,12 +5,8 @@
 __all__ = ["authentication", "rbac", "shared_data"]
 
 import logging
-from operator import is_
-# from forum_app import app_state, app_events
 from forum_app.modules import app_state
 from forum_app.databases.mysql_data_provider import MySqlDataProvider
-
-import pdb
 
 def is_feature_enable(feature_name):
     """Check if feature is enable"""
@@ -93,6 +89,8 @@ WHERE	name = %s;
             return False # Only handle when there's event_data
         if 'feature_name' not in event_data:
             return False # Only handle when we identify source
+        if event_data['feature_name'] == '__ALL_FEATURES__':
+            return True  # Only handle events when it concerns ALL
         if event_data['feature_name'] != self.feature_name:
             return False # Only handle events when it concerns us
         return True

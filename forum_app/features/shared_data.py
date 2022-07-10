@@ -31,7 +31,7 @@ class SharedDataFeature(BaseFeatureInterface):
 
     def update_ui(self):
         # We want to selective add/remove logins menu item to admin menu in drawer
-        menu_item_id = "rbac-dashboard"
+        menu_item_id = "shared-data-dashboard"
         
         if self.is_enable:
             logging.debug("Add to drawer_admin_menu")

@@ -12,6 +12,24 @@
   <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--3-col"></div>
     <div class="mdl-cell mdl-cell--6-col">
+
+      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp user full-width" style="margin: 1em;">
+        <thead>
+          <tr>
+            <th>s/n</th>
+            <th class="mdl-data-table__cell--non-numeric full-width">Data name (to-implement)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data_title in to_implement_data_list %}
+          <tr>
+            <td>{{loop.index}}</td>
+            <td class="mdl-data-table__cell--non-numeric" data-id="a"><a href="#">{{data_title}}</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
       {% if users %}
 
       <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp user full-width" style="margin: 1em;">
