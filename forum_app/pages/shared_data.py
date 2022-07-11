@@ -25,7 +25,8 @@ def shared_data_dashboard_page():
         "Yahoo ticker",
 
         "Wertpapierkennnummer",
-        "IATA ICAO",
+        "IATA Airline",
+        "IATA Airport",
 
         "Society for Worldwide Interbank Financial Telecommunication (SWIFT)",
         "Business Identifier Codes (BIC) (ISO 9362)"
@@ -43,6 +44,34 @@ def shared_data_country():
     sql = """SELECT short_name, code2, code3, m49 FROM country ORDER BY short_name;"""
     record_list = db.fetch_list(sql)
     return render_template('shared_data/shared_data_country.html', country_list=record_list)
+
+
+from html.parser import HTMLParser
+
+class AirlineParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        print("Encountered a start tag:", tag)
+        breakpoint()
+
+    def handle_endtag(self, tag):
+        print("Encountered an end tag :", tag)
+
+    def handle_data(self, data):
+        print("Encountered some data  :", data)
+
+
+@app.route('/shared-data/airline')
+def shared_data_airline():
+    """Web page at '/shared-data/airline'"""
+    url = "https://www.iata.org/en/publications/directories/code-search/?airline.page=1&airline.search="
+    # from forum_app.databases.forum_database import MySqlDataProvider
+    # db = MySqlDataProvider('forum')
+    # sql = """SELECT short_name, code2, code3, m49 FROM country ORDER BY short_name;"""
+    # record_list = db.fetch_list(sql)
+    from forum_app.modules.scrape import get_airline
+    get_airline(1)
+    return render_template('shared_data/shared_data_airline.html')
+
 
 
 # from html.parser import HTMLParser
@@ -74,8 +103,8 @@ def download_m49():
     with open(out_file_path, 'r', encoding='utf8') as infile:
         html = infile.read()
         
-    parser = MyHTMLParser()
-    parser.feed(html)
+    # parser = MyHTMLParser()
+    # parser.feed(html)
 
 
 def get_country_data_from_csv():
