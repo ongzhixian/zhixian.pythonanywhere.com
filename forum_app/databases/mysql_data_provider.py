@@ -114,7 +114,8 @@ class MySqlDataProvider(BaseDataProviderInterface):
             port=self.db_settings['PORT'],
             user=self.db_settings['USERNAME'],
             password=self.db_settings['PASSWORD'],
-            database=self.db_settings['DATABASE']
+            database=self.db_settings['DATABASE'],
+            charset='utf8'
         )
         return mydb
 
@@ -123,7 +124,8 @@ class MySqlDataProvider(BaseDataProviderInterface):
             host=self.db_settings['HOST'],
             port=self.db_settings['PORT'],
             user=self.db_settings['USERNAME'],
-            password=self.db_settings['PASSWORD']
+            password=self.db_settings['PASSWORD'],
+            charset='utf8'
         )
         return mydb
 
@@ -180,6 +182,15 @@ class MySqlDataProvider(BaseDataProviderInterface):
         connection = self.get_connection()
         mycursor = connection.cursor()
         mycursor.execute(sql, args)
+        mycursor.close()
+        connection.commit()
+        connection.close()
+        return mycursor.rowcount
+
+    def execute_many(self, sql, data_rows):
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        mycursor.executemany(sql, data_rows)
         mycursor.close()
         connection.commit()
         connection.close()

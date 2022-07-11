@@ -142,8 +142,8 @@ form.inline {
 .mdl-mini-footer.fab{
     background-color: inherit;
     /* border: 1px solid #213; */
-    position: absolute;
-    bottom: 2em;
+    position: fixed;
+    bottom: 0em;
     right: 2em;
 }
 
