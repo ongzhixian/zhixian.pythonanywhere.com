@@ -46,6 +46,36 @@ def shared_data_country():
     return render_template('shared_data/shared_data_country.html', country_list=record_list)
 
 
+@app.route('/shared-data/country-test')
+def shared_data_country_test():
+    """Web page at '/shared-data/country-test'"""
+    record_start = 0
+    page_size = 2
+    data_page = 1
+
+    if 'page' in request.args:
+        try:
+            data_page = int(request.args['page'])
+        except ValueError:
+            data_page = 1
+        
+    record_start = (data_page - 1) * page_size
+
+    from forum_app.databases.forum_database import MySqlDataProvider
+    db = MySqlDataProvider('forum')
+    sql = f"""
+SELECT 	* 
+FROM 	(
+			SELECT 	CAST(@row_no := @row_no+1 AS UNSIGNED) AS row_number, short_name, code2, code3, m49 
+			FROM 	country, (SELECT @row_no := 0) t
+  			ORDER BY short_name 
+  		) a
+LIMIT {record_start}, {page_size};"""
+    print(sql)
+    record_list = db.fetch_list(sql)
+    return render_template('shared_data/shared_data_country_test.html', country_list=record_list, prev_page=data_page-1, next_page=data_page+1)
+
+
 from html.parser import HTMLParser
 
 class AirlineParser(HTMLParser):
