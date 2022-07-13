@@ -1,7 +1,7 @@
 import logging
 from flask import render_template, session, request, redirect, url_for
 from forum_app import app, app_path
-from os import path
+from os import abort, path
 
 @app.route('/shared-data/')
 def root_shared_data_get():
@@ -58,6 +58,9 @@ def shared_data_country_test():
             data_page = int(request.args['page'])
         except ValueError:
             data_page = 1
+
+    if data_page == 3:
+        abort(500)
         
     record_start = (data_page - 1) * page_size
 
