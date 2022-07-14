@@ -56,3 +56,6 @@ def basic_art():
     
 
 # See also https://github.com/pixegami-team/machine-psychology-python-art/tree/main/src
+# https://github.com/erdavids/Mondrian-Tiles
+# https://www.youtube.com/watch?v=CHZtK-keEvU
+# https://github.com/sepandhaghighi/samila
