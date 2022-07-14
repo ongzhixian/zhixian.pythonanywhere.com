@@ -269,7 +269,7 @@ def create_tables():
     logging.info(f"run_create_table_scripts in {database_scripts_path}")
     from forum_app.databases.forum_database import MySqlDataProvider
     db = MySqlDataProvider('forum')
-    db.run_scripts(database_scripts_path)
+    db.run_scripts_in_path(database_scripts_path)
     
 
 

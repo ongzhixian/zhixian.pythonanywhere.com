@@ -1,6 +1,8 @@
 import logging
+from os import path
 from functools import wraps
 from flask import redirect, url_for, g, request
+from forum_app import app_path
 from forum_app.features import BaseFeatureInterface, is_feature_enable
 from forum_app.pages import menu
 from forum_app.modules import app_state, log
@@ -30,6 +32,8 @@ class AuthenticationFeature(BaseFeatureInterface):
     def register(self):
         if self.is_registered(self.feature_name):
             return
+        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'login', 'tables')
+        self.db.run_scripts_in_path(database_table_scripts_path)
         self.register_feature(self.feature_name, self.feature_description, __name__)
 
         

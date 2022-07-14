@@ -52,15 +52,21 @@ class MySqlDataProvider(BaseDataProviderInterface):
     def run_create_table_scripts(self, cursor, database_name):
         database_scripts_path = path.join(app_path, 'data', 'database_initialization_scripts', database_name, 'tables')
         logging.info(f"run_create_table_scripts in {database_scripts_path}")
-        self.run_scripts_in_path(cursor, database_scripts_path)
+        self.run_scripts_in_path(database_scripts_path, cursor)
         
     def run_create_view_scripts(self, cursor, database_name):
         database_scripts_path = path.join(app_path, 'data', 'database_initialization_scripts', database_name, 'views')
         logging.info(f"run_create_view_scripts in {database_scripts_path}")
-        self.run_scripts_in_path(cursor, database_scripts_path)
+        self.run_scripts_in_path(database_scripts_path, cursor)
         
 
-    def run_scripts_in_path(self, cursor, database_scripts_path):
+    def run_scripts_in_path(self, database_scripts_path, cursor = None):
+        did_not_bring_cursor = cursor is None
+
+        if did_not_bring_cursor:
+            connection = self.get_connection()
+            cursor = connection.cursor()
+
         for dirpath, _, files in walk(database_scripts_path):
             for file_name in files:
                 script_file_path = path.join(dirpath, file_name)
@@ -80,11 +86,13 @@ class MySqlDataProvider(BaseDataProviderInterface):
                     for result_set in result_sets:
                         pass
                     logging.info(f"Executed {file_relative_path}")
-                    
-                    
                 except Exception as e:
                     logging.error(e)
                     # logging.info("Some error occurred", e)
+        
+        if did_not_bring_cursor:
+            cursor.close()
+            connection.close()
 
 
     def run_create_database_script(self, cursor, database_name):
@@ -101,12 +109,12 @@ class MySqlDataProvider(BaseDataProviderInterface):
             sql_script = db_script_file.read()
         cursor.execute(sql_script, None, multi=True)
 
-    def run_scripts(self, database_scripts_path,):
-        connection = self.get_connection()
-        mycursor = connection.cursor()
-        self.run_scripts_in_path(mycursor, database_scripts_path)
-        mycursor.close()
-        connection.close()
+    # def run_scripts(self, database_scripts_path):
+    #     connection = self.get_connection()
+    #     mycursor = connection.cursor()
+    #     self.run_scripts_in_path(mycursor, database_scripts_path)
+    #     mycursor.close()
+    #     connection.close()
         
 
     def is_database_missing(self, cursor, database_name):
