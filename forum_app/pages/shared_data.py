@@ -48,7 +48,9 @@ def shared_data_country():
 
 @app.route('/shared-data/country-test')
 def shared_data_country_test():
-    """Web page at '/shared-data/country-test'"""
+    """Web page at '/shared-data/country-test'
+    Not in actual usage; used only for testing processes
+    """
     record_start = 0
     page_size = 2
     data_page = 1
@@ -183,3 +185,66 @@ def shared_data_country_post():
     # response.status, response.reason is equivalent to (200, 'OK')
     return render_template('shared_data/shared_data_country.html')
 
+
+@app.route('/shared-data/sgx/isin')
+def shared_data_sgx_isin():
+    """Web page at '/shared-data/country'"""
+    from forum_app.databases.forum_database import MySqlDataProvider
+    db = MySqlDataProvider('forum')
+    # sql = """SELECT short_name, code2, code3, m49 FROM country ORDER BY short_name;"""
+    # record_list = db.fetch_list(sql)
+    #return render_template('shared_data/shared_data_sgx_isin.html', country_list=record_list)
+    return render_template('shared_data/shared_data_sgx_isin.html', isin_list=None)
+
+
+def get_isin_data_from_file():
+    isin_data_file_path = path.join(app_path, 'data', 'fixed_width_formatted_text', 'sgx-isin.txt')
+    isin_data = []
+
+    import re
+    regex = r"(?P<name>.{50})(?P<status>.{10})(?P<isin>.{20})(?P<code>.{10})(?P<counter>.+)"
+    with open(isin_data_file_path, 'r', encoding='utf8') as infile:
+        infile.readline() # skip first header line
+        for line in infile:
+            match_result = re.match(regex, line)
+            if match_result is None:
+                continue
+            name = match_result.group('name').strip()
+            status = match_result.group('status').strip()
+            isin = match_result.group('isin').strip()
+            code = match_result.group('code').strip()
+            counter = match_result.group('counter').strip()
+            isin_data.append([name, isin, code, counter, status])
+    return isin_data
+
+
+def insert_sgx_isin_data(isin_data):
+    from forum_app.databases.forum_database import MySqlDataProvider
+    db = MySqlDataProvider('forum')
+    sql = """INSERT INTO isin (name, isin, code, counter_name, status) VALUES (%s, %s, %s, %s, %s)"""
+    db.execute_many(sql, isin_data)
+
+
+def load_isin_data():
+    isin_data = get_isin_data_from_file()
+    print(len(isin_data))
+    insert_sgx_isin_data(isin_data)
+
+@app.route('/shared-data/sgx/isin', methods=['POST'])
+def shared_data_sgx_isin_post():
+    """Web page at '/shared-data/country'"""
+    logging.info("POST to shared_data_sgx_isin_post")
+
+    action_map = {
+        'load ISIN data': load_isin_data
+    }
+
+    if 'action' not in request.form:
+        return
+    
+    action = request.form['action']
+    action_map[action]()
+
+    # response.status, response.reason is equivalent to (200, 'OK')
+    # return render_template('shared_data/shared_data_sgx_isin.html', isin_list=None)
+    return redirect(url_for('shared_data_sgx_isin'))
