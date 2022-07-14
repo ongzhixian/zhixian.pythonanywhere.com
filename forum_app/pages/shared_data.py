@@ -24,6 +24,10 @@ def shared_data_dashboard_page():
         "Reuters Instrument code ticker",
         "Yahoo ticker",
 
+        "GICS industry code",
+        "MSCI sector code",
+        "FTSE 100 sector code",
+
         "Wertpapierkennnummer",
         "IATA Airline",
         "IATA Airport",
@@ -247,4 +251,41 @@ def shared_data_sgx_isin_post():
 
     # response.status, response.reason is equivalent to (200, 'OK')
     # return render_template('shared_data/shared_data_sgx_isin.html', isin_list=None)
+    return redirect(url_for('shared_data_sgx_isin'))
+
+
+@app.route('/shared-data/init')
+def shared_data_init():
+    """Web page at '/shared-data/init'"""
+    from forum_app.databases.forum_database import MySqlDataProvider
+    db = MySqlDataProvider('forum')
+
+    return render_template('shared_data/shared_data_init.html', isin_list=None)
+
+
+def create_tables():
+    # Run all the scripts in 
+    database_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'shared_data', 'tables')
+    logging.info(f"run_create_table_scripts in {database_scripts_path}")
+    from forum_app.databases.forum_database import MySqlDataProvider
+    db = MySqlDataProvider('forum')
+    db.run_scripts(database_scripts_path)
+    
+
+
+@app.route('/shared-data/init', methods=['POST'])
+def shared_data_init_post():
+    """Web page at '/shared-data/init'"""
+    logging.info("POST to shared_data_init_post")
+
+    action_map = {
+        'Create tables': create_tables
+    }
+
+    if 'action' not in request.form:
+        return
+    
+    action = request.form['action']
+    action_map[action]()
+
     return redirect(url_for('shared_data_sgx_isin'))

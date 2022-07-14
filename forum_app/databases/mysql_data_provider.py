@@ -101,6 +101,14 @@ class MySqlDataProvider(BaseDataProviderInterface):
             sql_script = db_script_file.read()
         cursor.execute(sql_script, None, multi=True)
 
+    def run_scripts(self, database_scripts_path,):
+        connection = self.get_connection()
+        mycursor = connection.cursor()
+        self.run_scripts_in_path(mycursor, database_scripts_path)
+        mycursor.close()
+        connection.close()
+        
+
     def is_database_missing(self, cursor, database_name):
         cursor.execute(
             "SELECT DISTINCT 1 FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = %s",
