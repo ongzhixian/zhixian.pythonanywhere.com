@@ -289,3 +289,42 @@ def shared_data_init_post():
     action_map[action]()
 
     return redirect(url_for('shared_data_sgx_isin'))
+
+
+@app.route('/shared-data/fake')
+def shared_data_fake():
+    """Web page at '/shared-data/fake'"""
+    # from forum_app.databases.forum_database import MySqlDataProvider
+    # db = MySqlDataProvider('forum')
+    return render_template('shared_data/shared_data_fake.html', isin_list=None)
+
+
+def generate_fake_data():
+    from faker import Faker
+    Faker.seed(4321)
+    fake = Faker()
+    
+    # name = fake.name()
+    logging.info(f"name: {fake.name()}")
+    logging.info(f"name: {fake.name()}")
+    logging.info(f"name: {fake.name()}")
+    logging.info(f"name: {fake.name()}")
+    pass
+
+@app.route('/shared-data/fake', methods=['POST'])
+def shared_data_fake_post():
+    """Web page at '/shared-data/init'"""
+    logging.info("POST to shared_data_init_post")
+
+    action_map = {
+        'Generate fake data': generate_fake_data
+    }
+
+    if 'action' not in request.form:
+        return
+    
+    action = request.form['action']
+    action_map[action]()
+
+    return redirect(url_for('shared_data_fake'))
+

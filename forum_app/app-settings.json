@@ -1,6 +1,7 @@
 {
     "logging": {
         "werkzeug" : "WARNING",
-        "git" : "WARNING"
+        "git" : "WARNING",
+        "faker": "WARNING"
     }
 }

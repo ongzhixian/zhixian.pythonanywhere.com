@@ -21,6 +21,17 @@ def feature_dashboard_page():
     log.info("Render 'feature/feature_dashboard.html'")
     return render_template('feature/feature_dashboard.html', feature_list = feature_list)
 
+@app.route('/feature/<feature_name>')
+def feature_options_page(feature_name):
+    """Web page at '/feature/<feature>'"""
+    # Get list of registered features
+    # feature = Feature()
+    # feature_list = feature.get_registered_feature_list()
+    # log.info("Render 'feature/feature_options.html'")
+    option_list = []
+    return render_template('feature/feature_options.html', option_list=option_list)
+
+
 
 def validated_boolean_value(value):
     """Validates if given value is valid"""
