@@ -42,6 +42,30 @@ minikube kubectl -- create deployment mysql-minikube --image=mysql:5.7
 minikube kubectl -- set env deployment/mysql-minikube MYSQL_ROOT_PASSWORD=pass1234
 minikube kubectl -- expose deployment mysql-minikube --type=NodePort --port=3306
 
+
+## Setup test RabbitMq on Kubernetes (Minikube)
+
+(Work-in-progress)
+
+If we do not have the image "load" it with `minikube image load rabbitmq:3.10-management`
+
+Note: The '-management' tag refers to an image that has the management plugin enabled by default.
+      (on the standard management port of 15672, with the default username and password of guest / guest)
+Note: RabbitMQ container listen on the default port of 5672.
+
+tldr;
+
+docker run -d --hostname my-rabbit --name some-rabbit rabbitmq:3
+
+minikube kubectl -- create deployment rabbitmq-minikube --image=rabbitmq:3.10-management
+
+minikube kubectl -- expose deployment rabbitmq-minikube --type=NodePort --port=15672,5672
+-- OR --
+minikube kubectl -- expose deployment rabbitmq-mgmt --type=NodePort --port=15672
+minikube kubectl -- expose deployment rabbitmq-port --type=NodePort --port=5672
+
+
+
 ## Setup Kibana/Elasticsearch on Kubernetes (Minikube)
 
 (Work-in-progress)
