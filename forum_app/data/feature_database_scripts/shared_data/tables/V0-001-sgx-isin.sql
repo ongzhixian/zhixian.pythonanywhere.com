@@ -7,7 +7,10 @@ SET sql_notes = 0; -- suppress warnings
 -- Note: ISIN CODE is the ISIN code of the security; CODE is the trading counter code; TRADING COUNTER NAME is the name of the trading counter.
 -- 		 SGX ISIN file is fixed width;
 -- 		 ISIN maybe repeated in the file; 
--- example AEM Holdings (ISIN: SG1BA1000003) has 2 codes AWX and XWA (mirror of AWX?); not sure why 
+-- example AEM Holdings (same ISIN: SG1BA1000003) has 2 codes AWX and XWA  (because it support dual-currency trading)
+-- See https://sg.finance.yahoo.com/news/aem-commence-dual-currency-trading-225613210.html
+-- AWX => AEM SGD (AWX / AEM.SI)
+-- XWA => AEM USD (XWA / AEM.SI)
 
 CREATE TABLE IF NOT EXISTS `isin` (
 	`id`					INT UNSIGNED NOT NULL AUTO_INCREMENT,
