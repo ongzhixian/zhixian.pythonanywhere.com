@@ -15,122 +15,79 @@
     <span>Market identifier codes</span>
   </div> -->
 
-  <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--2-col"></div>
-    <div class="mdl-cell mdl-cell--8-col">
-
-      <div class="card-holder">
-
-        
-        <div class="portfolio-card mdl-card mdl-shadow--2dp full-width">
-          <div class="mdl-card__title">
-            
-            <span class="mdl-card__title-text">012932983</span>
-          </div>
-          <div class="mdl-card__supporting-text mdl-card--expand">
-            <!-- <span class="counter-text">1</span> -->
-          </div>
-
-          
-          <div class="mdl-grid full-width" style="background-color: #f5f5f5;">
-            <div class="mdl-cell mdl-cell--3-col">Service model</div>
-            <div class="mdl-cell mdl-cell--3-col">Strategy</div>
-            <div class="mdl-cell mdl-cell--3-col">Reference currency</div>
-            <div class="mdl-cell mdl-cell--3-col">session</div>
-
-            <div class="mdl-cell mdl-cell--3-col">Market value</div>
-            <div class="mdl-cell mdl-cell--3-col">Cash</div>
-            <div class="mdl-cell mdl-cell--3-col">Performance</div>
-            <div class="mdl-cell mdl-cell--3-col">Portfolio Quality</div>
-          </div>
-
-
-        </div> 
-       
-
-        <div class="display-card mdl-card mdl-shadow--2dp full-width">
-
-        </div>
-    
-    
-        <!-- 
-        <div class="display-card mdl-card mdl-shadow--2dp">
-          <div class="mdl-card__title">
-            <span class="mdl-card__title-text">Database version 2</span>
-          </div>
-          <div class="mdl-card__supporting-text mdl-card--expand">
-            <span class="counter-text">1</span>
-          </div>
-        </div>
-        -->
-    
-      </div>
-
-    </div>
-    <div class="mdl-cell mdl-cell--2-col"></div>
-  </div>
-
-  
-  <div class="mdl-grid">
+  <div class="mdl-grid ">
     <div class="mdl-cell mdl-cell--3-col"></div>
     <div class="mdl-cell mdl-cell--6-col">
-
-      {% if not country_list %}
-
-      <div>
-        <p>No data.</p>
-        <form method="post">
-          <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="action" value="Insert mic data">Insert MIC data</button>
-        </form>
-      </div>
-
-      {% else %}
-
-      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp user full-width" style="margin: 1em;">
+      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
         <thead>
           <tr>
-            <th>s/n</th>
-            <th class="mdl-data-table__cell--non-numeric full-width">Data</th>
+            <th class="mdl-data-table__cell--non-numeric">Name</th>
+            <th>Client Id</th>
+            <th>Domicile</th>
+            <th>Asset value</th>
+            <th class="mdl-data-table__cell--non-numeric">Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {% for country in country_list %}
           <tr>
-            <td>{{loop.index}}</td>
-            <td class="mdl-data-table__cell--non-numeric" data-id="a"><a href="#">{{country}}</a></td>
+            <td class="mdl-data-table__cell--non-numeric">Acrylic</td>
+            <td>25</td>
+            <td>US</td>
+            <td>$2.90</td>
+            <td class="mdl-data-table__cell--non-numeric">OK</td>
+            <td>
+              <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="login-dropdown-button">
+                <span class="material-icons">more_vert</span>
+              </button>
+            </td>
           </tr>
-          {% endfor %}
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric">Plywood</td>
+            <td>50</td>
+            <td>SG</td>
+            <td>$1.25</td>
+            <td class="mdl-data-table__cell--non-numeric">OK</td>
+            <td>
+              <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="login-dropdown-button">
+                <span class="material-icons">more_vert</span>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric">Laminate</td>
+            <td>10</td>
+            <td>US</td>
+            <td>$2.35</td>
+            <td class="mdl-data-table__cell--non-numeric">OK</td>
+            <td>
+              <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="login-dropdown-button">
+                <span class="material-icons">more_vert</span>
+              </button>
+            </td>
+          </tr>
         </tbody>
-      </table>  
+      </table>
       
-      {% endif %}
-
     </div>
+
     <div class="mdl-cell mdl-cell--3-col"></div>
   </div>
-  
+
+
+
+
 
 
   <div class="mdl-mini-footer fab" style="width:50%">
     <div class="mdl-mini-footer--left-section">
-      <!--
-      <button class="mdl-mini-footer--social-btn social-btn social-btn__twitter">
-        <span class="visuallyhidden">Twitter</span>
-      </button>
-      <button class="mdl-mini-footer--social-btn social-btn social-btn__blogger">
-        <span class="visuallyhidden">Facebook</span>
-      </button>
-      <button class="mdl-mini-footer--social-btn social-btn social-btn__gplus">
-        <span class="visuallyhidden">Google Plus</span>
-      </button>
-      -->
       <form method="post">
-        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="action" value="Create tables">Create tables</button>
+        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="action" value="Create tables">Create mock data</button>
       </form>
     </div>
     <div class="mdl-mini-footer--right-section">
-      <a href="/shared-data/add" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-        <i class="material-icons">add</i>
+      <a href="/client/new" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+        <span class="material-icons">add</span>
       </a>
     </div>
   </div>

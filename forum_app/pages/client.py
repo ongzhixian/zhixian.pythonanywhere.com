@@ -12,6 +12,14 @@ def root_client_get():
 def client_dashboard_page():
     """Web page at '/client/dashboard'"""
     return render_template('client/client_dashboard.html')
+
+@app.route('/client/new')
+def client_new_page():
+    """Web page at '/client/new'"""
+    return render_template('client/new_client.html')
+
+
+
     # Insert mic data
 
 

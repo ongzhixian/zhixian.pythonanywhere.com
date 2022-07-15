@@ -1,0 +1,152 @@
+{#  macros used in _home layout. #}
+
+
+{% macro shared_drawer() %}
+<nav class="mdl-navigation">
+    <a class="mdl-navigation__link" href="/">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>
+      Home</a>
+
+    <a class="mdl-navigation__link" href="/client/dashboard">
+      <span class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</span>
+      Clients</a>
+
+    <a class="mdl-navigation__link" href="/portfolio/dashboard">
+      <span class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</span>
+      Portfolios</a>
+
+    <a class="mdl-navigation__link" href="/">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>
+      SGX</a>
+
+    {% for menu_item in drawer_sitemap_menu %}
+    <a class="mdl-navigation__link" href="{{menu_item.href}}">
+      <span class="mdl-color-text--blue-grey-400 material-icons" role="presentation">{{menu_item.icon_name}}</span>
+      {{menu_item.display_text}}</a>
+    {% endfor %}
+    <!--
+    <a class="mdl-navigation__link" href="/mysql">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">table_rows</i>
+      MySql</a>
+    <a class="mdl-navigation__link" href="/forum">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">table_rows</i>
+      Forum</a>
+    <a class="mdl-navigation__link" href="/chart-examples">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">table_rows</i>
+      Chart examples</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+    -->
+    <hr/>
+    <span class="header">Administration</span>
+    <a class="mdl-navigation__link" href="/database/dashboard">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">table_rows</i>
+      Database</a>
+    <a class="mdl-navigation__link" href="/feature/dashboard">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">table_rows</i>
+      Features</a>
+    <!--
+    <a class="mdl-navigation__link" href="/shared-data/dashboard">
+      <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">table_rows</i>
+      Shared Data</a>
+    -->
+    {% for menu_item in drawer_admin_menu %}
+    <a class="mdl-navigation__link" href="{{menu_item.href}}">
+      <span class="mdl-color-text--blue-grey-400 material-icons" role="presentation">{{menu_item.icon_name}}</span>
+      {{menu_item.display_text}}</a>
+    {% endfor %}
+    
+
+</nav>
+{% endmacro %}
+
+
+
+{% macro application_dropdown() %}
+<span id="selected_application">{% if selected_application %}{{ selected_application }}{% endif %}</span>
+{% if application_menu_items and application_menu_items|length > 0 %}
+<div class="dropdown" id="application_dropdown">
+  <button id="application_selector" class="mdl-button mdl-js-button mdl-button--icon">
+    <i class="material-icons">arrow_drop_down</i>
+  </button>
+  <div class="mdl-menu__container is-upgraded">
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="application_selector">
+      {% for menu_item in application_menu_items %}
+      <li class="mdl-menu__item" {% if menu_item.is_disabled %}disabled{%endif%}>
+        {% if menu_item.is_disabled %}
+        {{menu_item.display_text}}
+        {% else %}
+        <a href="{{menu_item.href}}">{{menu_item.display_text}}</a>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}
+{% endmacro %}
+
+
+{% macro login_dropdown() %}
+<div class="dropdown" id="login_dropdown">
+  <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="login-dropdown-button">
+    <span class="material-icons">more_vert</span>
+  </button>
+
+  <div class="mdl-menu__container is-upgraded">
+    <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="login-dropdown-button">
+      {% for menu_item in login_menu_items %}
+      <li class="mdl-menu__item">{{ menu_item.display_text }}</li>
+      {% endfor %}
+      <!-- 
+      <li class="mdl-menu__item">Profile ({{ g.username }})</li>
+      <li class="mdl-menu__item">Change password</li>
+      <li class="mdl-menu__item" disabled >Settings</li>
+      <li class="mdl-menu__item"><a href="/logout">Log out</a></li>
+      -->
+    </ul>
+  </div>
+</div>
+{% endmacro %}
+
+
+
+{# THE BELOW ARE OBSOLETE; kept for reference only #}
+
+
+{% macro drawer() %}
+{% 
+    set menu_items = [
+        { 'href' : "/",         'text' : "Home", 'view_id' : 'pages.site.webroot_get'},
+        { 'href' : "/about",    'text' : "About us" },
+        { 'href' : "/contact",  'text' : "Contact us" },
+        { 'href' : "#",         'text' : "Link 3" },
+        { 'href' : "#",         'text' : "Link 4" },
+        ]
+%}
+<nav class="mdl-navigation">
+    <a class="mdl-navigation__link" href="/">Home</a>
+    <a class="mdl-navigation__link" href="/mysql">MySql Administration xx</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+    <a class="mdl-navigation__link" href="">Link</a>
+</nav>
+{% endmacro %}
+
+
+{% macro test_function(param1) %}
+{% 
+    set menu_items = [
+        { 'href' : "/",         'text' : "Home", 'view_id' : 'pages.site.webroot_get'},
+        { 'href' : "/about",    'text' : "About us" },
+        { 'href' : "/contact",  'text' : "Contact us" },
+        { 'href' : "#",         'text' : "Link 3" },
+        { 'href' : "#",         'text' : "Link 4" },
+        ]
+%}
+{% if param1 == "display" %}
+    {% for item in menu_items %}
+    <a href="{{item.href}}" class="btn btn-link">{{item.text}}</a>
+    {%- endfor %}
+{% else %}
+    <span>DO NOT DISPLAY ANYTHING</span>
+{% endif %}
+{% endmacro %}

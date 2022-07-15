@@ -1,0 +1,95 @@
+{% extends "_layouts/_home.html" %}
+
+{% block title %}New client{% endblock %}
+
+{% block head_link %}<link rel="stylesheet" href="/css/mdl/material.min.css" />
+<link rel="stylesheet" href="/css/mdl/material.min.css" />{% endblock %}
+
+{% block content %}
+
+<div class="page-content">
+
+  <div class="breadcrumb inline">
+    <a href="/client/dashboard">Client dashboard</a>
+    <span class="material-icons">chevron_right</span>
+    <span>New client</span>
+  </div>
+
+
+  <!-- <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+    <select class="mdl-selectfield__select" id="professsion2" name="professsion">
+      <option value=""></option>
+      <option value="option1">option 1</option>
+      <option value="option2">option 2</option>
+      <option value="option3">option 3</option>
+      <option value="option4">option 4</option>
+      <option value="option5">option 5</option>
+    </select>
+    <label class="mdl-selectfield__label" for="professsion2">Profession</label>
+  </div> -->
+
+
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--3-col"></div>
+    <div class="mdl-cell mdl-cell--6-col">
+
+      <form method="post">
+
+        <div class="form-row">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="sample3">
+            <label class="mdl-textfield__label" for="sample3">First Name</label>
+          </div>
+          
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="sample3">
+            <label class="mdl-textfield__label" for="sample3">Last Name</label>
+          </div>
+        </div>
+
+        <div class="form-row">
+
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="domicile">
+            <label class="mdl-textfield__label" for="sample3">Domicile</label>
+
+            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+                for="demo-menu-lower-left">
+              <li class="mdl-menu__item">Some Action</li>
+              <li class="mdl-menu__item mdl-menu__item--full-bleed-divider">Another Action</li>
+              <li disabled class="mdl-menu__item">Disabled Action</li>
+              <li class="mdl-menu__item">Yet Another Action</li>
+            </ul>
+            
+          </div>
+
+
+        </div>
+
+
+      </form>
+
+
+    </div>
+    <div class="mdl-cell mdl-cell--3-col"></div>
+  </div>
+
+
+  <div class="mdl-mini-footer fab" style="width:50%">
+    <div class="mdl-mini-footer--left-section">
+      <form method="post">
+        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="action" value="Create tables">Create tables</button>
+      </form>
+    </div>
+    <div class="mdl-mini-footer--right-section">
+      <a href="/shared-data/add" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+        <i class="material-icons">add</i>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}{% endblock %}

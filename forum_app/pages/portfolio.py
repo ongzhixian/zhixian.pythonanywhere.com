@@ -12,7 +12,10 @@ def root_portfolio_get():
 def portfolio_dashboard_page():
     """Web page at '/portfolio/dashboard'"""
     return render_template('portfolio/portfolio_dashboard.html')
-    # Insert mic data
+
+
+
+# Insert mic data
 
 
 # def get_mic_from_csv_file():
