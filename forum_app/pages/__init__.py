@@ -2,7 +2,10 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["root", "mysql", "test", "authentication", "database", "user", "feature", "shared_data", "markdown_service", "basic_art", "dice"]
+__all__ = [
+    "root", "mysql", "test", "authentication", "database", "user", 
+    "feature", "shared_data", "markdown_service", "basic_art", "dice",
+    "client", "portfolio"]
 
 # Page UI Components
 

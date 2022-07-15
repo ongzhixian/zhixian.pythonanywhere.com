@@ -94,6 +94,10 @@ form.column {
     font-size: 3em;
 }
 
+.portfolio-card {
+    margin: 0 1em 1em 0;
+}
+
 .mdl-navigation .header {
     display: block;
     flex-shrink: 0;
