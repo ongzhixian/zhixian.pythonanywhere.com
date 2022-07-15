@@ -30,6 +30,11 @@ def shared_data_dashboard_page():
         "MSCI sector code",
         "FTSE 100 sector code",
 
+
+        "Central Index Key (CIK) number, Standard Industrial Classification (SIC) code, ",
+        "EDGAR (https://www.sec.gov/edgar/quickedgar)"
+
+
         "Wertpapierkennnummer",
         "IATA Airline",
         "IATA Airport",
