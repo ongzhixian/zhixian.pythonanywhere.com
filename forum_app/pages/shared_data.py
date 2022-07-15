@@ -14,6 +14,8 @@ def shared_data_dashboard_page():
     to_implement_data_list = [
         "Country codes", 
         "Market Identifier Code (MIC) (ISO 10383)",
+        "currency codes (ISO 4217)",
+        "ISO 24165 on Digital Token Identifiers (DTI).",
         
         "Classification of Financial Instruments (CFI) (ISO 10962)",
         
@@ -311,6 +313,7 @@ def generate_fake_data():
     logging.info(f"name: {fake.name()}")
     pass
 
+
 @app.route('/shared-data/fake', methods=['POST'])
 def shared_data_fake_post():
     """Web page at '/shared-data/init'"""
@@ -328,3 +331,63 @@ def shared_data_fake_post():
 
     return redirect(url_for('shared_data_fake'))
 
+
+
+@app.route('/shared-data/currency')
+def shared_data_currency():
+    """Web page at '/shared-data/currency'"""
+    # from forum_app.databases.forum_database import MySqlDataProvider
+    # db = MySqlDataProvider('forum')
+    return render_template('shared_data/shared_data_currency.html', isin_list=None)
+
+
+def get_child_element_value(element, child_element_tag_name):
+    child_elements = element.getElementsByTagName(child_element_tag_name)
+    return None if len(child_elements) <= 0 else child_elements[0].firstChild.nodeValue.strip()
+
+
+def get_currency_data_from_file():
+    # Read XML data 
+    # Node: xml.dom.minidom is not secure against maliciously constructed data; used only with trusted data sources.
+    import xml.dom.minidom
+    xml_file_path = path.join(app_path, 'data', 'xml', 'currency-codes-iso-4217.xml')
+    docs = xml.dom.minidom.parse(xml_file_path)
+    code_list = []
+    maxlen = 0
+    ccy_list = docs.getElementsByTagName("CcyNtry")
+    for ccy in ccy_list:
+        country_name = get_child_element_value(ccy, "CtryNm")
+        currency_name = get_child_element_value(ccy, "CcyNm")
+        # is_fund = get_child_element_attribute_value(ccy, "CcyNm", "IsFund")
+        currency_code = get_child_element_value(ccy, "Ccy")
+        currency_number = get_child_element_value(ccy, "CcyNbr")
+        currency_minor_unit = get_child_element_value(ccy, "CcyMnrUnts")
+        currency_minor_unit = int(currency_minor_unit) if currency_minor_unit is not None and currency_minor_unit.isdigit() else None
+        code_list.append([country_name, currency_name, currency_code, currency_number, currency_minor_unit])
+        maxlen = max(maxlen, len(currency_name))
+    logging.debug("Number of currencies: %d", len(code_list))
+    return code_list
+
+def insert_currency_data():
+    ccy_list = get_currency_data_from_file()
+    from forum_app.databases.forum_database import MySqlDataProvider
+    db = MySqlDataProvider('forum')
+    sql = """INSERT INTO currency (country_name, name, code, number, minor_unit) VALUES (%s, %s, %s, %s, %s)"""
+    db.execute_many(sql, ccy_list)
+
+@app.route('/shared-data/currency', methods=['POST'])
+def shared_data_currency_post():
+    """Web page at '/shared-data/currency'"""
+    logging.info("POST to shared_data_currency_post")
+
+    action_map = {
+        'Insert currency data': insert_currency_data
+    }
+
+    if 'action' not in request.form:
+        return
+    
+    action = request.form['action']
+    action_map[action]()
+
+    return redirect(url_for('shared_data_currency'))
