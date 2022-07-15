@@ -1,6 +1,7 @@
-{% import "./_macros/_default.html" as macros %}
+{% import "./_macros/_home.html" as macros with context %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <!-- Basic Page Needs
@@ -22,49 +23,83 @@
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="/css/mdl/material.min.css" />
+  <link rel="stylesheet" href="/css/materialize/materialize.min.css" />
   <link rel="stylesheet" href="/css/site.css" />
-  {% block head_link %}{% endblock %}
+  {%- block head_link %}{% endblock %}
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="icon" type="image/png" href="/images/favicon.png">
 
-  </head>
+</head>
+
 <body>
-  
+
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        
+        <span class="mdl-layout-title">{{self.title()}}</span>
+        
+        <div class="mdl-layout-spacer"></div>
+
+        <div class="android-navigation-container">
+          <nav class="android-navigation mdl-navigation">
+            <!-- 
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/forums">Forums</a>
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/mysql">MySql</a>
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/link-dump">Link Dump</a>
+            <a class="mdl-navigation__link mdl-typography--text-uppercase" href="/database">Database</a> 
+            -->
+          </nav>
+        </div>
+
+        {{ macros.application_dropdown() }}
+
+        <!-- 
+        <div class="dropdown" id="application_dropdown">
+          <button id="application_selector_xc" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">arrow_drop_down</i>
+          </button>
+
+          <div class="mdl-menu__container is-upgraded">
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="application_selector_xc">
+              <li class="mdl-menu__item">Application 11</li>
+              <li class="mdl-menu__item">Application 12</li>
+              <li disabled class="mdl-menu__item">Application 13</li>
+              <li class="mdl-menu__item">Application 14</li>
+            </ul>
+          </div>
+        </div> 
+        -->
+
+        {{ macros.login_dropdown() }}
+
+      </div>
+
+    </header>
+
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Sitemap</span>
+      {{ macros.shared_drawer() }}
+      {%- block drawer %}{% endblock %}
+    </div>
 
     <main class="mdl-layout__content">
-      {% block content %}
-      <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
-        <div class="page-content"><!-- Your content goes here -->Tab content 1</div>
-      </section>
-      <section class="mdl-layout__tab-panel" id="scroll-tab-2">
-        <div class="page-content"><!-- Your content goes here -->Tab content 2</div>
-      </section>
-      <section class="mdl-layout__tab-panel" id="scroll-tab-3">
-        <div class="page-content"><!-- Your content goes here -->Tab content 3</div>
-      </section>
-      <section class="mdl-layout__tab-panel" id="scroll-tab-4">
-        <div class="page-content"><!-- Your content goes here -->Tab content 4</div>
-      </section>
-      <section class="mdl-layout__tab-panel" id="scroll-tab-5">
-        <div class="page-content"><!-- Your content goes here -->Tab content 5</div>
-      </section>
-      <section class="mdl-layout__tab-panel" id="scroll-tab-6">
-        <div class="page-content"><!-- Your content goes here -->Tab content 6</div>
-      </section>
+      {%- block content %}
+      <p>Put content here</p>
       {% endblock %}
-
     </main>
 
     <footer class="mdl-mini-footer">
       <div class="mdl-mini-footer__left-section">
-        <div class="mdl-logo">{{self.title()}}</div>
+        <!-- <div class="mdl-logo">{{self.title()}}</div> -->
         <ul class="mdl-mini-footer__link-list">
-          <li><a href="#">Help</a></li>
           <li><a href="#">Privacy & Terms</a></li>
+          <!-- 
+          <li><a href="#">Help</a></li>
+          
+          -->
         </ul>
       </div>
     </footer>
@@ -73,10 +108,10 @@
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-
-<!-- End Document
+  <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <script src="/js/mdl/material.min.js"></script>
+  <script src="/js/materialize/materialize.min.js"></script>
   {% block scripts %}{% endblock %}
 </body>
+
 </html>

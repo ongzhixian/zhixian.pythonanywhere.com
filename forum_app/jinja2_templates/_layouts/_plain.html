@@ -6,24 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/css/materialize/materialize.min.css"  media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="/css/mdl/material.min.css" />
+    <link rel="stylesheet" href="/css/site.css" />
     {% block head_link %}{% endblock %}
     <link rel="icon" type="image/png" href="/images/favicon.png">
   </head>
 
   <body>
-
-    <nav class="teal lighten-2">
-      <div class="nav-wrapper">
-        <a href="/" class="brand-logo">Logo</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="sass.html">Sass</a></li>
-          <li><a href="badges.html">Components</a></li>
-          <li><a href="collapsible.html">JavaScript</a></li>
-        </ul>
-      </div>
-    </nav>
-    
     {% block content %}Place content here{% endblock %}
 
     <script type="text/javascript" src="/js/materialize/materialize.min.js"></script>
