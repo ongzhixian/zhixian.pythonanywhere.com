@@ -13,20 +13,57 @@
 
   <body>
 
-    <nav class="teal lighten-2">
+    <nav class="blue darken-4">
       <div class="nav-wrapper">
-        <a href="/" class="brand-logo">Logo</a>
+        <span data-target="slide-out" class="sidenav-trigger show-on-large interactive"><i class="material-icons">menu</i></span>
+        <a href="/" class="brand-logo">{{self.title()}}</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="sass.html">Sass</a></li>
-          <li><a href="badges.html">Components</a></li>
-          <li><a href="collapsible.html">JavaScript</a></li>
+          <!-- applications -->
+          {% if g.application == None %}
+          <li><a href="/client/dashboard">Anonymous</a></li>
+          {% else %}
+          <li><a href="/client/dashboard">Clients</a></li>
+          <li><a href="/portfolio/dashboard">Portfolios</a></li>
+          {% endif %}
+          <!-- <li><a href="collapsible.html">Miscellaneous</a></li> -->
         </ul>
       </div>
     </nav>
+
+    <ul id="slide-out" class="sidenav">
+      <li>
+        <div class="user-view">
+          <div class="background">
+            <img src="/images/placeholders/office.jpg">
+          </div>
+          <a href="#user"><img class="circle" src="/images/placeholders/yuna.jpg"></a>
+          <a href="#name"><span class="purple-text name">John Doe</span></a>
+          <a href="#email"><span class="grey-text email">jdandturk@gmail.com</span></a>
+        </div>
+      </li>
+      <li><a href="/"><i class="material-icons">home</i>Home</a></li>
+      <!-- <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li> -->
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Applications</a></li>
+      <li><a href="/portfolio/dashboard">Investment Portfolios</a></li>
+      <li><a href="/inventory/dashabord">Inventory</a></li>
+      <li><a href="/other/dashboard">Others...</a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Administration</a></li>
+      <li><a class="waves-effect" href="/database/dashboard">Database</a></li>
+      <li><a class="waves-effect" href="/feature/dashboard">Feature</a></li>
+    </ul>
+    
     
     {% block content %}Place content here{% endblock %}
 
     <script type="text/javascript" src="/js/materialize/materialize.min.js"></script>
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems);
+    });
+    </script>
     {% block scripts %}{% endblock %}
   </body>
 </html>

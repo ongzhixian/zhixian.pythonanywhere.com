@@ -6,8 +6,11 @@ from forum_app.modules import app_state
 
 @app.before_request
 def before_each_request():
-    if "username" in session:
-        g.username = session["username"]
+    # if "username" in session:
+    #     g.username = session["username"]
+    g.username = session["username"] if "username" in session else None
+    g.roles = session["roles"] if "roles" in session else None
+    g.application = session["application"] if "application" in session else None
 
 # Defining menu items for various menus
 # Note: It is possible to define menu on g as well like so:

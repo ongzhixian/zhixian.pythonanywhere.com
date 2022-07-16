@@ -14,18 +14,19 @@ def root_get():
 @app.route('/forum')
 @login_required
 def forum_get():
-    """GET /"""
+    """TODO: Reorganize; GET /"""
+    
     return render_template('forum_get.html')
 
 @app.route('/chart-examples')
 @login_required
 def chart_examples_get():
-    """GET /"""
+    """TODO: Reorganize; GET /"""
     return render_template('chart_examples_get.html')
 
 @app.route('/qrcode')
 def qrcode_get():
-    """GET /"""
+    """TODO: Reorganize; GET /"""
     data = "dummy qr data"
     
     query_params = request.args
@@ -43,7 +44,7 @@ def qrcode_get():
 @app.route('/link-dump', methods=['GET', 'POST'])
 @login_required
 def link_dump_get():
-    """GET /"""
+    """TODO: Reorganize; GET /"""
     # if request.method == 'POST':
     #     url_text = request.form['urlText']
     #     url_list = url_text.splitlines()

@@ -1,3 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant&family=News+Cycle:wght@400;700&display=swap');
+
+:root {
+    --default-text: 'Assistant', sans-serif;
+    --header-text: 'News Cycle', sans-serif;
+    
+}
+
+html {
+    font-family: var(--default-text);
+}
+
+nav {
+    padding: 0 1em;
+}
+
+.interactive {
+    cursor: pointer;
+}
+
+.brand-logo {
+    font-family: var(--header-text);
+}
 
 .page-content {
     padding:1em;
@@ -28,8 +51,8 @@ input.large-text {
 }
 
 .card-holder {
-    display: flex;
-    flex-wrap: wrap;
+    /* display: flex;
+    flex-wrap: wrap; */
     padding: 1em;
 }
 
@@ -77,10 +100,39 @@ form.column {
 }
 
 .display-card {
-    margin: 0 1em 1em 0;
+    /* margin: 0 1em 1em 0; */
 }
 
-.display-card .mdl-card__title {
+.display-card .card-panel {
+    height: 100%;
+}
+
+.display-card .header {
+    text-align: center;
+    padding-top: 1.6em;
+}
+
+.display-card .header .title {
+    font-family: var(--header-text);
+    font-size: 1.26em;
+    color: grey;
+}
+
+.display-card .content {
+    text-align: center;
+}
+
+.display-card .actions {
+    border-top
+}
+
+.display-card hr {
+    border-top: 1px solid #ddd;
+    margin-top: 1.6em;
+    color: transparent;
+}
+
+/* .display-card .mdl-card__title {
     align-self: center;
     margin-top: 1.67em;
     color: #757575;
@@ -89,7 +141,7 @@ form.column {
 .display-card .mdl-card__supporting-text {
     line-height: normal;
     text-align: center;
-}
+} */
 
 .display-card .counter-text {
     font-size: 3em;
