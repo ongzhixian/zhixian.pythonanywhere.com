@@ -21,6 +21,7 @@ class RbacFeature(BaseFeatureInterface):
     def initialize(self):
         """Things to do when feature is initialized (eg. restore state from persistence storage) (on initialize_features)"""
         super().initialize()
+        self.register()
 
 
     def register(self):

@@ -2,7 +2,10 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["authentication", "rbac", "shared_data"]
+__all__ = ["authentication", "rbac", "shared_data",
+    "client", "portfolio", "inventory",
+    "note", "tag",
+    "dice"]
 
 import logging
 from forum_app.modules import app_state

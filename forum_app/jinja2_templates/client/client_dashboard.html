@@ -2,8 +2,7 @@
 
 {% block title %}Clients{% endblock %}
 
-{% block head_link %}<link rel="stylesheet" href="/css/mdl/material.min.css" />
-<link rel="stylesheet" href="/css/mdl/material.min.css" />{% endblock %}
+{% block head_link %}{% endblock %}
 
 {% block content %}
 
@@ -15,7 +14,51 @@
     <span>Market identifier codes</span>
   </div> -->
 
-  <div class="mdl-grid ">
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Item Name</th>
+            <th>Item Price</th>
+        </tr>
+      </thead>
+  
+      <tbody>
+        <tr>
+          <td>Alvin</td>
+          <td>Eclair</td>
+          <td>$0.87</td>
+        </tr>
+        <tr>
+          <td>Alan</td>
+          <td>Jellybean</td>
+          <td>$3.76</td>
+        </tr>
+        <tr>
+          <td>Jonathan</td>
+          <td>Lollipop</td>
+          <td>$7.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="footer action container">
+      <div class="row">
+
+        <div class="col s6"></div>
+        <div class="col s6 right-align">
+          <a href="/client/new" class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  
+        
+
+  <!-- <div class="mdl-grid ">
     <div class="mdl-cell mdl-cell--3-col"></div>
     <div class="mdl-cell mdl-cell--6-col">
       <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
@@ -72,14 +115,14 @@
     </div>
 
     <div class="mdl-cell mdl-cell--3-col"></div>
-  </div>
+  </div> -->
 
 
 
 
 
 
-  <div class="mdl-mini-footer fab" style="width:50%">
+  <!-- <div class="mdl-mini-footer fab" style="width:50%">
     <div class="mdl-mini-footer--left-section">
       <form method="post">
         <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="action" value="Create tables">Create mock data</button>
@@ -90,7 +133,7 @@
         <span class="material-icons">add</span>
       </a>
     </div>
-  </div>
+  </div> -->
 
 </div>
 

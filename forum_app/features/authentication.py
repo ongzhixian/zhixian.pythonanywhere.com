@@ -27,6 +27,7 @@ class AuthenticationFeature(BaseFeatureInterface):
     def initialize(self):
         """Things to do when feature is initialized (eg. restore state from persistence storage) (on initialize_features)"""
         super().initialize()
+        self.register()
 
 
     def register(self):
@@ -40,7 +41,7 @@ class AuthenticationFeature(BaseFeatureInterface):
     def app_state_changed(self, event_data=None):
         """Things to do whenever app_state changed"""
         is_my_event = self.is_my_event(event_data)
-        log.debug(f"is_my_event {is_my_event}")
+        # log.debug(f"is_my_event {is_my_event}")
         if not self.is_my_event(event_data):
             return
 

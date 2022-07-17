@@ -55,7 +55,7 @@ class Feature:
 
     def get_registered_feature_list(self):
         records = self.db.fetch_list(
-            "SELECT * FROM _feature;", None)
+            "SELECT * FROM _feature ORDER BY name;", None)
         
         if records is None:
             return []

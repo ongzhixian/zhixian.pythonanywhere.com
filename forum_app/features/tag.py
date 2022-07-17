@@ -1,9 +1,7 @@
-import logging
-
 from forum_app.modules import app_state, log
 from forum_app.features import BaseFeatureInterface
 
-class SharedDataFeature(BaseFeatureInterface):
+class TagFeature(BaseFeatureInterface):
 
     def __init__(self):
         super().__init__()
@@ -11,12 +9,12 @@ class SharedDataFeature(BaseFeatureInterface):
     @property
     def feature_name(self):
         """feature_name getter property. (required)"""
-        return "Shared data"
+        return "Tag"
 
     @property
     def feature_description(self):
         """feature_description getter property. (required)"""
-        return "Enable shared data module"
+        return "Enable tag module"
 
     def initialize(self):
         """Things to do when feature is initialized (eg. restore state from persistence storage) (on initialize_features)"""
@@ -32,15 +30,16 @@ class SharedDataFeature(BaseFeatureInterface):
 
     def update_ui(self):
         # We want to selective add/remove logins menu item to admin menu in drawer
-        menu_item_id = "shared-data-dashboard"
-        
-        if self.is_enable:
-            logging.debug("Add to drawer_admin_menu")
-            app_state.add_to_menu('drawer_admin_menu', menu_item_id, "Shared data", "/shared-data/dashboard", False, "table_rows",)
-        else:
-            # Remove login menu item to admin menu in drawer
-            logging.debug("Remove drawer_admin_menu")
-            app_state.remove_from_menu('drawer_admin_menu', menu_item_id)
+        # menu_item_id = "shared-data-dashboard"
+        #
+        # if self.is_enable:
+        #     logging.debug("Add to drawer_admin_menu")
+        #     app_state.add_to_menu('drawer_admin_menu', menu_item_id, "Shared data", "/shared-data/dashboard", False, "table_rows",)
+        # else:
+        #     # Remove login menu item to admin menu in drawer
+        #     logging.debug("Remove drawer_admin_menu")
+        #     app_state.remove_from_menu('drawer_admin_menu', menu_item_id)
+        pass
 
     def app_state_changed(self, event_data=None):
         """Things to do whenever app_state changed"""
