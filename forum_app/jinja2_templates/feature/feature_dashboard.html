@@ -38,7 +38,13 @@
             {% for feature in feature_list %}
             <tr>
               <td>{{loop.index}}</td>
-              <td><a href="/feature/{{ feature[1] | replace(' ', '-') | lower }}">{{feature[1]}}</a></td>
+              <td>
+                <a href="/feature/option/{{feature[1] | replace(' ', '-') | lower }}" >
+                  <span class="material-icons" style="vertical-align: middle;">settings</span>
+                </a>
+
+                <a href="/feature/{{ feature[1] | replace(' ', '-') | lower }}" style="vertical-align: middle;">{{feature[1]}}</a>
+              </td>
               <td>{{feature[2]}}</td>
               <td>
                 <div class="switch">

@@ -1,10 +1,12 @@
 from forum_app.modules import app_state, log
 from forum_app.features import BaseFeatureInterface
+from forum_app.databases.mysql_data_provider import MySqlDataProvider
 
 class ClientFeature(BaseFeatureInterface):
 
     def __init__(self):
         super().__init__()
+        self.db = MySqlDataProvider('forum')
 
     @property
     def feature_name(self):
@@ -47,3 +49,18 @@ class ClientFeature(BaseFeatureInterface):
             return
         log.debug(f"{self.feature_name} is_enable: {self.is_enable} event_data {event_data}")
         self.update_ui()
+
+
+    # Feature specific functions below
+
+    def add_new(self, first_name_field, last_name_field):
+        """Add a new client"""
+        # from databases.mysql_data_provider import MySqlDataProvider
+        # db = MySqlDataProvider('forum')
+
+        # rows_affected = self.db.execute(
+        #     "INSERT INTO login (username, password_salt, password_hash) VALUES (%s, %s, %s);", 
+        #     (username, password_salt, password_hash))
+        # print(f"Rows affected {rows_affected}")
+        # return rows_affected
+        pass

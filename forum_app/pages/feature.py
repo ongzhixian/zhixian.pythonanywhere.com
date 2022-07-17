@@ -21,9 +21,33 @@ def feature_dashboard_page():
     log.info("Render 'feature/feature_dashboard.html'")
     return render_template('feature/feature_dashboard.html', feature_list = feature_list)
 
+
+@app.route('/feature/option/<feature_name>')
+def feature_option_page(feature_name):
+    """Web page at '/feature/option/<feature>'"""
+    # Get list of options applicable for feature
+    # feature = Feature()
+    # feature_list = feature.get_registered_feature_list()
+    # log.info("Render 'feature/feature_options.html'")
+    option_list = []
+    az = BaseFeatureInterface.get_feature_name('aaa')
+    return render_template('feature/feature_option.html', option_list=option_list)
+
+@app.route('/feature/option/<feature_name>')
+def feature_option_post(feature_name, methods=['POST']):
+    """Web page at '/feature/option/<feature>'"""
+    action = request.form.get("action")
+    feature_name = request.form.get("feature_name")
+    pass
+
+
+
+
 @app.route('/feature/<feature_name>')
 def feature_options_page(feature_name):
-    """Web page at '/feature/<feature>'"""
+    """
+    OBSOLETE
+    Web page at '/feature/<feature>'"""
     # Get list of registered features
     # feature = Feature()
     # feature_list = feature.get_registered_feature_list()
