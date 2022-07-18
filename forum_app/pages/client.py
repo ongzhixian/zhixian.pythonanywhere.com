@@ -13,21 +13,21 @@ def client_dashboard_page():
     """Web page at '/client/dashboard'"""
     return render_template('client/client_dashboard.html')
 
+
 @app.route('/client/new')
 def client_new_page():
     """Web page at '/client/new'"""
     return render_template('client/new_client.html')
 
-
 @app.route('/client/new', methods=['POST'])
 def client_new_post():
     """Web page at '/client/new'"""
-    first_name_field = request.form.get("first_name_field")
-    last_name_field = request.form.get("last_name_field")
+    client_name_field = request.form.get("client_name_field")
+    
 
     from forum_app.features.client import ClientFeature
     client = ClientFeature()
-    client.add_new(first_name_field, last_name_field)
+    rows_affected = client.add_new(client_name_field)
 
     return render_template('client/new_client.html')
 

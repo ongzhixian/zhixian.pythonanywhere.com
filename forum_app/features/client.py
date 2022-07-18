@@ -53,14 +53,10 @@ class ClientFeature(BaseFeatureInterface):
 
     # Feature specific functions below
 
-    def add_new(self, first_name_field, last_name_field):
+    def add_new(self, client_name_field, client_type_id=0):
         """Add a new client"""
-        # from databases.mysql_data_provider import MySqlDataProvider
-        # db = MySqlDataProvider('forum')
-
-        # rows_affected = self.db.execute(
-        #     "INSERT INTO login (username, password_salt, password_hash) VALUES (%s, %s, %s);", 
-        #     (username, password_salt, password_hash))
-        # print(f"Rows affected {rows_affected}")
-        # return rows_affected
-        pass
+        rows_affected = self.db.execute(
+            "INSERT INTO client (name, type_id) VALUES (%s, %s);", 
+            (client_name_field, client_type_id))
+        print(f"Rows affected {rows_affected}")
+        return rows_affected

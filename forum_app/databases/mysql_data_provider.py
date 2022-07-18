@@ -1,5 +1,6 @@
 import logging
 from os import environ, path, walk
+from sqlite3 import connect
 
 from forum_app import app_secrets, app_path
 from forum_app.databases import BaseDataProviderInterface
@@ -195,13 +196,22 @@ class MySqlDataProvider(BaseDataProviderInterface):
         return results
 
     def execute(self, sql, args=None):
-        connection = self.get_connection()
-        mycursor = connection.cursor()
-        mycursor.execute(sql, args)
-        mycursor.close()
-        connection.commit()
-        connection.close()
-        return mycursor.rowcount
+        connection = None
+        mycursor = None
+        try:
+            connection = self.get_connection()
+            mycursor = connection.cursor()
+            mycursor.execute(sql, args)
+        except Exception as ex:
+            logging.error(ex)
+        finally:
+            if mycursor is not None:
+                mycursor.close()
+            if connection is not None:
+                connection.commit()
+                connection.close()
+
+        return 0 if mycursor is None else mycursor.rowcount
 
     def execute_many(self, sql, data_rows):
         connection = self.get_connection()

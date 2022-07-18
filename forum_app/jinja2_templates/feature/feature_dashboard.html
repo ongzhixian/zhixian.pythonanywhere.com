@@ -30,6 +30,7 @@
                 <th>s/n</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Characteristics</th>
                 <th>Is enable</th>
             </tr>
           </thead>
@@ -44,8 +45,17 @@
                 </a>
 
                 <a href="/feature/{{ feature[1] | replace(' ', '-') | lower }}" style="vertical-align: middle;">{{feature[1]}}</a>
+                
               </td>
-              <td>{{feature[2]}}</td>
+              <td>{{feature[2]}}
+              </td>
+              <td>
+                <b style="color: #aaa;">
+                  <a href="/{{ feature[1] | replace(' ', '-') | lower }}/dashboard">UI</a>
+                </b> 
+                
+                <b style="color: #aaa; margin-left: 1.2em;">API</b>
+              </td>
               <td>
                 <div class="switch">
                   <label>
