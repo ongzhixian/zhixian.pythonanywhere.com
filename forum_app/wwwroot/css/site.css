@@ -157,6 +157,24 @@ div.footer.action {
     margin: 0 1em 1em 0;
 }
 
+
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+    background-color: rgba(181,178,246,0.2);
+    outline: none;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+    color:#2196F3;
+}
+
+.tabs .tab a {
+    color:#2196F3;
+}
+
+.tabs .indicator {
+    background-color: #2196F3;
+}
+
 .mdl-navigation .header {
     display: block;
     flex-shrink: 0;

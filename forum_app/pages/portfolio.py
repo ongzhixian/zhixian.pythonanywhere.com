@@ -26,10 +26,13 @@ def portfolio_dashboard_page():
         portfolio_list=records)
 
 
-@app.route('/portfolio/<portfolio_id>')
-def root_portfolio_get(portfolio_id):
+@app.route('/portfolio/detail/<portfolio_id>')
+def portfolio_detail_page(portfolio_id):
     """Web page at '/portfolio/<portfolio_id>'"""
-    return redirect('/portfolio/portfolio_detail.html')
+    position_list = []
+    return render_template('/portfolio/portfolio_detail.html',
+        position_list=position_list)
+
 
 
 @app.route('/portfolio/new')
