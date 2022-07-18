@@ -11,7 +11,9 @@ CREATE TABLE IF NOT EXISTS `client_type` (
 COLLATE='utf8mb4_unicode_ci'
 ;
 
-INSERT INTO client_type (id, name) VALUES (0, 'GENERIC');
+INSERT INTO client_type (id, name) VALUES (1, 'Generic'); -- If id is zero, it will use auto-increment unless we SET sql_mode='NO_AUTO_VALUE_ON_ZERO';
+INSERT INTO client_type (name) VALUES ('Investment');
+INSERT INTO client_type (name) VALUES ('Inventory');
 
 CREATE TABLE IF NOT EXISTS `client` (
 	`id`					INT UNSIGNED NOT NULL AUTO_INCREMENT,

@@ -77,3 +77,9 @@ LIMIT 25;
             return result_sets[0]
         else:
             return []
+
+    def get_client_type_list(self):
+        records = self.db.fetch_list("SELECT id, name FROM client_type ORDER BY name;", None)
+        if records is None:
+            return []
+        return records

@@ -13,120 +13,55 @@
     <span>New client</span>
   </div>
 
-
-  <!-- <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-    <select class="mdl-selectfield__select" id="professsion2" name="professsion">
-      <option value=""></option>
-      <option value="option1">option 1</option>
-      <option value="option2">option 2</option>
-      <option value="option3">option 3</option>
-      <option value="option4">option 4</option>
-      <option value="option5">option 5</option>
-    </select>
-    <label class="mdl-selectfield__label" for="professsion2">Profession</label>
-  </div> -->
-
   <div class="container">
     
-  <div class="row">
-    <form method="post" class="col s12">
+    <div class="row">
+      <form method="post" class="col s12">
 
-      <div class="row">
-        <div class="input-field col s6">
-          <input id="client_name" name="client_name_field" type="text" class="validate">
-          <label for="client_name">Client Name</label>
-        </div>
-        <div class="input-field col s6">
-          <!-- <input id="last_name" name="last_name_field" type="text" class="validate">
-          <label for="last_name">Last Name</label> -->
-        </div>
-      </div>
+        <div class="row">
+          <div class="input-field col s3">
+            <input id="client_name" name="client_name_field" type="text" class="validate">
+            <label for="client_name">Client Name</label>
+          </div>
 
-      <!--
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="email" type="email" class="validate">
-          <label for="email">Email</label>
-        </div>
-      </div>
+          <div class="input-field col s3">
+            <select id="client_type" name="client_type_dropdown">
+              {% for client_type in client_type_list%}
+              <option value="{{client_type[0]}}" {% if 'client_type[0]' == '0' %}selected{% endif %}>{{client_type[1]}}</option>
+              {% endfor %}
+              <!-- <option value="1" disabled selected>Choose client type</option>
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option> -->
+            </select>
+            <label for="client_type">Client type</label>
+          </div>
 
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="email" type="email" class="validate">
-          <label for="email">Domicile</label>
+          <div class="input-field col s6"></div>
         </div>
-      </div>
-      -->
 
-      <div class="row">
-        <div class="col s12">
-          <button class="btn waves-effect waves-light" type="submit" name="action" value="new">Submit
-            <i class="material-icons right">send</i>
-          </button>
+        <div class="row">
+          <div class="col s12">
+            <button class="btn waves-effect waves-light" type="submit" name="action" value="new">Submit
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
         </div>
-      </div>
-      
-    </form>
-  </div>
         
-  </div>
-
-
-  <!-- <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--3-col"></div>
-    <div class="mdl-cell mdl-cell--6-col">
-
-      <form method="post">
-
-        <div class="form-row">
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="sample3">
-            <label class="mdl-textfield__label" for="sample3">First Name</label>
-          </div>
-          
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="sample3">
-            <label class="mdl-textfield__label" for="sample3">Last Name</label>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="domicile">
-            <label class="mdl-textfield__label" for="sample3">Domicile</label>
-
-            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-                for="demo-menu-lower-left">
-              <li class="mdl-menu__item">Some Action</li>
-              <li class="mdl-menu__item mdl-menu__item--full-bleed-divider">Another Action</li>
-              <li disabled class="mdl-menu__item">Disabled Action</li>
-              <li class="mdl-menu__item">Yet Another Action</li>
-            </ul>
-          </div>
-        </div>
       </form>
-    </div>
-    <div class="mdl-cell mdl-cell--3-col"></div>
-  </div> -->
+    </div><!-- end of row -->
+        
+  </div><!-- end of container -->
 
-
-  <!--
-  <div class="mdl-mini-footer fab" style="width:50%">
-    <div class="mdl-mini-footer--left-section">
-      <form method="post">
-        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="action" value="Create tables">Create tables</button>
-      </form>
-    </div>
-    <div class="mdl-mini-footer--right-section">
-      <a href="/shared-data/add" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-        <i class="material-icons">add</i>
-      </a>
-    </div>
-  </div>
-  -->
-
-</div>
+</div><!-- end of page-content -->
 
 {% endblock %}
 
-{% block scripts %}{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('select');
+      var instances = M.FormSelect.init(elems);
+  });
+</script>
+{% endblock %}
