@@ -53,10 +53,9 @@ class Feature:
         # password_hash = m.hexdigest()
         # return password_hash == stored_password_hash
 
-    def get_registered_feature_list(self):
-        records = self.db.fetch_list(
-            "SELECT * FROM _feature ORDER BY name;", None)
-        
+    def get_registered_feature_list(self, filter=''):
+        records = self.db.fetch_list("SELECT * FROM _feature WHERE name LIKE %s ORDER BY name;", (f"%{filter}%",))
+        logging.debug(f"Registered feature list: {len(records)}")
         if records is None:
             return []
     

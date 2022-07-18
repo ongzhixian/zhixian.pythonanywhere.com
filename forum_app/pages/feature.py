@@ -21,6 +21,19 @@ def feature_dashboard_page():
     log.info("Render 'feature/feature_dashboard.html'")
     return render_template('feature/feature_dashboard.html', feature_list = feature_list)
 
+@app.route('/feature/dashboard', methods=['POST'])
+def feature_dashboard_post():
+    """Web page at '/feature/dashboard'"""
+    # Get list of registered features
+    feature_name = request.form.get("feature_name_field")
+    
+    feature = Feature()
+    feature_list = feature.get_registered_feature_list(feature_name)
+    log.info("Render 'feature/feature_dashboard.html'")
+    return render_template('feature/feature_dashboard.html', 
+        feature_list = feature_list, 
+        search_term = feature_name)
+
 
 @app.route('/feature/option/<feature_name>')
 def feature_option_page(feature_name):
@@ -84,29 +97,27 @@ def get_validated_toggle_content(form):
         "is_enable": is_enable
     }
 
-@app.route('/feature/dashboard', methods=['POST'])
-def feature_dashboard_post():
-    """Handles when user updates a feature toggle
-    Originally implemented because pure API call does not update UI.
-    After implementation, found that this implementation has its own set of issues:
-    1. Stuttering on multiple consecutive updates.
-    2. Blink on screen refresh
-    Keeping this for future reference on why this is bad.
-    Favouring API call
-    """
-
-    response_message = "Changes not saved"
-    content = get_validated_toggle_content(request.form)
-    if not content:
-        return redirect(url_for("feature_dashboard_page"))
-
-    base_feature = BaseFeatureInterface()
-    change_saved = base_feature.toggle_enable(content['feature_name'], content['is_enable'])
-    if change_saved:
-        enabled_message = "enabled" if content['is_enable'] else "disabled"
-        response_message = f"{content['feature_name']} {enabled_message}"
-    logging.info(response_message)
-    return redirect(url_for("feature_dashboard_page"))
+# @app.route('/feature/dashboard', methods=['POST'])
+# def feature_dashboard_post():
+#     """Handles when user updates a feature toggle
+#     Originally implemented because pure API call does not update UI.
+#     After implementation, found that this implementation has its own set of issues:
+#     1. Stuttering on multiple consecutive updates.
+#     2. Blink on screen refresh
+#     Keeping this for future reference on why this is bad.
+#     Favouring API call
+#     """
+#     response_message = "Changes not saved"
+#     content = get_validated_toggle_content(request.form)
+#     if not content:
+#         return redirect(url_for("feature_dashboard_page"))
+#     base_feature = BaseFeatureInterface()
+#     change_saved = base_feature.toggle_enable(content['feature_name'], content['is_enable'])
+#     if change_saved:
+#         enabled_message = "enabled" if content['is_enable'] else "disabled"
+#         response_message = f"{content['feature_name']} {enabled_message}"
+#     logging.info(response_message)
+#     return redirect(url_for("feature_dashboard_page"))
 
 
 @app.route('/feature/register')

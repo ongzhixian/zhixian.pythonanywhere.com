@@ -15,14 +15,14 @@
       <div class="col s12">
         <form method="post">
           <div class="col s12">
-            <!-- This is an inline input field: -->
             <div class="input-field inline">
-              <input id="email_inline" type="text">
-              <label for="email_inline">Feature name</label>
-              <!-- <span class="helper-text" data-error="wrong" data-success="right">Search for feature name</span> -->
+              <input type="text" id="feature_name_field" name="feature_name_field" value="{{search_term}}">
+              <label for="feature_name_field">Feature name</label>
             </div>
           </div>
         </form>
+
+        {% if feature_list %}
 
         <table>
           <thead>
@@ -63,6 +63,18 @@
             {% endfor %}
           </tbody>
         </table>
+
+        {% else %}
+
+        {% if search_term %}
+        <p>No features with {{search_term}} found.</p>
+        {% else %}
+        <p>No features found.</p>
+        {% endif %}
+
+        
+
+        {% endif %}
       </div>
 
     </div>
