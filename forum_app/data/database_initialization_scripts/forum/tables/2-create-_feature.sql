@@ -12,4 +12,9 @@ CREATE TABLE IF NOT EXISTS `_feature` (
 	PRIMARY KEY (`id`)
 ) COLLATE='utf8mb4_unicode_ci';
 
+-- ALTER TABLE `_feature`
+--     ADD COLUMN `has_api` 		BOOLEAN NOT NULL DEFAULT FALSE,
+--     ADD COLUMN `has_pages` 		BOOLEAN NOT NULL DEFAULT FALSE,
+--     ADD COLUMN `template_path`	VARCHAR(128) NOT NULL DEFAULT '';
+	
 SET sql_notes = 1; -- enable warnings
