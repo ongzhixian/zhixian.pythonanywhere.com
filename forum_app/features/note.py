@@ -1,3 +1,5 @@
+from flask import render_template, redirect, url_for
+
 from forum_app.modules import app_state, log
 from forum_app.features import BaseFeatureInterface
 
@@ -47,3 +49,5 @@ class NoteFeature(BaseFeatureInterface):
             return
         log.debug(f"{self.feature_name} is_enable: {self.is_enable} event_data {event_data}")
         self.update_ui()
+
+    # Feature specific methods
