@@ -100,7 +100,7 @@ def authentication_check(f):
         if not is__authentication_feature_enable:
             return f(*args, **kwargs)
         # Else authentication feature is enabled, and then we should check...
-        if 'username' in g:
+        if 'username' in g and g.username is not None:
             logging.debug(f"Is valid user: {g.username}")
             return f(*args, **kwargs)
         else:

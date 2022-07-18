@@ -7,6 +7,7 @@ from forum_app.modules import app_state
 @app.before_request
 def before_each_request():
     # if "username" in session:
+    #     logging.debug("username is in session")
     #     g.username = session["username"]
     g.username = session["username"] if "username" in session else None
     g.roles = session["roles"] if "roles" in session else None
