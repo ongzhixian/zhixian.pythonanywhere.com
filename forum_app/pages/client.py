@@ -14,16 +14,28 @@ def client_dashboard_page():
     from forum_app.features.client import ClientFeature
     client = ClientFeature()
     records = client.get_client_list()
-    return render_template('client/client_dashboard.html', client_list=records)
+    client_type_list = client.get_client_type_list()
+    selected_client_type = 1
+    return render_template('client/client_dashboard.html', 
+        client_type_list=client_type_list,
+        client_list=records,
+        selected_client_type=selected_client_type)
 
 @app.route('/client/dashboard', methods=['POST'])
 def client_dashboard_post():
     """Web page at '/client/dashboard'"""
     client_name = request.form.get("client_name_field")
+    client_type_dropdown = request.form.get("client_type_dropdown")
+    logging.debug(f"client_name {client_name},  client_type_dropdown {client_type_dropdown}")
     from forum_app.features.client import ClientFeature
     client = ClientFeature()
-    records = client.get_client_list(client_name)
-    return render_template('client/client_dashboard.html', client_list=records, search_term=client_name)
+    records = client.get_client_list(client_name, client_type_dropdown)
+    client_type_list = client.get_client_type_list()
+    return render_template('client/client_dashboard.html', 
+        client_type_list=client_type_list,
+        client_list=records, 
+        search_term=client_name,
+        selected_client_type=client_type_dropdown,)
 
 
 @app.route('/client/new')
@@ -34,19 +46,24 @@ def client_new_page():
     from forum_app.features.client import ClientFeature
     client = ClientFeature()
     client_type_list = client.get_client_type_list()
-    return render_template('client/new_client.html', client_type_list=client_type_list)
+    selected_client_type = 1
+    return render_template('client/new_client.html', 
+        selected_client_type=selected_client_type,
+        client_type_list=client_type_list)
 
 @app.route('/client/new', methods=['POST'])
 def client_new_post():
     """Web page at '/client/new'"""
     client_name_field = request.form.get("client_name_field")
+    client_type_dropdown = request.form.get("client_type_dropdown")
 
     from forum_app.features.client import ClientFeature
     client = ClientFeature()
-    rows_affected = client.add_new(client_name_field)
+    rows_affected = client.add_new(client_name_field, client_type_dropdown)
     client_type_list = client.get_client_type_list()
     message = 'Success' if rows_affected > 0 else 'Failed'
     return render_template('client/new_client.html', 
+        selected_client_type=client_type_dropdown,
         client_type_list=client_type_list,
         message=message)
 

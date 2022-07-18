@@ -26,18 +26,16 @@
 
           <div class="input-field col s3">
             <select id="client_type" name="client_type_dropdown">
-              {% for client_type in client_type_list%}
-              <option value="{{client_type[0]}}" {% if 'client_type[0]' == '0' %}selected{% endif %}>{{client_type[1]}}</option>
+              {% for client_type in client_type_list %}
+              <option value="{{ client_type[0] }}" {% if client_type[0] == selected_client_type|int %}selected{% endif %}>{{ client_type[1] }}</option>
               {% endfor %}
-              <!-- <option value="1" disabled selected>Choose client type</option>
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-              <option value="3">Option 3</option> -->
             </select>
             <label for="client_type">Client type</label>
+            
           </div>
 
           <div class="input-field col s6"></div>
+
         </div>
 
         <div class="row">
@@ -45,6 +43,11 @@
             <button class="btn waves-effect waves-light" type="submit" name="action" value="new">Submit
               <i class="material-icons right">send</i>
             </button>
+
+            {% if message %}
+            <div style="margin-left:1em; display:inline-block;">{{ message }}</div>
+            {% endif %}
+            
           </div>
         </div>
         

@@ -68,11 +68,12 @@ SELECT	(@row_number:=@row_number + 1) AS row_num
 		, id
         , name
 FROM	client
-WHERE   name LIKE %s
+WHERE   name LIKE %s 
+        AND type_id = %s
 ORDER BY name
 LIMIT 25;
         """
-        result_sets = self.db.fetch_record_sets(sql, (f"%{client_name}%",))
+        result_sets = self.db.fetch_record_sets(sql, (f"%{client_name}%", type_id))
         if len(result_sets) > 0:
             return result_sets[0]
         else:
