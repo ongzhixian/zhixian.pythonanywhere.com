@@ -187,7 +187,7 @@ class MySqlDataProvider(BaseDataProviderInterface):
         results = []
         connection = self.get_connection()
         mycursor = connection.cursor()
-        result_sets = mycursor.execute(sql, None, multi=True)
+        result_sets = mycursor.execute(sql, args, multi=True)
         for result_set in result_sets:
             if result_set.with_rows:
                 results.append(result_set.fetchall())
@@ -202,13 +202,13 @@ class MySqlDataProvider(BaseDataProviderInterface):
             connection = self.get_connection()
             mycursor = connection.cursor()
             mycursor.execute(sql, args)
+            connection.commit()
         except Exception as ex:
             logging.error(ex)
         finally:
             if mycursor is not None:
                 mycursor.close()
             if connection is not None:
-                connection.commit()
                 connection.close()
 
         return 0 if mycursor is None else mycursor.rowcount

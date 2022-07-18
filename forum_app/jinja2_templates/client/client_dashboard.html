@@ -15,33 +15,41 @@
   </div> -->
 
   <div class="container">
-    <table>
-      <thead>
-        <tr>
-            <th>Name</th>
-            <th>Item Name</th>
-            <th>Item Price</th>
-        </tr>
-      </thead>
-  
-      <tbody>
-        <tr>
-          <td>Alvin</td>
-          <td>Eclair</td>
-          <td>$0.87</td>
-        </tr>
-        <tr>
-          <td>Alan</td>
-          <td>Jellybean</td>
-          <td>$3.76</td>
-        </tr>
-        <tr>
-          <td>Jonathan</td>
-          <td>Lollipop</td>
-          <td>$7.00</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row">
+      <div class="col s12">
+        <form method="post">
+          <div class="input-field inline">
+            <input type="text" id="client_name_field" name="client_name_field" value="{{search_term}}">
+            <label for="client_name_field">Client name</label>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s6">
+
+        <table>
+          <thead>
+            <tr>
+                <th>s/n</th>
+                <th>Name</th>
+            </tr>
+          </thead>
+      
+          <tbody>
+            {% for client in client_list %}
+            <tr>
+              <td>{{client[0]}}</td>
+              <td class="full-width">{{client[2]}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+      <div class="col s6"></div>
+    </div>
 
     <div class="footer action container">
       <div class="row">
@@ -55,85 +63,6 @@
 
   </div>
 
-  
-        
-
-  <!-- <div class="mdl-grid ">
-    <div class="mdl-cell mdl-cell--3-col"></div>
-    <div class="mdl-cell mdl-cell--6-col">
-      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
-        <thead>
-          <tr>
-            <th class="mdl-data-table__cell--non-numeric">Name</th>
-            <th>Client Id</th>
-            <th>Domicile</th>
-            <th>Asset value</th>
-            <th class="mdl-data-table__cell--non-numeric">Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="mdl-data-table__cell--non-numeric">Acrylic</td>
-            <td>25</td>
-            <td>US</td>
-            <td>$2.90</td>
-            <td class="mdl-data-table__cell--non-numeric">OK</td>
-            <td>
-              <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="login-dropdown-button">
-                <span class="material-icons">more_vert</span>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td class="mdl-data-table__cell--non-numeric">Plywood</td>
-            <td>50</td>
-            <td>SG</td>
-            <td>$1.25</td>
-            <td class="mdl-data-table__cell--non-numeric">OK</td>
-            <td>
-              <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="login-dropdown-button">
-                <span class="material-icons">more_vert</span>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td class="mdl-data-table__cell--non-numeric">Laminate</td>
-            <td>10</td>
-            <td>US</td>
-            <td>$2.35</td>
-            <td class="mdl-data-table__cell--non-numeric">OK</td>
-            <td>
-              <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="login-dropdown-button">
-                <span class="material-icons">more_vert</span>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      
-    </div>
-
-    <div class="mdl-cell mdl-cell--3-col"></div>
-  </div> -->
-
-
-
-
-
-
-  <!-- <div class="mdl-mini-footer fab" style="width:50%">
-    <div class="mdl-mini-footer--left-section">
-      <form method="post">
-        <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" name="action" value="Create tables">Create mock data</button>
-      </form>
-    </div>
-    <div class="mdl-mini-footer--right-section">
-      <a href="/client/new" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-        <span class="material-icons">add</span>
-      </a>
-    </div>
-  </div> -->
 
 </div>
 

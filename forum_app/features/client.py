@@ -60,3 +60,20 @@ class ClientFeature(BaseFeatureInterface):
             (client_name_field, client_type_id))
         print(f"Rows affected {rows_affected}")
         return rows_affected
+
+    def get_client_list(self, client_name='', type_id=0):
+        sql = """
+SET @row_number = 0;
+SELECT	(@row_number:=@row_number + 1) AS row_num
+		, id
+        , name
+FROM	client
+WHERE   name LIKE %s
+ORDER BY name
+LIMIT 25;
+        """
+        result_sets = self.db.fetch_record_sets(sql, (f"%{client_name}%",))
+        if len(result_sets) > 0:
+            return result_sets[0]
+        else:
+            return []

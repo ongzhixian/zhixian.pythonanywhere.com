@@ -11,7 +11,19 @@ def root_client_get():
 @app.route('/client/dashboard')
 def client_dashboard_page():
     """Web page at '/client/dashboard'"""
-    return render_template('client/client_dashboard.html')
+    from forum_app.features.client import ClientFeature
+    client = ClientFeature()
+    records = client.get_client_list()
+    return render_template('client/client_dashboard.html', client_list=records)
+
+@app.route('/client/dashboard', methods=['POST'])
+def client_dashboard_post():
+    """Web page at '/client/dashboard'"""
+    client_name = request.form.get("client_name_field")
+    from forum_app.features.client import ClientFeature
+    client = ClientFeature()
+    records = client.get_client_list(client_name)
+    return render_template('client/client_dashboard.html', client_list=records, search_term=client_name)
 
 
 @app.route('/client/new')
@@ -23,13 +35,12 @@ def client_new_page():
 def client_new_post():
     """Web page at '/client/new'"""
     client_name_field = request.form.get("client_name_field")
-    
 
     from forum_app.features.client import ClientFeature
     client = ClientFeature()
     rows_affected = client.add_new(client_name_field)
-
-    return render_template('client/new_client.html')
+    message = 'Success' if rows_affected > 0 else 'Failed'
+    return render_template('client/new_client.html', message=message)
 
 
     # Insert mic data
