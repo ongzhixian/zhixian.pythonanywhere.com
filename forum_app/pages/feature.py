@@ -66,7 +66,7 @@ def feature_options_page(feature_name):
     # feature_list = feature.get_registered_feature_list()
     # log.info("Render 'feature/feature_options.html'")
     option_list = []
-    return render_template('feature/feature_options.html', option_list=option_list)
+    return render_template('feature/feature_option.html', option_list=option_list)
 
 
 

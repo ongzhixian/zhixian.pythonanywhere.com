@@ -47,3 +47,20 @@ class PortfolioFeature(BaseFeatureInterface):
             return
         log.debug(f"{self.feature_name} is_enable: {self.is_enable} event_data {event_data}")
         self.update_ui()
+
+    # Feature specific methods
+
+    def get_portfolio_list(self):
+        sql = """
+SET @row_number = 0;
+SELECT	(@row_number:=@row_number + 1) AS row_num
+		, id
+FROM	portfolio
+ORDER BY id
+LIMIT 25;
+        """
+        result_sets = self.db.fetch_record_sets(sql, None)
+        if len(result_sets) > 0:
+            return result_sets[0]
+        else:
+            return []
