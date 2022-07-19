@@ -108,14 +108,13 @@
               <div class="row">
 
                 <div class="input-field col s3">
-                  <input type="text" id="isin_field" name="client_name_field" class="autocomplete validate">
+                  <input type="text" id="isin_field" name="isin_field" class="autocomplete validate">
                   <label for="isin_field">ISIN</label>
                 </div>
 
                 <div class="col s9"></div>
 
               </div>
-
 
               <p>A bunch of text</p>
             </div>
@@ -166,6 +165,10 @@
         "Apple": null,
         "Microsoft": null,
         "Google": 'https://placehold.it/250x250'
+      },
+      minLength: 2,
+      onAutocomplete: function() {
+       console.log('Selected an option');
       }
     });
 
@@ -178,40 +181,92 @@
     var el = document.querySelectorAll('.tabs');
     var tabs_instance = M.Tabs.init(el);
 
+    const isin_field_element = document.getElementById("isin_field");
+    var isin_autocomplete = M.Autocomplete.getInstance(isin_field_element);
+    document.getElementById("isin_field").addEventListener("change", ()=> {
+      console.log("change"); // When selected; same effect as setting onAutocomplete
+    });
+
+    document.getElementById("isin_field").addEventListener("input", performSearch);
 
   });
 
-  function performSearch() {
+  function searchAjaxCall() {
+    
+    console.log('ajax search');
     // document.getElementById("search_form").submit();
 
     var data = JSON.stringify({
       "isin": document.getElementById("isin_field").value
     });
     
-    console.log("So some kind of search");
-    fetch('/api/instrument/search', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        'Content-Type': 'application/json' // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
-    }).then(response => {
-      debugger;
-      response.body.getReader().read()
-      var s = response.json();
+    //console.log("So some kind of search");
+    let url = '/api/test/oda';
+
+    fetch(url)
+    .then(function(response) {
+      // handle the response
+      return response.json();
+    })
+    .then(function(data) {
+      // handle the data
+      
+      console.log(data);
+
+      var dataMap = {};
+      data.instruments.map(function (val, idx, array) {
+        dataMap[val.displayName] = null;
+      });
 
       const isin_field_element = document.getElementById("isin_field");
       var instance = M.Autocomplete.getInstance(isin_field_element);
-      instance.updateData({
-        "FakeApple": null,
-        "FakeMicrosoft": null,
-        "FakeGoogle": 'https://placehold.it/250x250'
-      });
+      instance.updateData(dataMap);
+    })
+    .catch(function() {
+      // handle the error
     });
+  }
+
+  let timeOutId;
+  function performSearch() {
+
+    if (timeOutId) {
+      clearTimeout(timeOutId);
+      timeOutId = null;
+    }
+
+    timeOutId = setTimeout(() => {
+      searchAjaxCall();
+
+      clearTimeout(timeOutId);
+      timeOutId = null;
+    }, 678);
+
+    
+
+
+    // fetch('/api/instrument/search', {
+    //   method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    //   headers: {
+    //     'Content-Type': 'application/json' // 'Content-Type': 'application/x-www-form-urlencoded',
+    //   },
+    //   body: JSON.stringify(data) // body data type must match "Content-Type" header
+    // }).then(response => {
+    //   debugger;
+    //   response.body.getReader().read()
+    //   var s = response.json();
+    //   const isin_field_element = document.getElementById("isin_field");
+    //   var instance = M.Autocomplete.getInstance(isin_field_element);
+    //   instance.updateData({
+    //     "FakeApple": null,
+    //     "FakeMicrosoft": null,
+    //     "FakeGoogle": 'https://placehold.it/250x250'
+    //   });
+    // });
 
     
   }
 
-  document.getElementById("isin_field").addEventListener("change", performSearch);
+
 </script>
 {% endblock %}
