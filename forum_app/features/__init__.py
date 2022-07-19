@@ -2,7 +2,8 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["authentication", "rbac", "shared_data",
+__all__ = ["authentication", "rbac", 
+    "shared_data", "iso_data",
     "client", "portfolio", "inventory",
     "note", "tag",
     "dice"]
