@@ -232,6 +232,15 @@ form.inline {
     top: 0 !important;
 }
 
+.preloader-wrapper.tiny {
+    width: 18px;
+    height: 18px;
+}
+
+.circle.thin {
+    border-width: 1px;
+}
+
 .mdl-mini-footer.fab{
     background-color: inherit;
     /* border: 1px solid #213; */

@@ -8,7 +8,7 @@ import logging
 
 from os import environ, path
 from datetime import datetime
-from time import time
+from time import time,sleep
 
 from flask import request, make_response, abort
 
@@ -21,7 +21,19 @@ def api_test_oda():
     json_file_path = path.join(app_path, 'data', 'json', 'oda-instruments.json')
     with open(json_file_path, 'r', encoding='utf-8') as json_file:
         data = json.load(json_file) # Load the JSON data
+
+    sleep(1.678) # sleep for 1.678 seconds    
     return json.dumps(data)
+
+
+@app.route('/api/test/exec', methods=['GET', 'POST'])
+def api_test_exec():
+    logging.info("In api_test_mysql()")
+    json_file_path = path.join(app_path, 'data', 'json', 'oda-instruments.json')
+    with open(json_file_path, 'r', encoding='utf-8') as json_file:
+        data = json.load(json_file) # Load the JSON data
+    return json.dumps(data)
+
 
 
 @app.route('/api/test/mysql', methods=['GET', 'POST'])

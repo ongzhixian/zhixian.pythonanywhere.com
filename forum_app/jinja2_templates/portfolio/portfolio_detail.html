@@ -99,24 +99,36 @@
       <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a> -->
 
       <!-- Modal Structure -->
-      <div id="add-transation-modal" class="modal">
+      <div id="add-transation-modal" class="modal" style="overflow: inherit;">
         
           <div class="modal-content">
-            <h4>Add transaction</h4>
+            <h4>Add transaction
+
+            </h4>
             <div class="container" style="width: 100%;">
 
               <div class="row">
 
                 <div class="input-field col s3">
-                  <input type="text" id="isin_field" name="isin_field" class="autocomplete validate">
-                  <label for="isin_field">ISIN</label>
+                  <input type="text" id="isin_field" name="isin_field" class="autocomplete validate" autocomplete="off">
+                  <label for="isin_field">Instrument</label>
                 </div>
 
-                <div class="col s9"></div>
+                <div class="col s9">
+                    <!--
+                    <div id="isin_field_loader" class="preloader-wrapper tiny active hide">
+                      <div class="spinner-layer spinner-green-only">
+                        <div class="circle-clipper left"><div class="circle thin"></div></div>
+                        <div class="gap-patch"><div class="circle thin"></div></div>
+                        <div class="circle-clipper right"><div class="circle thin"></div></div>
+                      </div>
+                    </div>
+                    -->
+                </div>
 
               </div>
 
-              <p>A bunch of text</p>
+              <!-- <p>A bunch of text</p> -->
             </div>
           </div>
           <hr style="margin: 0 2em; color:gray"/>
@@ -195,6 +207,7 @@
     
     console.log('ajax search');
     // document.getElementById("search_form").submit();
+    // document.getElementById("isin_field_loader").classList.remove("hide");
 
     var data = JSON.stringify({
       "isin": document.getElementById("isin_field").value
@@ -217,10 +230,15 @@
       data.instruments.map(function (val, idx, array) {
         dataMap[val.displayName] = null;
       });
+      console.log(dataMap);
 
       const isin_field_element = document.getElementById("isin_field");
       var instance = M.Autocomplete.getInstance(isin_field_element);
       instance.updateData(dataMap);
+      // document.getElementById("isin_field_loader").classList.add("hide");
+      if (instance.activeIndex < 0) {
+        instance.open();
+      }
     })
     .catch(function() {
       // handle the error
@@ -230,6 +248,10 @@
   let timeOutId;
   function performSearch() {
 
+    const isin_field_element = document.getElementById("isin_field");
+    var instance = M.Autocomplete.getInstance(isin_field_element);
+    instance.activeIndex = -1;
+
     if (timeOutId) {
       clearTimeout(timeOutId);
       timeOutId = null;
@@ -237,7 +259,6 @@
 
     timeOutId = setTimeout(() => {
       searchAjaxCall();
-
       clearTimeout(timeOutId);
       timeOutId = null;
     }, 678);
