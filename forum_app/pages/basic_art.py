@@ -46,7 +46,6 @@ def basic_art():
     image.save(img_bytes_buffer, format="png")
     img_bytes_buffer.seek(0)
     # return img_bytes_buffer
-    # breakpoint()
 
     response = make_response(img_bytes_buffer.read())
     response.headers.set('Content-Type', 'image/png')

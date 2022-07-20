@@ -126,6 +126,15 @@ class FinancialInstrumentDataFeature(BaseFeatureInterface):
         # 2. Instruments
         self.load_sgx_isin_data_to_instrument_table()
         self.load_six_data_to_instrument_table()
+        # TODO: load data for the following exchanges
+        # XJPX -- Japan         : WWW.JPX.CO.JP
+        # XFRA -- Germany       : WWW.DEUTSCHE-BOERSE.COM
+        # XHKG -- Hong Kong     : WWW.HKEX.COM.HK   https://www.hkex.com.hk/Mutual-Market/Stock-Connect/Eligible-Stocks/View-All-Eligible-Securities?sc_lang=en
+        # XLUX -- Luxembourg    : WWW.BOURSE.LU
+        # XNAS -- US            : WWW.NASDAQ.COM
+        # UK
+        # MY
+        # https://www.citibank.com/mss/about/assets/docs//Stock_Connect_Handbook_Feb2017.pdf
         # self.populate_country_table()
         # self.populate_currency_table()
         # self.populate_market_identifier_table()

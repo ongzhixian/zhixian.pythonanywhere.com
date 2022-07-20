@@ -127,7 +127,6 @@ class ISODataFeature(BaseFeatureInterface):
             return
         market_identifier_code_list = self.get_market_identifier_codes_from_csv()
         logging.debug(len(market_identifier_code_list))
-        breakpoint()
         self.insert_market_identifier_data(market_identifier_code_list)
 
     def register(self):

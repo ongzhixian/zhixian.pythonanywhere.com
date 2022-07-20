@@ -98,7 +98,6 @@ from html.parser import HTMLParser
 class AirlineParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         print("Encountered a start tag:", tag)
-        breakpoint()
 
     def handle_endtag(self, tag):
         print("Encountered an end tag :", tag)
@@ -126,7 +125,6 @@ def shared_data_airline():
 # class MyHTMLParser(HTMLParser):
 #     def handle_starttag(self, tag, attrs):
 #         print("Encountered a start tag:", tag)
-#         breakpoint()
 
 #     def handle_endtag(self, tag):
 #         print("Encountered an end tag :", tag)
