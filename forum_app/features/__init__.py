@@ -4,6 +4,7 @@
 
 __all__ = ["authentication", "rbac", 
     "shared_data", "iso_data",
+    "financial_instrument_data",
     "client", "portfolio", "inventory",
     "note", "tag",
     "dice"]
