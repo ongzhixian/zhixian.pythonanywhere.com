@@ -13,9 +13,11 @@ CREATE TABLE IF NOT EXISTS `instrument` (
 	`mic` 				    VARCHAR(04) NULL,
     `ticker`				VARCHAR(10) NULL, -- AKA counter / symbol
 	`ticker_name`          	VARCHAR(30) NULL,
+	`trading_venue`			VARCHAR(10) NULL,
 	`currency` 			    VARCHAR(03) NULL, -- Trading currency, ISO 4217
     `remarks`               VARCHAR(10) NOT NULL DEFAULT '',
 	`type_id`               INT UNSIGNED NULL,
+	`asset_class_id`		INT UNSIGNED NULL,
 	`cre_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	`upd_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	PRIMARY KEY (`id`)

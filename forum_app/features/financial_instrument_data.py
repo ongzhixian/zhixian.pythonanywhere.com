@@ -1,3 +1,4 @@
+import json
 import logging
 from os import path
 from functools import wraps
@@ -114,6 +115,54 @@ class FinancialInstrumentDataFeature(BaseFeatureInterface):
         six_equity_data = self.get_six_equity_data_from_csv()
         self.insert_six_equity_data(six_equity_data)
 
+    def get_oanda_asset_class_from_tags(self, tags):
+        if len(tags) <= 0:
+            return None
+        asset_class_map = {
+            'CFD': 1,
+            'METAL': 1,
+            'CURRENCY': 1
+        }
+
+    def get_oanda_instrument_data_from_json(self):
+        oanda_instrument_data_file_path = path.join(app_path, 'data', 'json', 'oda-instruments.json')
+        instrument_data = []
+        
+        with open(oanda_instrument_data_file_path, "r") as infile:
+            oanda_instrument_json = json.load(infile)
+        if 'instruments' not in oanda_instrument_json:
+            return instrument_data
+        oanda_instruments = oanda_instrument_json['instruments']
+        for instrument in oanda_instruments:
+            name = instrument['displayName']
+            ticker = instrument['name']
+            instrument_type = instrument['type']
+            tags = {}
+            if 'tags' in instrument:
+                tag_list = instrument['tags']
+                for tag in tag_list:
+                    tag_type = tag['type']
+                    tag_name = tag['name']
+                    tags[tag_type] = tag_name
+            asset_class = self.get_oanda_asset_class_from_tags(tags)
+
+            logging.debug(f"{name}, {ticker}, {instrument_type}, {len(tags)}")
+
+            # instrument_data.append([name, valor, mic, ticker, currency])
+            # csv_reader = csv.reader(infile, delimiter=';', )
+            # next(csv_reader, None)  # skip the headers
+            # for row in csv_reader:
+            #     name = row[0]
+            #     valor = row[2]
+            #     mic = row[5]
+            #     ticker = row[1]
+            #     currency = row[4]
+            #     instrument_data.append([name, valor, mic, ticker, currency])
+        # return instrument_data
+        breakpoint()
+
+    def load_oanda_data_to_instrument_table(self):
+        oanda_data = self.get_oanda_instrument_data_from_json()
 
     def register(self):
         if self.is_registered(self.feature_name):
@@ -134,6 +183,7 @@ class FinancialInstrumentDataFeature(BaseFeatureInterface):
         # XNAS -- US            : WWW.NASDAQ.COM
         # UK
         # MY
+        self.load_oanda_data_to_instrument_table()
         # https://www.citibank.com/mss/about/assets/docs//Stock_Connect_Handbook_Feb2017.pdf
         # self.populate_country_table()
         # self.populate_currency_table()

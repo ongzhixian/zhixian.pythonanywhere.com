@@ -6,7 +6,7 @@ __all__ = [
     "root", "mysql", "test", "authentication", "database", "user", 
     "feature", "shared_data", "markdown_service", "basic_art", 
     "dice", "note",
-    "client", "portfolio"]
+    "client", "portfolio", "trade"]
 
 # Page UI Components
 
