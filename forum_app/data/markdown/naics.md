@@ -14,3 +14,4 @@ NAICS codes array the economy into 20 sectors, which are separated into 96 3-dig
 
 # Reference
 https://siccode.com/page/what-is-a-naics-code
+
