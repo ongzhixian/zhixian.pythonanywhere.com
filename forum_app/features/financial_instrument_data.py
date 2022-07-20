@@ -1,6 +1,7 @@
 import logging
 from os import path
 from functools import wraps
+from unicodedata import name
 from flask import redirect, url_for, g, request
 from forum_app import app_path
 from forum_app.features import BaseFeatureInterface, is_feature_enable
@@ -36,11 +37,11 @@ class FinancialInstrumentDataFeature(BaseFeatureInterface):
         super().initialize()
         self.register()
 
-    def get_isin_data_from_file(self):
+    def get_sgx_isin_data_from_file(self):
         isin_data_file_path = path.join(app_path, 'data', 'fixed_width_formatted_text', 'sgx-isin.txt')
         isin_data = []
 
-        regex = r"(?P<name>.{50})(?P<status>.{10})(?P<isin>.{20})(?P<code>.{10})(?P<counter>.+)"
+        regex = r"(?P<name>.{50})(?P<status>.{10})(?P<isin>.{20})(?P<ticker>.{10})(?P<ticker_name>.+)"
         with open(isin_data_file_path, 'r', encoding='utf8') as infile:
             infile.readline() # skip first header line
             for line in infile:
@@ -50,18 +51,68 @@ class FinancialInstrumentDataFeature(BaseFeatureInterface):
                 name = match_result.group('name').strip()
                 status = match_result.group('status').strip()
                 isin = match_result.group('isin').strip()
-                code = match_result.group('code').strip()
-                counter = match_result.group('counter').strip()
-                isin_data.append([name, isin, 'XSES', code, counter, status, 0])
+                ticker = match_result.group('ticker').strip()
+                ticker_name = match_result.group('ticker_name').strip()
+                isin_data.append([name, isin, 'XSES', ticker, ticker_name, status])
         return isin_data
 
     def insert_sgx_isin_data(self, isin_data):
-        sql = """INSERT INTO instrument (name, isin, mic, ticker, ticker_name, remarks, type_id) VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+        sql = """INSERT INTO instrument (name, isin, mic, ticker, ticker_name, remarks) VALUES (%s, %s, %s, %s, %s, %s)"""
         self.db.execute_many(sql, isin_data)
 
     def load_sgx_isin_data_to_instrument_table(self):
-        isin_data_list = self.get_isin_data_from_file()
+        record_count = self.db.fetch_value('SELECT COUNT(*) AS `record_count` FROM instrument WHERE mic = %s;', ('XSES',))
+        if record_count > 0:
+            return
+        isin_data_list = self.get_sgx_isin_data_from_file()
         self.insert_sgx_isin_data(isin_data_list)
+
+
+    def get_six_equity_data_from_csv(self):
+        equity_data_file_path = path.join(app_path, 'data', 'comma_separated_values', 'six_equity_issuers.csv')
+        # Note: six_equity_issuers.csv is actually delimited by semi-colon (;) and not comma (,)
+        instrument_data = []
+
+        #  0 - Company                              |ABB Ltd
+        #  1 - Symbol                               |ABBN
+        #  2 - Valor Number                         |1222171
+        #  3 - Country                              |CH
+        #  4 - Traded Currency                      |CHF
+        #  5 - Trading platform                     |XSWX
+        #  6 - Class of Share                       |Registered Share
+        #  7 - Nominal Value                        |0.12
+        #  8 - Listing Segment                      |International Reporting Standard
+        #  9 - Accounting Rules                     |US GAAP
+        # 10 - Next General Meeting                 |23.03.2023
+        # 11 - Annual closing date                  |31.12.
+        # 12 - Auditors                             |KPMG AG - CH[501403]
+        # 13 - Sustainability report opting in      |No
+        # 14 - International recognized standard    |
+        # 15 - Primary listing                      |TRUE
+        # 16 - Opting Clause                        |
+
+        with open(equity_data_file_path, "r") as infile:
+            csv_reader = csv.reader(infile, delimiter=';', )
+            next(csv_reader, None)  # skip the headers
+            for row in csv_reader:
+                name = row[0]
+                valor = row[2]
+                mic = row[5]
+                ticker = row[1]
+                currency = row[4]
+                instrument_data.append([name, valor, mic, ticker, currency])
+        return instrument_data
+
+    def insert_six_equity_data(self, isin_data):
+        sql = """INSERT INTO instrument (name, valor, mic, ticker, currency) VALUES (%s, %s, %s, %s, %s)"""
+        self.db.execute_many(sql, isin_data)
+
+    def load_six_data_to_instrument_table(self):
+        record_count = self.db.fetch_value('SELECT COUNT(*) AS `record_count` FROM instrument WHERE mic = %s;', ('XSWX',))
+        if record_count > 0:
+            return
+        six_equity_data = self.get_six_equity_data_from_csv()
+        self.insert_six_equity_data(six_equity_data)
 
 
     def register(self):
@@ -74,6 +125,7 @@ class FinancialInstrumentDataFeature(BaseFeatureInterface):
         # 1. Instrument types (skipped for now; implicitly loaded by the instrument type table script)
         # 2. Instruments
         self.load_sgx_isin_data_to_instrument_table()
+        self.load_six_data_to_instrument_table()
         # self.populate_country_table()
         # self.populate_currency_table()
         # self.populate_market_identifier_table()
