@@ -99,6 +99,10 @@ form.column {
     margin:0;
 }
 
+.counter-card .card-content{
+    text-align: center;
+}
+
 .display-card {
     /* margin: 0 1em 1em 0; */
 }

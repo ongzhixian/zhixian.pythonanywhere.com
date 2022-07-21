@@ -3,15 +3,10 @@ from flask import render_template, session, request, redirect, url_for
 from forum_app import app, app_path
 from os import abort, path
 
-from forum_app.features.investment_portfolio import InvestmentPortfolioFeature
-
 
 @app.route('/trade/')
 def root_trade_get():
     """Web page at '/trade'"""
-    # portfolio = PortfolioFeature()
-    # records = portfolio.get_portfolio_list()
-    # return redirect('/portfolio/dashboard', portfolio_list=records)
     return redirect('/trade/dashboard')
 
 @app.route('/trade/dashboard')
@@ -20,6 +15,35 @@ def trade_dashboard_page():
     # portfolio = PortfolioFeature()
     # records = portfolio.get_portfolio_list()
     return render_template('trade/trade_dashboard.html')
+
+
+
+@app.route('/trade/oanda')
+def trade_oanda_page():
+    """Web page at '/trade/trading-api-list'"""
+    return render_template('trade/trade_oanda.html')
+
+
+@app.route('/trade/trading-api-list')
+def trade_trading_api_list_page():
+    """Web page at '/trade/trading-api-list'"""
+    return render_template('trade/trade_trading_api_list.html')
+
+
+@app.route('/trade/add-trading-api')
+def trade_add_trading_api_page():
+    """Web page at '/trade/trading-api-list'"""
+    return render_template('trade/add_trading_api.html')
+
+@app.route('/trade/add-trading-api', methods=['POST'])
+def trade_add_trading_api_post():
+    """Web page at '/trade/trading-api-list'"""
+    token_type = request.form['token_type']
+    token_name = request.form['token_name']
+    token_value = request.form['token_value']
+    logging.debug(f"{token_type}, {token_name}, {token_value}")
+    
+    return render_template('trade/add_trading_api.html')
 
 
 # @app.route('/portfolio/detail/<portfolio_id>')
