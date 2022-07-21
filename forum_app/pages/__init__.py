@@ -7,7 +7,7 @@ __all__ = [
     "feature", "shared_data", "markdown_service", "basic_art", 
     "dice", "note",
     "investment_client", "investment_portfolio",
-    "trade", "trading_portfolio"]
+    "trade", "trade_portfolio"]
 
 # Page UI Components
 

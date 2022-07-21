@@ -6,8 +6,8 @@ from os import abort, path
 from forum_app.features.investment_portfolio import InvestmentPortfolioFeature
 
 
-@app.route('/trading/portfolio/')
-def root_trading_portfolio_get():
+@app.route('/trade/portfolio/')
+def root_trade_portfolio_get():
     """Web page at '/portfolio'"""
     portfolio = InvestmentPortfolioFeature()
     records = portfolio.get_portfolio_list()
@@ -15,8 +15,8 @@ def root_trading_portfolio_get():
     return redirect('/portfolio/dashboard',
         portfolio_list=records)
 
-@app.route('/trading/portfolio/dashboard')
-def trading_portfolio_dashboard_page():
+@app.route('/trade/portfolio/dashboard')
+def trade_portfolio_dashboard_page():
     """Web page at '/portfolio/dashboard'"""
 
     portfolio = InvestmentPortfolioFeature()
@@ -26,8 +26,8 @@ def trading_portfolio_dashboard_page():
         portfolio_list=records)
 
 
-@app.route('/trading/portfolio/detail/<portfolio_id>')
-def trading_portfolio_detail_page(portfolio_id):
+@app.route('/trade/portfolio/detail/<portfolio_id>')
+def trade_portfolio_detail_page(portfolio_id):
     """Web page at '/portfolio/<portfolio_id>'"""
     position_list = []
     return render_template('/portfolio/portfolio_detail.html',
@@ -35,8 +35,8 @@ def trading_portfolio_detail_page(portfolio_id):
 
 
 
-@app.route('/trading/portfolio/new')
-def trading_portfolio_new_page():
+@app.route('/trade/portfolio/new')
+def trade_portfolio_new_page():
     """Web page at '/client/new'"""
     # Get a list of client types
     # SELECT id, name FROM client_type ORDER BY name;
@@ -48,8 +48,8 @@ def trading_portfolio_new_page():
         selected_client_type=selected_client_type,
         client_type_list=client_type_list)
 
-@app.route('/trading/portfolio/new', methods=['POST'])
-def trading_portfolio_new_post():
+@app.route('/trade/portfolio/new', methods=['POST'])
+def trade_portfolio_new_post():
     """Web page at '/client/new'"""
     client_name_field = request.form.get("client_name_field")
     client_type_dropdown = request.form.get("client_type_dropdown")
