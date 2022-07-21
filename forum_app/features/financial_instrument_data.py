@@ -159,7 +159,7 @@ class FinancialInstrumentDataFeature(BaseFeatureInterface):
             #     currency = row[4]
             #     instrument_data.append([name, valor, mic, ticker, currency])
         # return instrument_data
-        breakpoint()
+        # TODO:
 
     def load_oanda_data_to_instrument_table(self):
         oanda_data = self.get_oanda_instrument_data_from_json()

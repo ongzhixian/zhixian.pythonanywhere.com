@@ -3,15 +3,15 @@ from flask import render_template, session, request, redirect, url_for
 from forum_app import app, app_path
 from os import abort, path
 
-@app.route('/client/')
+@app.route('/investment/client/')
 def root_client_get():
     """Web page at '/client'"""
-    return redirect('/client/dashboard')
+    return redirect('/investment/client/dashboard')
 
-@app.route('/client/dashboard')
+@app.route('/investment/client/dashboard')
 def client_dashboard_page():
     """Web page at '/client/dashboard'"""
-    from forum_app.features.client import ClientFeature
+    from forum_app.features.investment_client import ClientFeature
     client = ClientFeature()
     records = client.get_client_list()
     client_type_list = client.get_client_type_list()
@@ -21,13 +21,13 @@ def client_dashboard_page():
         client_list=records,
         selected_client_type=selected_client_type)
 
-@app.route('/client/dashboard', methods=['POST'])
+@app.route('/investment/client/dashboard', methods=['POST'])
 def client_dashboard_post():
     """Web page at '/client/dashboard'"""
     client_name = request.form.get("client_name_field")
     client_type_dropdown = request.form.get("client_type_dropdown")
     logging.debug(f"client_name {client_name},  client_type_dropdown {client_type_dropdown}")
-    from forum_app.features.client import ClientFeature
+    from forum_app.features.investment_client import ClientFeature
     client = ClientFeature()
     records = client.get_client_list(client_name, client_type_dropdown)
     client_type_list = client.get_client_type_list()
@@ -43,7 +43,7 @@ def client_new_page():
     """Web page at '/client/new'"""
     # Get a list of client types
     # SELECT id, name FROM client_type ORDER BY name;
-    from forum_app.features.client import ClientFeature
+    from forum_app.features.investment_client import ClientFeature
     client = ClientFeature()
     client_type_list = client.get_client_type_list()
     selected_client_type = 1
@@ -57,7 +57,7 @@ def client_new_post():
     client_name_field = request.form.get("client_name_field")
     client_type_dropdown = request.form.get("client_type_dropdown")
 
-    from forum_app.features.client import ClientFeature
+    from forum_app.features.investment_client import ClientFeature
     client = ClientFeature()
     rows_affected = client.add_new(client_name_field, client_type_dropdown)
     client_type_list = client.get_client_type_list()

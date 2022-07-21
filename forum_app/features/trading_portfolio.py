@@ -1,22 +1,20 @@
 from forum_app.modules import app_state, log
 from forum_app.features import BaseFeatureInterface
-from forum_app.databases.mysql_data_provider import MySqlDataProvider
 
-class ClientFeature(BaseFeatureInterface):
+class TradingPortfolioFeature(BaseFeatureInterface):
 
     def __init__(self):
         super().__init__()
-        self.db = MySqlDataProvider('forum')
 
     @property
     def feature_name(self):
         """feature_name getter property. (required)"""
-        return "Client"
+        return "Trading Portfolio"
 
     @property
     def feature_description(self):
         """feature_description getter property. (required)"""
-        return "Enable client module"
+        return "Enable trading portfolio module"
 
     def initialize(self):
         """Things to do when feature is initialized (eg. restore state from persistence storage) (on initialize_features)"""
@@ -50,37 +48,19 @@ class ClientFeature(BaseFeatureInterface):
         log.debug(f"{self.feature_name} is_enable: {self.is_enable} event_data {event_data}")
         self.update_ui()
 
+    # Feature specific methods
 
-    # Feature specific functions below
-
-    def add_new(self, client_name_field, client_type_id=0):
-        """Add a new client"""
-        rows_affected = self.db.execute(
-            "INSERT INTO client (name, type_id) VALUES (%s, %s);", 
-            (client_name_field, client_type_id))
-        print(f"Rows affected {rows_affected}")
-        return rows_affected
-
-    def get_client_list(self, client_name='', type_id=0):
-        sql = """
-SET @row_number = 0;
-SELECT	(@row_number:=@row_number + 1) AS row_num
-		, id
-        , name
-FROM	client
-WHERE   name LIKE %s 
-        AND type_id = %s
-ORDER BY name
-LIMIT 25;
-        """
-        result_sets = self.db.fetch_record_sets(sql, (f"%{client_name}%", type_id))
-        if len(result_sets) > 0:
-            return result_sets[0]
-        else:
-            return []
-
-    def get_client_type_list(self):
-        records = self.db.fetch_list("SELECT id, name FROM client_type ORDER BY name;", None)
-        if records is None:
-            return []
-        return records
+#     def get_portfolio_list(self):
+#         sql = """
+# SET @row_number = 0;
+# SELECT	(@row_number:=@row_number + 1) AS row_num
+# 		, id
+# FROM	portfolio
+# ORDER BY id
+# LIMIT 25;
+#         """
+#         result_sets = self.db.fetch_record_sets(sql, None)
+#         if len(result_sets) > 0:
+#             return result_sets[0]
+#         else:
+#             return []

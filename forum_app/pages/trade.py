@@ -3,7 +3,7 @@ from flask import render_template, session, request, redirect, url_for
 from forum_app import app, app_path
 from os import abort, path
 
-from forum_app.features.portfolio import PortfolioFeature
+from forum_app.features.investment_portfolio import InvestmentPortfolioFeature
 
 
 @app.route('/trade/')
