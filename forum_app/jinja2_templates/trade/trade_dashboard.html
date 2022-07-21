@@ -4,6 +4,49 @@
 
 {% block content %}
     <div class="page-content">
-      <p>Trade dashboard page</p>
+      <div class="container">
+        <div class="row">
+          <p>Alerts (if any)</p>
+        </div>
+        <div class="row">
+
+          <div class="col s3">
+            <div class="card blue darken-3">
+              <div class="card-content white-text">
+                <span class="card-title">1</span>
+                <p>trade(s) opened</p>
+              </div>
+              <div class="card-action">
+                <a href="#">View trades</a>
+                <a href="#">Add trade</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col s3">
+            <div class="card blue-grey darken-1">
+              <div class="card-content white-text">
+                <span class="card-title"><a href="#">2</a></span>
+                <p>trade(s) closed</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <p>Number of open trades: nnn</p>
+
+          <p>Number of closed trades: nnn</p>
+
+          <p>Profit/Loss: nnn</p>
+
+          <p>Number of markets in open trades: nnn</p>
+
+          <p>Number of markets traded: nnn</p>
+
+          <p>Number of instruments traded: nnn</p>
+        </div>
+      </div>
     </div><!-- end-of-page-content -->
 {% endblock %}
