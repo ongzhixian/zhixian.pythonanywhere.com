@@ -2,13 +2,18 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["authentication", "rbac", 
-    "shared_data", "iso_data",
-    "financial_instrument_data",
-    "investment_client", "investment_portfolio", 
-    "inventory",
-    "note", "tag",
-    "dice"]
+# Note: The sequence is important. Dependents should be loaded after the parent feature
+__all__ = [
+    "authentication", "login", "user_profile",
+    # "investment_client", "investment_portfolio", 
+    # "inventory",
+    # "iso_data", "financial_instrument_data",
+    # Not ready yet
+    # , "shared_data", 
+    # "note", "tag",
+    # "dice",
+    # "rbac"
+    ]
 
 import logging
 from forum_app.modules import app_state
@@ -35,11 +40,26 @@ class BaseFeatureInterface:
             return False
         return True
 
-    def register_feature(self, feature_name, feature_description, module_name) -> bool:
+    def register_feature(self, feature_name, feature_description, module_name, parent_name=None) -> bool:
         """Register feature into system (inherited; use by all features)"""
-        (rows_affected, _) = self.db.execute(
-            "INSERT INTO _feature (name, description, module_name) VALUES (%s, %s, %s);", 
-            (feature_name, feature_description, module_name))
+
+        if parent_name is None:
+            (rows_affected, _) = self.db.execute(
+                "INSERT INTO _feature (name, description, module_name) VALUES (%s, %s, %s);", 
+                (feature_name, feature_description, module_name))
+        else:
+            sql = """
+INSERT INTO _feature (name, description, module_name, parent_id)
+SELECT 	%s AS name
+		, %s AS description
+        , %s AS module_name
+        , id AS parent_id 
+FROM 	_feature 
+WHERE 	name = %s
+        """
+            (rows_affected, _) = self.db.execute(
+                sql, 
+                (feature_name, feature_description, module_name, parent_name))
         return rows_affected > 0
 
     def update_is_enable(self, feature_name, enable):

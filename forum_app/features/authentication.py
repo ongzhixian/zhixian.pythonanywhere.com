@@ -9,7 +9,16 @@ from forum_app.modules import app_state, log
 
 import pdb
 
+# 
+
 class AuthenticationFeature(BaseFeatureInterface):
+    """
+    Authentication
+    └──Login
+        ├──User Profile
+        ├──Role based access control
+        └??
+    """
 
     def __init__(self):
         super().__init__()
@@ -33,11 +42,11 @@ class AuthenticationFeature(BaseFeatureInterface):
     def register(self):
         if self.is_registered(self.feature_name):
             return
-        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'login', 'tables')
+        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'authentication', 'tables')
         self.db.run_scripts_in_path(database_table_scripts_path)
         self.register_feature(self.feature_name, self.feature_description, __name__)
 
-        
+
     def app_state_changed(self, event_data=None):
         """Things to do whenever app_state changed"""
         is_my_event = self.is_my_event(event_data)

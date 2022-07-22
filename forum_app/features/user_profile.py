@@ -25,7 +25,7 @@ class UserProfileFeature(BaseFeatureInterface):
     def register(self):
         if self.is_registered(self.feature_name):
             return
-        self.register_feature(self.feature_name, self.feature_description, __name__)
+        self.register_feature(self.feature_name, self.feature_description, __name__, 'Login')
 
 
     def update_ui(self):

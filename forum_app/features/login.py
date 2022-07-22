@@ -1,3 +1,5 @@
+from os import path
+from forum_app import app_path
 from forum_app.modules import app_state, log
 from forum_app.features import BaseFeatureInterface
 
@@ -25,8 +27,10 @@ class LoginFeature(BaseFeatureInterface):
     def register(self):
         if self.is_registered(self.feature_name):
             return
-        self.register_feature(self.feature_name, self.feature_description, __name__)
-
+        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'login', 'tables')
+        self.db.run_scripts_in_path(database_table_scripts_path)
+        # No need to register; dependent of AuthenticationFeature
+        self.register_feature(self.feature_name, self.feature_description, __name__, "Authentication")
 
     def update_ui(self):
         # We want to selective add/remove logins menu item to admin menu in drawer
