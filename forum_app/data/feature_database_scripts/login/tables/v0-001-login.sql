@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS `login` (
 	`password_salt` 		VARCHAR(32) NOT NULL,
 	`password_update_dt` 	DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	`last_login_dt` 		DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+	`is_locked` 			BOOLEAN NOT NULL DEFAULT FALSE,
+	`email` 				VARCHAR(128) NULL, -- recovery email address; not use for now
 	`cre_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	`upd_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	PRIMARY KEY (`id`),

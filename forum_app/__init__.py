@@ -334,8 +334,8 @@ app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_fol
 # with app.app_context():
 #     current_app.feature_instance_list = menu_items
 
-# if "SESSION_SECRET_KEY" in secrets:
-#     app.secret_key = secrets["SESSION_SECRET_KEY"]
+if "SESSION_SECRET_KEY" in app_secrets:
+    app.secret_key = app_secrets["SESSION_SECRET_KEY"]
 
 
 ################################################################################

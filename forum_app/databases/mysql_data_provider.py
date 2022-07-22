@@ -205,13 +205,13 @@ class MySqlDataProvider(BaseDataProviderInterface):
             connection.commit()
         except Exception as ex:
             logging.error(ex)
+            return (-1, ex)
         finally:
             if mycursor is not None:
                 mycursor.close()
             if connection is not None:
                 connection.close()
-
-        return 0 if mycursor is None else mycursor.rowcount
+        return (0, None) if mycursor is None else (mycursor.rowcount, None)
 
     def execute_many(self, sql, data_rows):
         connection = self.get_connection()

@@ -55,7 +55,7 @@ class InvestmentClientFeature(BaseFeatureInterface):
 
     def add_new(self, client_name_field, client_type_id=0):
         """Add a new client"""
-        rows_affected = self.db.execute(
+        (rows_affected, _) = self.db.execute(
             "INSERT INTO client (name, type_id) VALUES (%s, %s);", 
             (client_name_field, client_type_id))
         print(f"Rows affected {rows_affected}")

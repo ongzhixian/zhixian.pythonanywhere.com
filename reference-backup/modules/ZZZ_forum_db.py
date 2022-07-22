@@ -67,7 +67,7 @@ class ForumDb:
     
     def add_weblink(self, url):
         print("Executing add_weblink")
-        rows_affected = self.db.execute(
+        (rows_affected, _) = self.db.execute(
             "INSERT INTO weblink (url) VALUES (%s);", (url,))
         print(f"Rows affected {rows_affected}")
 
@@ -78,7 +78,7 @@ class ForumDb:
         print(f"Rows affected {rows_affected}")
 
     def add_db_migrate(self, file_path):
-        rows_affected = self.db.execute(
+        (rows_affected, _) = self.db.execute(
             "INSERT INTO _db_migrate (file_path) VALUES (%s);", (file_path,))
         logging.info(f"add_db_migrate (rows affected): [{rows_affected}]")
         

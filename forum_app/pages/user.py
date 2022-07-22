@@ -1,6 +1,5 @@
 from flask import render_template, session, request, redirect, url_for
 from forum_app import app
-#from documodules.user import User
 from forum_app.modules.user import User
 
 @app.route('/user/')
@@ -12,39 +11,58 @@ def root_user_get():
 def user_dashboard_page():
     """Web page at '/user/dashboard'"""
     user = User()
-    users = user.get_users()
-    return render_template('user/user_dashboard.html', users=users)
-    # return render_template('database/database_dashboard.html', model = {
-    #     'unapplied_db_migrate_count' : unapplied_db_migrate_count,
-    #     'table_count' : table_count,
-    #     'view_count' : view_count,
-    #     'procedure_count' : procedure_count,
-    #     'function_count' : function_count
-    # })
-    # except ProgrammingError as e:
-    #     if e.errno == 1146: # 1146 is MySql specific error code for 'no such table'
-    #         pass
-    #         initialize_database()
-    #         # Create table and any
+    user_login_list = user.get_user_logins()
+    return render_template('user/user_dashboard.html', user_login=user_login_list)
+
 
 @app.route('/user/add')
 def user_add_page():
     """Web page at '/user/add'"""
     return render_template('user/user_add.html')
 
+
+def validate_form_input(username, password):
+    """Validate form input"""
+    if username is None or username.strip() == '' or password is None or password.strip() == '':
+        return (False, "Username and password are required")
+    return (True, None)
+
 @app.route('/user/add', methods=['POST'])
 def user_add_post():
     """Web page at '/user/add'"""
-    import pdb
-    # query_params = request.args
-    # if 'd' in query_params:
-    #     data = query_params['d']
+    username = request.form['username_field'] if 'username_field' in request.form else ''
+    password = request.form['password_field'] if 'password_field' in request.form else ''
 
-    username = request.form['username'] if 'username' in request.form else ''
-    password = request.form['password'] if 'password' in request.form else ''
-    print(username)
-    print(password)
+    (is_valid_form_input, error_message) = validate_form_input(username, password)
+    if not is_valid_form_input:
+        return render_template('user/user_add.html', message={
+            'type': 'error',
+            'text': error_message
+        })
+
     user = User()
-    user.add(username, password)
+    (rows_affected, error_message) = user.add(username, password)
 
-    return render_template('user/user_add.html')
+    if rows_affected <= 0:
+        return render_template('user/user_add.html', message={
+            'type': 'error',
+            'text': error_message
+        })
+
+    return render_template('user/user_add.html', message={
+        'type': 'success',
+        'text': f"User {username} added"
+    })
+
+
+
+@app.route('/user/profile')
+def user_profile_page():
+    """Web page at '/user/profile'"""
+    return render_template('user/user_profile.html')
+
+
+@app.route('/user/password-test')
+def user_password_test_page():
+    """Web page at '/user/password-test'"""
+    return render_template('user/user_password_test.html')
