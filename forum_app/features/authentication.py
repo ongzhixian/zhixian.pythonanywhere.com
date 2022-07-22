@@ -51,13 +51,23 @@ class AuthenticationFeature(BaseFeatureInterface):
         if self.is_enable:
             logging.debug("Add to drawer_admin_menu")
             app_state.add_to_menu('drawer_admin_menu', 
-                authentication_login_menu_item_id, "Logins", "/user/dashboard", False, "table_rows",)
+                authentication_login_menu_item_id, "Users", "/user/dashboard", False, "table_rows",)
         else:
             # Remove login menu item to admin menu in drawer
             logging.debug("Remove drawer_admin_menu")
             app_state.remove_from_menu('drawer_admin_menu', 
                 authentication_login_menu_item_id)
             
+    def get_password_control_setting(self):
+        """
+        How are the passwords to user logins controlled?
+        1.  By system administrator (meaning the administrator can reset passwords)
+        2.  By email (meaning resetting of password is done by system and new password is sent to user via email)
+        3.  By user (meaning user can reset password (maybe using PKI))
+        KIV for now until we decide.
+        Default to option 1 (by administrator)
+        """
+        pass
 
     # def load_app_settings(self, app_settings):
     #     logging.info(f"load_app_settings for {__name__}")

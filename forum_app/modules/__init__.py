@@ -2,7 +2,7 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["feature", "barcode", "user"]
+__all__ = ["feature", "barcode", "user", "login", "role"]
 
 import json
 import logging

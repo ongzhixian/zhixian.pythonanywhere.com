@@ -37,14 +37,14 @@ class BaseFeatureInterface:
 
     def register_feature(self, feature_name, feature_description, module_name) -> bool:
         """Register feature into system (inherited; use by all features)"""
-        rows_affected = self.db.execute(
+        (rows_affected, _) = self.db.execute(
             "INSERT INTO _feature (name, description, module_name) VALUES (%s, %s, %s);", 
             (feature_name, feature_description, module_name))
         return rows_affected > 0
 
     def update_is_enable(self, feature_name, enable):
         """Called by toggle_enable (general-usage)"""
-        rows_affected = self.db.execute("""
+        (rows_affected, _) = self.db.execute("""
 UPDATE  _feature 
 SET		is_enable = %s
 WHERE	name = %s;

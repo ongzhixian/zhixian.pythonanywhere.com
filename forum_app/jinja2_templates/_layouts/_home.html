@@ -24,6 +24,17 @@
           <li><a href="/client/dashboard">Clients</a></li>
           <li><a href="/portfolio/dashboard">Portfolios</a></li>
           {% endif %}
+
+          <li><a href="/user/dashboard">Users</a></li>
+          <li><a href="/role/dashboard">Roles</a></li>
+
+          {%- if g.username %}
+          <!-- 
+          <li><a href="/logout" title="Log out">
+            <i class="material-icons">logout</i>
+          </a></li> 
+          -->
+          {%- endif %}
           <!-- <li><a href="collapsible.html">Miscellaneous</a></li> -->
         </ul>
       </div>
@@ -35,9 +46,14 @@
           <div class="background">
             <img src="/images/placeholders/office.jpg">
           </div>
+
           <a href="#user"><img class="circle" src="/images/placeholders/yuna.jpg"></a>
-          <a href="#name"><span class="purple-text name">John Doe</span></a>
-          <a href="#email"><span class="grey-text email">jdandturk@gmail.com</span></a>
+          
+          <span class="white-text name">
+            <a class="white-text" href="/user/profile">{{ g.username }}</a>
+            <a href="/logout" class="white-text" title="Log out" style="vertical-align: middle;"><i class="material-icons">logout</i></a>
+          </span>
+          <a href="#email"><span class="white-text email">&nbsp;</span></a>
         </div>
       </li>
 

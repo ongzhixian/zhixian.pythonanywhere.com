@@ -31,7 +31,7 @@ class ForumDatabase(BaseDatabaseInterface):
     # _db_migrate
 
     def add_db_migrate(self, file_path):
-        rows_affected = self.db.execute(
+        (rows_affected, _) = self.db.execute(
             "INSERT INTO _db_migrate (file_path) VALUES (%s);", (file_path,))
         logging.info(f"add_db_migrate (rows affected): [{rows_affected}]")
         
