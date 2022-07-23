@@ -54,7 +54,20 @@ class Feature:
         # return password_hash == stored_password_hash
 
     def get_registered_feature_list(self, filter=''):
-        records = self.db.fetch_list("SELECT * FROM _feature WHERE name LIKE %s ORDER BY name;", (f"%{filter}%",))
+        sql = """
+SELECT  DISTINCT COALESCE(p.id, c.id) AS 'id'
+        , COALESCE(p.display_name, c.display_name) AS 'display_name'
+        , COALESCE(p.description, c.description) AS 'description'
+        , COALESCE(p.name, c.name) AS 'name'
+        , COALESCE(p.is_enable, c.is_enable) AS 'is_enable'
+FROM    _feature c
+LEFT OUTER JOIN
+        _feature p
+        ON c.root_parent_id = p.id
+WHERE   c. display_name LIKE %s
+ORDER BY display_name;
+        """
+        records = self.db.fetch_list(sql, (f"%{filter}%",))
         logging.debug(f"Registered feature list: {len(records)}")
         if records is None:
             return []

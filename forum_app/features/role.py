@@ -3,7 +3,7 @@ from forum_app import app_path
 from forum_app.modules import app_state, log
 from forum_app.features import BaseFeatureInterface
 
-class UserProfileFeature(BaseFeatureInterface):
+class RoleFeature(BaseFeatureInterface):
 
     def __init__(self):
         super().__init__()
@@ -11,12 +11,12 @@ class UserProfileFeature(BaseFeatureInterface):
     @property
     def feature_name(self):
         """feature_name getter property. (required)"""
-        return "User Profile"
+        return "Role"
 
     @property
     def feature_description(self):
         """feature_description getter property. (required)"""
-        return "Enable user profile module"
+        return "Enable user role module"
 
     def initialize(self):
         """Things to do when feature is initialized (eg. restore state from persistence storage) (on initialize_features)"""
@@ -27,9 +27,9 @@ class UserProfileFeature(BaseFeatureInterface):
     def register(self):
         if self.is_registered(self.feature_name):
             return
-        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'user_profile', 'tables')
+        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'role', 'tables')
         self.db.run_scripts_in_path(database_table_scripts_path)
-        self.register_feature(self.feature_name, self.feature_description, __name__, 'Login')
+        self.register_feature(self.feature_name, self.feature_description, __name__, 'Role-based access control')
 
 
     def update_ui(self):

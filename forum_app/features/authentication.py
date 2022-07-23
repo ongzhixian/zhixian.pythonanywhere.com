@@ -16,8 +16,11 @@ class AuthenticationFeature(BaseFeatureInterface):
     Authentication
     └──Login
         ├──User Profile
+        │  ├──User Preferences
         ├──Role based access control
-        └??
+        │  └──Role
+    │      └──Permission
+        ├──User Group
     """
 
     def __init__(self):

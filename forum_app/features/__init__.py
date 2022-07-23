@@ -5,6 +5,7 @@
 # Note: The sequence is important. Dependents should be loaded after the parent feature
 __all__ = [
     "authentication", "login", "user_profile",
+    "role_based_access_control", "role", "permission"
     # "investment_client", "investment_portfolio", 
     # "inventory",
     # "iso_data", "financial_instrument_data",
@@ -34,7 +35,7 @@ class BaseFeatureInterface:
     def is_registered(self, feature_name) -> bool:
         """Check if feature is registered in system (inherited; use by all features)"""
         record = self.db.fetch_record(
-            "SELECT 1 FROM _feature WHERE name = %s;", 
+            "SELECT 1 FROM _feature WHERE display_name = %s;", 
             (feature_name,))
         if record is None:
             return False
@@ -42,24 +43,31 @@ class BaseFeatureInterface:
 
     def register_feature(self, feature_name, feature_description, module_name, parent_name=None) -> bool:
         """Register feature into system (inherited; use by all features)"""
+        normalized_name = feature_name.replace(' ', '-').lower()
+        # normalized_parent_name = parent_name.replace(' ', '-').lower()
 
         if parent_name is None:
             (rows_affected, _) = self.db.execute(
-                "INSERT INTO _feature (name, description, module_name) VALUES (%s, %s, %s);", 
-                (feature_name, feature_description, module_name))
+                "INSERT INTO _feature (name, display_name, description, module_name, level) VALUES (%s, %s, %s, %s, 0);", 
+                (feature_name.replace(' ', '-').lower(), feature_name, feature_description, module_name))
         else:
             sql = """
-INSERT INTO _feature (name, description, module_name, parent_id)
-SELECT 	%s AS name
-		, %s AS description
-        , %s AS module_name
-        , id AS parent_id 
-FROM 	_feature 
-WHERE 	name = %s
+INSERT INTO _feature (name, display_name, description, module_name, level, parent_id, root_parent_id)
+SELECT  %s          AS `name`
+        , %s        AS `display_name`
+        , %s        AS `description`
+        , %s        AS 'module_name'
+        , level + 1 AS 'level'
+        , id        AS 'parent_id'
+        , COALESCE(root_parent_id, id)  AS 'root_parent_id'
+FROM    _feature c
+WHERE   display_name = %s
+
         """
             (rows_affected, _) = self.db.execute(
                 sql, 
-                (feature_name, feature_description, module_name, parent_name))
+                (normalized_name, feature_name, feature_description, module_name, parent_name))
+        logging.debug(f"register_feature ({feature_name}): {rows_affected}")
         return rows_affected > 0
 
     def update_is_enable(self, feature_name, enable):

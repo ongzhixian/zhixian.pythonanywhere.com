@@ -18,3 +18,14 @@ Routes should be defined in `forum_app\pages\authentication.py` module.
 
 
 As a example see `forum_app.features.authentication` module.
+
+## Feature map
+
+Authentication
+└──Login
+    ├──User Profile
+    │  ├──User Preferences
+    ├──Role based access control
+    │  └──Role
+│      └──Permission
+    ├──User Group
