@@ -5,7 +5,9 @@
 # Note: The sequence is important. Dependents should be loaded after the parent feature
 __all__ = [
     "authentication", "login", "user_profile",
-    "role_based_access_control", "role", "permission"
+    "role_based_access_control", "role", "permission",
+    "development", "development_note"
+
     # "investment_client", "investment_portfolio", 
     # "inventory",
     # "iso_data", "financial_instrument_data",

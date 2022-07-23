@@ -3,6 +3,7 @@
 ################################################################################
 
 __all__ = ["website", "test", "db", "weblink", "stats", "qr", "feature",
+    "development",
     "instrument",
     "dice"]
 

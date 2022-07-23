@@ -132,7 +132,8 @@ class MySqlDataProvider(BaseDataProviderInterface):
             user=self.db_settings['USERNAME'],
             password=self.db_settings['PASSWORD'],
             database=self.db_settings['DATABASE'],
-            charset='utf8'
+            collation='utf8mb4_unicode_ci',
+            charset='utf8mb4'
         )
         return mydb
 
@@ -142,7 +143,8 @@ class MySqlDataProvider(BaseDataProviderInterface):
             port=self.db_settings['PORT'],
             user=self.db_settings['USERNAME'],
             password=self.db_settings['PASSWORD'],
-            charset='utf8'
+            collation='utf8mb4_unicode_ci',
+            charset='utf8mb4'
         )
         return mydb
 
@@ -164,23 +166,41 @@ class MySqlDataProvider(BaseDataProviderInterface):
 
     def fetch_record(self, sql, args=None):
         """Return a single record"""
-        connection = self.get_connection()
-        mycursor = connection.cursor()
-        mycursor.execute(sql, args)
-        result = mycursor.fetchone()
-        mycursor.close()
-        connection.close()
-        return result
+        connection = None
+        mycursor = None
+        try:
+            connection = self.get_connection()
+            mycursor = connection.cursor()
+            mycursor.execute(sql, args)
+            result = mycursor.fetchone()
+            return result
+        except Exception as ex:
+            logging.error(ex)
+            return None
+        finally:
+            if mycursor is not None:
+                mycursor.close()
+            if connection is not None:
+                connection.close()
 
     def fetch_list(self, sql, args=None):
         """Return a single list"""
-        connection = self.get_connection()
-        mycursor = connection.cursor()
-        mycursor.execute(sql, args)
-        results = mycursor.fetchall()
-        mycursor.close()
-        connection.close()
-        return results
+        connection = None
+        mycursor = None
+        try:
+            connection = self.get_connection()
+            mycursor = connection.cursor()
+            mycursor.execute(sql, args)
+            results = mycursor.fetchall()
+            return results
+        except Exception as ex:
+            logging.error(ex)
+            return None
+        finally:
+            if mycursor is not None:
+                mycursor.close()
+            if connection is not None:
+                connection.close()
 
     def fetch_record_sets(self, sql, args=None):
         """Return a single record_sets"""

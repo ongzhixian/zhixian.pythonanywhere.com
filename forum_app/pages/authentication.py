@@ -3,7 +3,7 @@ from flask.sessions import NullSession
 
 from forum_app import app
 from forum_app.features import is_feature_enable
-from forum_app.modules.login import Login
+from forum_app.modules.zzz_login import Login
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

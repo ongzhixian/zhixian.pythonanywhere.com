@@ -35,6 +35,43 @@ def feature_dashboard_post():
         search_term = feature_name)
 
 
+@app.route('/feature/<feature_name>')
+def feature_options_page(feature_name):
+    """
+    Web page at '/feature/<feature>'
+    Page to display more details about feature (for example its sub-features)
+    """
+    feature = Feature()
+    feature_record = feature.get_feature_record(feature_name)
+    feature_list = feature.get_child_feature_list(feature_name)
+    
+    logging.debug(feature_name)
+
+    breadcrumbs = [
+        { 'href' : '/feature/dashboard', 'text': 'Feature dashboard' },
+        { 'href' : None, 'text': f'{feature_record[2]} detail' }
+    ]
+    return render_template('feature/feature_detail.html', 
+        breadcrumb_list = breadcrumbs, 
+        feature_list = feature_list, 
+        feature_title = feature_record[2])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### PENDING DEVELOPMENT
+
 @app.route('/feature/option/<feature_name>')
 def feature_option_page(feature_name):
     """Web page at '/feature/option/<feature>'"""
@@ -55,18 +92,6 @@ def feature_option_post(feature_name, methods=['POST']):
 
 
 
-
-@app.route('/feature/<feature_name>')
-def feature_options_page(feature_name):
-    """
-    OBSOLETE
-    Web page at '/feature/<feature>'"""
-    # Get list of registered features
-    # feature = Feature()
-    # feature_list = feature.get_registered_feature_list()
-    # log.info("Render 'feature/feature_options.html'")
-    option_list = []
-    return render_template('feature/feature_option.html', option_list=option_list)
 
 
 

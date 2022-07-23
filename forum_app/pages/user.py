@@ -1,6 +1,6 @@
 from flask import render_template, session, request, redirect, url_for
 from forum_app import app
-from forum_app.modules.user import User
+from forum_app.modules.zzz_user import User
 
 @app.route('/user/')
 def root_user_get():

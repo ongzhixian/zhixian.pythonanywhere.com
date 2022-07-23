@@ -1,0 +1,35 @@
+{% extends "_layouts/_home.html" %}
+
+{% block title %}Feature detail{% endblock %}
+
+{% block content %}
+
+<div class="page-content">
+
+  {{ macros.shared_breadcrumb(breadcrumb_list) }}
+  
+  <div class="container">
+
+    {% if feature_list %}
+    <div class="row">
+      <strong class="section-title">Sub-features of {{ feature_title }}</strong>
+      <ul class="collection">
+        {% for feature in feature_list%}
+        <li class="collection-item">
+          <span class="title">{{ feature[2] }}</span>
+          
+          <br/>{{ feature[3] }}
+
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+      
+  </div>
+
+</div>
+
+
+{% endblock %}
+

@@ -114,7 +114,7 @@ def shared_data_airline():
     # db = MySqlDataProvider('forum')
     # sql = """SELECT short_name, code2, code3, m49 FROM country ORDER BY short_name;"""
     # record_list = db.fetch_list(sql)
-    from forum_app.modules.scrape import get_airline
+    from forum_app.modules.zzz_scrape import get_airline
     get_airline(1)
     return render_template('shared_data/shared_data_airline.html')
 

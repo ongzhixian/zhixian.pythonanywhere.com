@@ -1,6 +1,6 @@
 from flask import render_template, session, request, redirect, url_for
 from forum_app import app
-from forum_app.modules.role import Role
+from forum_app.modules.zzz_role import Role
 
 @app.route('/role/')
 def root_role_get():
