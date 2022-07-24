@@ -2,7 +2,9 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["feature", "barcode", "user", "login", "role"]
+__all__ = ["barcode", "feature"
+    # , "user", "login", "role"
+]
 
 import json
 import logging
@@ -13,6 +15,7 @@ class app_state(object):
     menu = {}
     value = {}
     event = {}
+    is_development = False
     
     def add_menu_callback(menu_name, callback):
         """Used only app initialization; no logging needed"""

@@ -1,8 +1,9 @@
 import logging
 from flask import g, current_app, request, session, redirect, url_for, abort
 from forum_app import app
-# from forum_app.pages import menu
+from forum_app.pages import menu
 from forum_app.modules import app_state
+from forum_app.features import BaseMenuInterface
 
 @app.before_request
 def before_each_request():
@@ -12,6 +13,12 @@ def before_each_request():
     g.username = session["username"] if "username" in session else None
     g.roles = session["roles"] if "roles" in session else None
     g.application = session["application"] if "application" in session else None
+    g.is_development = app_state.is_development
+    # Get menu (depends if its accessed by authenticated user)
+    menu_items = BaseMenuInterface().get_menu_items()
+    # breakpoint()
+    g.menu_items = menu_items
+    
 
 # Defining menu items for various menus
 # Note: It is possible to define menu on g as well like so:

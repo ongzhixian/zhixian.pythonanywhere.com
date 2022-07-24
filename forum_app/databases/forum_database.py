@@ -16,14 +16,15 @@ class ForumDatabase(BaseDatabaseInterface):
 
     def is_missing_key_tables(self):
         """Checks if database is missing key tables"""
-        # Application should have minimally 2 tables
+        # Application should have minimally 3 tables
         # 1.    _db_migrate
         # 2.    _feature
-        required_table_list = ('_db_migrate', '_feature')
+        # 3.    _menu?
+        required_table_list = ('_db_migrate', '_feature', '_menu')
         format_strings = ','.join(['%s'] * len(required_table_list))
         sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'forum' AND TABLE_NAME IN ({0});".format(format_strings)
         records = self.db.fetch_list(sql, required_table_list)
-        if len(records) == 2:
+        if len(records) == len(required_table_list):
             return
         # Carry out recovery action here
         self.db.initialize_database()

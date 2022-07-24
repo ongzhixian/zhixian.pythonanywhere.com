@@ -6,16 +6,17 @@
 __all__ = [
     "authentication", "login", "user_profile",
     "role_based_access_control", "role", "permission",
-    "development", "development_note"
+    "development", "development_note",
+    "trade"
 
     # "investment_client", "investment_portfolio", 
-    # "inventory",
-    # "iso_data", "financial_instrument_data",
     # Not ready yet
-    # , "shared_data", 
+    # "inventory",
+    # "human_resource"
+    # "education"
+    # "shared_data","iso_data", "financial_instrument_data",
     # "note", "tag",
-    # "dice",
-    # "rbac"
+    # "game", "dice", "card"
     ]
 
 import logging
@@ -184,3 +185,67 @@ WHERE	name = %s;
     # def is_enable(self):
     #     """is_enable deleter property."""
     #     del self._is_enable
+
+class BaseMenuInterface:
+    """Defines interface for menu"""
+
+    def __init__(self):
+        self.db = MySqlDataProvider('forum')
+
+    def add_menu_item(self, display_name, description, href=None, parent_name=None):
+        sql = """
+INSERT INTO _menu (display_name, href, description, level, parent_id, ancestor_id, display_order)
+SELECT  DISTINCT
+        %s AS 'display_name'
+        , %s AS 'href'
+        , %s AS 'description'
+        , level + 1 AS 'level'
+        , id AS 'parent_id'
+        , COALESCE(ancestor_id, id) AS 'ancestor_id'
+        , (
+            SELECT  COALESCE(MAX(display_order) + 1, 1) AS 'display_order'
+            FROM    _menu 
+            WHERE   parent_id = (SELECT id FROM _menu WHERE display_name = %s)
+        ) AS 'display_order'
+FROM    _menu
+WHERE   _menu.display_name = %s;
+"""
+        self.db.execute(sql, (display_name, href, description, parent_name, parent_name))
+
+        # href, level, display_order,
+#         if parent_name is None:
+#             sql = """
+# INSERT INTO _menu (display_name, href, description, level, parent_id, ancestor_id, display_order)
+# SELECT  DISTINCT
+#         %s AS 'display_name'
+#         , NULL AS 'href'
+#         , s AS 'description'
+#         , 0 AS 'level'
+#         , NULL AS 'parent_id'
+#         , NULL AS 'ancestor_id'
+#         , MAX(display_order) + 1 AS 'display_order'
+# FROM    _menu
+# GROUP BY _menu.level
+#             """
+#             self.db.execute(sql, (display_name, description))
+#         else:
+
+
+    
+    def get_menu_items(self) -> bool:
+        """Get menu items"""
+        sql = """
+SELECT  c.id
+        , c.display_name
+        , c.href, c.description
+        , COALESCE(p.display_name, c.display_name) as 'parent_name'
+        , COALESCE(p.display_order, c.display_order) AS 'parent_display_order'
+        , c.display_order
+FROM    _menu c
+LEFT OUTER JOIN
+        _menu p
+        ON c.parent_id = p.id
+ORDER BY COALESCE(p.display_order, c.display_order) 
+        """
+        records = self.db.fetch_list(sql, None)
+        return [] if records is None else records

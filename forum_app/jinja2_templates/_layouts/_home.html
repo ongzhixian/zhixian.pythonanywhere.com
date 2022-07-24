@@ -6,6 +6,7 @@
     <title>{% block title %}Forums{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link type="text/css" rel="stylesheet" href="/css/materialize/materialize.min.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="/css/site.css" />
     {%- block head_link %}{% endblock %}
@@ -26,9 +27,7 @@
           <li><a href="/portfolio/dashboard">Portfolios</a></li>
           {% endif %}
 
-          <li><a href="/user/dashboard">Users</a></li>
-          <li><a href="/role/dashboard">Roles</a></li>
-
+          
           {%- if g.username %}
           <!-- 
           <li><a href="/logout" title="Log out">
@@ -36,12 +35,18 @@
           </a></li> 
           -->
           {%- endif %}
-          <!-- <li><a href="collapsible.html">Miscellaneous</a></li> -->
+
+          <!-- 
+          <li><a href="collapsible.html">Miscellaneous</a></li> 
+          <li><a href="/user/dashboard">Users</a></li>
+          <li><a href="/role/dashboard">Roles</a></li>
+          -->
         </ul>
       </div>
     </nav>
 
     <ul id="slide-out" class="sidenav">
+      {%- if g.username %}
       <li>
         <div class="user-view">
           <div class="background">
@@ -51,32 +56,57 @@
           <a href="#user"><img class="circle" src="/images/placeholders/yuna.jpg"></a>
           
           <span class="white-text name">
+            
             <a class="white-text" href="/user/profile">{{ g.username }}</a>
             <a href="/logout" class="white-text" title="Log out" style="vertical-align: middle;"><i class="material-icons">logout</i></a>
+            
           </span>
           <a href="#email"><span class="white-text email">&nbsp;</span></a>
+          
         </div>
       </li>
+      {% endif %}
 
       <li><a href="/"><i class="material-icons">home</i>Home</a></li>
       
+      {% for menu_item in g.menu_items %}
+      
+      {% if menu_item[4] == 0 %}
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">{{ menu_item[1] }}</a></li>
+      {% else %}
+      <li><a href="{{ menu_item[2] }}" title="{{ menu_item[3] }}">{{ menu_item[1] }}</a></li>
+      {% endif %}
+
+      {% endfor %}
+      <!-- TODO: Make data driven
       <li><div class="divider"></div></li>
       <li><a class="subheader">Applications</a></li>
       <li><a href="/investment/dashboard">Investment</a></li>
       <li><a href="/trade/dashboard">Trade</a></li>
       <li><a href="/logistics/dashboard">Logistics</a></li>
-      <!-- <li><a href="/other/dashboard">Others...</a></li> -->
+      -->
+      
+      <!-- 
+      <li><a href="/other/dashboard">Others...</a></li> 
+      -->
 
+      <!-- TODO: make data driven  
       <li><div class="divider"></div></li>
       <li><a class="subheader">Administration</a></li>
       <li><a class="waves-effect" href="/database/dashboard">Database</a></li>
       <li><a class="waves-effect" href="/feature/dashboard">Feature</a></li>
+      -->
+
       {%- for menu_item in drawer_admin_menu %}
       <li><a class="waves-effect" href="{{menu_item.href}}">{{menu_item.display_text}}</a></li>
       {% endfor %}
     </ul>
 
+    {%- if g.is_development %}
     <div class="development-toolbar" style="float:right; margin:0.367em;">
+      <a href="/database" title="Database"><i class="material-icons">table_view</i></a>
+      <a href="/feature" title="Feature"><i class="material-icons">featured_play_list</i></a>
       <a class="modal-trigger" href="#add-development-note" title="Add note"><i class="material-icons">note_add</i></a>
       <div id="add-development-note" class="modal">
         <div class="modal-content">
@@ -96,7 +126,9 @@
           <button type="button" id="add_development_note_button" class="waves-effect waves-blue btn-flat">Save note</button>
         </div>
       </div>
+      <!-- <a class="modal-trigger" href="#add-test-data" title="Add test data"><i class="material-icons">model_training</i></a> -->
     </div>
+    {% endif %}
 
     {% block content %}Place content here{% endblock %}
     <script type="text/javascript" src="/js/materialize/materialize.min.js"></script>

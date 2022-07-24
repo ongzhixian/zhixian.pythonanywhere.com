@@ -298,12 +298,13 @@ def initialize_app_state():
     app_state.add_menu_callback('drawer_sitemap_menu', setup_drawer_sitemap_menu)
     app_state.add_menu_callback('drawer_admin_menu', setup_drawer_admin_menu)
     app_state.add_menu_callback('header_menu', setup_header_menu)
-    app_state.add_menu_callback('application_menu', setup_application_menu)
-    app_state.add_menu_callback('login_menu', setup_login_menu)
-    app_state.add_value('selected_application', None)
+    # The following are not used for now
+    # app_state.add_menu_callback('application_menu', setup_application_menu)
+    # app_state.add_menu_callback('login_menu', setup_login_menu)
+    # app_state.add_value('selected_application', None)
     app_state.add_event_callback('app_state_changed', 
         lambda event_data : broadcast_app_state_changed(event_data))
-    
+    app_state.is_development = 'is_development' in app_settings and app_settings['is_development']
 
 ################################################################################
 # Define Flask application

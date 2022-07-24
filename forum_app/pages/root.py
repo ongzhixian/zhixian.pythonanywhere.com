@@ -9,6 +9,7 @@ from forum_app.features.authentication import authentication_check
 @authentication_check
 def root_get():
     """GET /"""
+    logging.debug(f"Username: {g.username}")
     return render_template('root_get.html')
 
 @app.route('/forum')

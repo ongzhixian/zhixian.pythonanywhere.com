@@ -3,5 +3,6 @@
         "werkzeug" : "WARNING",
         "git" : "WARNING",
         "faker": "WARNING"
-    }
+    },
+    "is_development": true
 }
