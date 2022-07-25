@@ -208,9 +208,10 @@ SELECT  DISTINCT
             WHERE   parent_id = (SELECT id FROM _menu WHERE display_name = %s)
         ) AS 'display_order'
 FROM    _menu
-WHERE   _menu.display_name = %s;
+WHERE   _menu.display_name = %s
+        AND NOT EXISTS (SELECT 1 FROM _menu WHERE display_name = %s);
 """
-        self.db.execute(sql, (display_name, href, description, parent_name, parent_name))
+        self.db.execute(sql, (display_name, href, description, parent_name, parent_name, display_name))
 
         # href, level, display_order,
 #         if parent_name is None:
@@ -241,6 +242,7 @@ SELECT  c.id
         , COALESCE(p.display_name, c.display_name) as 'parent_name'
         , COALESCE(p.display_order, c.display_order) AS 'parent_display_order'
         , c.display_order
+        , p.id AS 'parent_id'
 FROM    _menu c
 LEFT OUTER JOIN
         _menu p
