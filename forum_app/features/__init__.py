@@ -247,7 +247,7 @@ FROM    _menu c
 LEFT OUTER JOIN
         _menu p
         ON c.parent_id = p.id
-ORDER BY COALESCE(p.display_order, c.display_order) 
+ORDER BY COALESCE(p.display_order, c.display_order), p.id;
         """
         records = self.db.fetch_list(sql, None)
         return [] if records is None else records
