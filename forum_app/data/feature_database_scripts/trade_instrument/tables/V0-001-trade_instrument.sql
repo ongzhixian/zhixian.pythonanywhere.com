@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `trade_instrument` (
     `type_id` 			    VARCHAR(50) NOT NULL,
     `asset_class` 			VARCHAR(50) NOT NULL,
     `execution_venue` 		VARCHAR(50) NOT NULL,
+	`is_tradable` 			BOOLEAN NOT NULL DEFAULT TRUE,
 	`cre_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	`upd_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	PRIMARY KEY (`id`),

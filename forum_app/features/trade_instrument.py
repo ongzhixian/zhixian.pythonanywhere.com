@@ -72,6 +72,7 @@ class TradeInstrumentFeature(BaseFeatureInterface):
     # Feature specific methods
     def add_oda_instruments(self):
         # Read from CSV file and insert into database
+        print('add_oda_instruments')
         instrument_data = self.get_records_from_csv_file('oda-simplified-instruments.csv')
         sql = """
 INSERT INTO trade_instrument (ticker, name, type_id, asset_class, execution_venue)
@@ -81,7 +82,7 @@ SELECT 	DISTINCT
         , %s AS type_id
         , %s AS asset_class
         , 'ODA' AS execution_venue 
-FROM	trade_instrument
+FROM    (SELECT 1) a
 WHERE	NOT EXISTS (SELECT 1 FROM trade_instrument WHERE execution_venue = 'ODA' AND ticker = %s);
 """
         self.db.execute_many(sql, instrument_data)
