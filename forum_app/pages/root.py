@@ -57,3 +57,8 @@ def link_dump_get():
     #         mydb.add_weblinks(data)
     
     return render_template('link_dump_get.html')
+
+@app.route('/lightbox', methods=['GET', 'POST'])
+def lightbox_page():
+    """TODO: Reorganize; GET /"""
+    return render_template('lightbox.html')

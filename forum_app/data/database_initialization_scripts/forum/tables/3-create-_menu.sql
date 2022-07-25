@@ -27,7 +27,7 @@ SELECT  'Applications'          AS 'display_name'
         , 'Applications'        AS 'description'
         , 1 AS 'level'
         , 1 AS 'display_order' 
-FROM _menu
+FROM    (SELECT 1) a
 WHERE NOT EXISTS (SELECT 1 FROM _menu WHERE display_name = 'Applicationsa')
 LIMIT 1;
 
@@ -36,8 +36,8 @@ SELECT  'Administration'        AS 'display_name'
         , NULL                  AS 'href'
         , 'Administration'      AS 'description'
         , 1 AS 'level'
-        , 1 AS 'display_order' 
-FROM _menu
+        , 2 AS 'display_order' 
+FROM    (SELECT 1) a
 WHERE NOT EXISTS (SELECT 1 FROM _menu WHERE display_name = 'Administration')
 LIMIT 1;
 
