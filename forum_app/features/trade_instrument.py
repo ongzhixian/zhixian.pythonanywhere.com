@@ -87,3 +87,12 @@ WHERE	NOT EXISTS (SELECT 1 FROM trade_instrument WHERE execution_venue = 'ODA' A
         self.db.execute_many(sql, instrument_data)
         # for instrument in instrument_data:
         #     print(instrument)
+
+    def get_instrument_count_by_asset_class(self):
+        sql = """
+SELECT	asset_class, COUNT(id) AS 'count'
+FROM	trade_instrument 
+GROUP BY asset_class
+ORDER BY asset_class;
+"""
+        return self.db.fetch_list(sql)

@@ -4,9 +4,39 @@
 
 {% block content %}
     <div class="page-content">
-      
 
-    </div>
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col s4">
+
+            <table>
+              <thead>
+                <tr>
+                    <th>Asset class</th>
+                    <th>Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for aci in asset_class_instrument_count %}
+                <tr>
+                  <td>
+                    <a href="/trade/asset/{{ aci[0] | lower }}/dashboard">{{ aci[0] }}</a>
+
+                  </td>
+                  <td>{{ aci[1] }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+    
+          </div>
+        </div>
+
+      </div>
+
+    </div><!-- end-of-page-content -->
 
     <!-- <div class="page-content">
       <div class="container">

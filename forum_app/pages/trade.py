@@ -1,7 +1,8 @@
 import logging
+from os import abort, path
 from flask import render_template, session, request, redirect, url_for
 from forum_app import app, app_path
-from os import abort, path
+from forum_app.features.trade_instrument import TradeInstrumentFeature
 
 
 @app.route('/trade/')
@@ -12,11 +13,78 @@ def root_trade_get():
 @app.route('/trade/dashboard')
 def trade_dashboard_page():
     """Web page at '/trade/dashboard'"""
-    # portfolio = PortfolioFeature()
-    # records = portfolio.get_portfolio_list()
-    return render_template('trade/trade_dashboard.html')
+    trade_instrument = TradeInstrumentFeature()
+    instrument_count_list = trade_instrument.get_instrument_count_by_asset_class()
+    return render_template('trade/trade_dashboard.html', asset_class_instrument_count=instrument_count_list)
+
+@app.route('/trade/asset/bond/dashboard')
+def trade_asset_bond_page():
+    """Web page at '/trade/asset/bond/dashboard'"""
+    breadcrumbs = [
+        { 'href' : '/trade/dashboard', 'text': 'Trade dashboard' },
+        { 'href' : None, 'text': 'Bond' }
+    ]
+    # There are currently about 6 bonds
+    return render_template('trade/trade_asset_bond_dashboard.html', breadcrumb_list=breadcrumbs)
+
+# COMMODITY
+# CRYPTO
+# CURRENCY
+# INDEX
+
+@app.route('/trade/asset/commodity/dashboard')
+def trade_asset_commodity_page():
+    """Web page at '/trade/asset/crypto/dashboard'"""
+    breadcrumbs = [
+        { 'href' : '/trade/dashboard', 'text': 'Trade dashboard' },
+        { 'href' : None, 'text': 'Commodity' }
+    ]
+    # There are currently about 6 bonds
+    return render_template('trade/trade_asset_commodity_dashboard.html', breadcrumb_list=breadcrumbs)
+
+@app.route('/trade/asset/cryto/dashboard')
+def trade_asset_crypto_page():
+    """Web page at '/trade/asset/crypto/dashboard'"""
+    breadcrumbs = [
+        { 'href' : '/trade/dashboard', 'text': 'Trade dashboard' },
+        { 'href' : None, 'text': 'Crypto' }
+    ]
+    # There are currently about 6 bonds
+    return render_template('trade/trade_asset_crypto_dashboard.html', breadcrumb_list=breadcrumbs)
 
 
+@app.route('/trade/asset/currency/dashboard')
+def trade_asset_currency_page():
+    """Web page at '/trade/asset/currency/dashboard'"""
+    breadcrumbs = [
+        { 'href' : '/trade/dashboard', 'text': 'Trade dashboard' },
+        { 'href' : None, 'text': 'Currency' }
+    ]
+    # There are currently about 6 bonds
+    return render_template('trade/trade_asset_currency_dashboard.html', breadcrumb_list=breadcrumbs)
+
+
+@app.route('/trade/asset/index/dashboard')
+def trade_asset_index_page():
+    """Web page at '/trade/asset/index/dashboard'"""
+    breadcrumbs = [
+        { 'href' : '/trade/dashboard', 'text': 'Trade dashboard' },
+        { 'href' : None, 'text': 'Index' }
+    ]
+    # There are currently about 6 bonds
+    return render_template('trade/trade_asset_index_dashboard.html', breadcrumb_list=breadcrumbs)
+
+
+@app.route('/trade/asset/<asset_class>/dashboard')
+def trade_asset_generic_page(asset_class):
+    """Web page at '/trade/asset/bond/dashboard'"""
+    breadcrumbs = [
+        { 'href' : '/trade/dashboard', 'text': 'Trade dashboard' },
+        { 'href' : None, 'text': asset_class }
+    ]
+    return render_template('trade/trade_asset_generic_dashboard.html', breadcrumb_list=breadcrumbs)
+
+## Obsolete routes
 
 @app.route('/trade/oanda')
 def trade_oanda_page():
