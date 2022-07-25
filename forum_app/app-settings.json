@@ -4,5 +4,5 @@
         "git" : "WARNING",
         "faker": "WARNING"
     },
-    "is_development": true
+    "is_development": false
 }
