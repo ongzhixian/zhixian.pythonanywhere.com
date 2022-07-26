@@ -9,21 +9,48 @@
         <div class="row">
 
           <div class="col s4">
-            <ul class="collection">
-              <li class="collection-item asset-class" draggable="true">
-                <i class="material-icons" style="vertical-align: bottom;">drag_indicator</i>Stocks</li>
-              <li class="collection-item asset-class" draggable="true">
-                <i class="material-icons" style="vertical-align: bottom;">drag_indicator</i>Bonds</li>
-              <li class="collection-item asset-class" draggable="true">
-                <i class="material-icons" style="vertical-align: bottom;">drag_indicator</i>Commodities</li>
-              <li class="collection-item asset-class">
-                <i class="material-icons" style="vertical-align: bottom;">drag_indicator</i>Crypto</li>
-            </ul>
+
+            <div id="srcDropZone" class="drop-zone" style="width: 200px; height: 200px; border: 3px dashed #aaa; display: flex; justify-content: center;align-items: center;">
+              <ul class="collection">
+              
+                <li class="collection-item asset-class" draggable="true">
+                    <i class="material-icons" style="vertical-align: bottom; cursor:grab;" >drag_indicator</i>Stocks
+                </li>
+  
+                <li class="collection-item asset-class">
+                  <div draggable="true" style="cursor:grab">
+                    <i class="material-icons" style="vertical-align: bottom; cursor:grab;" >drag_indicator</i>Bonds
+                  </div>
+                </li>
+  
+                <li class="collection-item asset-class">
+                  <div draggable="true">
+                    <i class="material-icons" style="vertical-align: bottom; cursor:move;" >drag_indicator</i>Commodity
+                  </div>
+                </li>
+  
+                <li class="collection-item asset-class">
+                  <div>
+                    <i class="material-icons" style="vertical-align: bottom; cursor:move;" >drag_indicator</i>Crypto
+                  </div>
+                </li>
+  
+              </ul>
+
+            </div>
+            
           </div>
 
           <div class="col s4">
-            <div id="dropZone" style="width: 200px; height: 200px; border: 3px dashed #aaa; display: flex; justify-content: center;align-items: center;">
-              <i class="material-icons" style="color:#aaa; font-size: 5em;">shopping_cart</i>
+            <div id="dropZone" class="drop-zone" style="width: 200px; height: 200px; border: 3px dashed #aaa; display: flex; justify-content: center;align-items: center;">
+              <i class="material-icons" style="color:#aaa; font-size: 5em;z-index: -1;">shopping_cart</i>
+              <ul style="display: none;">
+                <li class="collection-item asset-class" >
+                  <div draggable="true">
+                    <i class="material-icons" style="vertical-align: bottom; cursor:move;" >drag_indicator</i>Crypto
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
 
@@ -38,13 +65,22 @@
     function dragstart_handler(ev) {
       // Add the target element's id to the data transfer object
       // ev.dataTransfer.setData("text/plain", ev.target.id);
-      let nodeText = ev.target.childNodes[2].textContent;
+      // if (ev.target.nodeName != 'DIV') {
+      //   event.preventDefault(); // Cancel the drag action
+      //   return;
+      // }
+        
+      
+      
+      
+      let nodeText = ev.target.childNodes[2].textContent.trim();
       ev.dataTransfer.setData("src_id", nodeText);
       console.log("Dragging:", nodeText);
       // ev.dataTransfer.setData("text/plain", ev.target.innerText);
       // ev.dataTransfer.setData("text/html", ev.target.outerHTML);
       // ev.dataTransfer.setData("text/uri-list", ev.target.ownerDocument.location.href);
       ev.dataTransfer.dropEffect = "copy";
+      debugger;
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -60,27 +96,92 @@
     });
 
 
-    var dropZone = document.getElementById('dropZone');
-
-    // Optional.   Show the copy icon when dragging over.  Seems to only work for chrome.
-    dropZone.addEventListener('dragover', function(e) {
-        e.stopPropagation();
+    // var dropZone = document.getElementById('dropZone');
+    var dropZoneElements = document.getElementsByClassName('drop-zone');
+    
+    // Optional.   Show the copy icon when dragging over.
+    function dragOverHandler(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+    function dragEnterHandler(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      e.target.style.borderColor = '#0aa';
+    }
+    function dragLeaveHandler(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      e.target.style.borderColor = '#aaa';
+    }
+    function dragEndHandler(e) {
+      e.stopPropagation();
         e.preventDefault();
 
-        e.dataTransfer.dropEffect = 'move';
-    });
+        // e.target.style.borderColor = '#aaa';
+        console.debug("dragend");
+    }
+    function dropHandler(e) {
+      e.stopPropagation();
+      e.preventDefault();
+
+      // const data = e.dataTransfer.getData("text/plain");
+      // e.target.appendChild(document.getElementById(data));
+      const data = e.dataTransfer.getData("src_id");
+      console.log(data);
+
+      e.target.style.borderColor = '#aaa';
+    }
+
+
+    for (const dropZone of document.getElementsByClassName('drop-zone')) {
+      dropZone.addEventListener('dragover', dragOverHandler);
+      dropZone.addEventListener('dragover', dragEnterHandler);
+      dropZone.addEventListener('dragleave', dragLeaveHandler);
+      dropZone.addEventListener('dragend', dragEndHandler);
+      dropZone.addEventListener('drop', dropHandler);
+    }
+
+    // // Optional.   Show the copy icon when dragging over.
+    // dropZone.addEventListener('dragover', function(e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //     e.dataTransfer.dropEffect = 'move';
+    // });
+
+    // // Optional. UI updates
+    // dropZone.addEventListener('dragenter', function(e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //     e.target.style.borderColor = '#0aa';
+    // });
+    // // Optional. UI updates
+    // dropZone.addEventListener('dragleave', function(e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //     e.target.style.borderColor = '#aaa';
+    // });
+    //   // Optional. UI updates
+    //   dropZone.addEventListener('dragend', function(e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //     // e.target.style.borderColor = '#aaa';
+    //     console.debug("dragend");
+    // });
 
     // Get file data on drop
-    dropZone.addEventListener('drop', function(e) {
-        e.stopPropagation();
-        e.preventDefault();
+    // dropZone.addEventListener('drop', function(e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
 
-        // const data = e.dataTransfer.getData("text/plain");
-        // e.target.appendChild(document.getElementById(data));
-        const data = e.dataTransfer.getData("src_id");
-        debugger;
-        console.log(data);
-    });
+    //     // const data = e.dataTransfer.getData("text/plain");
+    //     // e.target.appendChild(document.getElementById(data));
+    //     const data = e.dataTransfer.getData("src_id");
+    //     console.log(data);
+
+    //     e.target.style.borderColor = '#aaa';
+    // });
   </script>
   
 {% endblock %}
