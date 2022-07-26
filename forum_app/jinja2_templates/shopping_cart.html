@@ -1,0 +1,86 @@
+{% extends "_layouts/_home.html" %}
+
+{% block title %}Shopping cart{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+
+      <div class="container">
+        <div class="row">
+
+          <div class="col s4">
+            <ul class="collection">
+              <li class="collection-item asset-class" draggable="true">
+                <i class="material-icons" style="vertical-align: bottom;">drag_indicator</i>Stocks</li>
+              <li class="collection-item asset-class" draggable="true">
+                <i class="material-icons" style="vertical-align: bottom;">drag_indicator</i>Bonds</li>
+              <li class="collection-item asset-class" draggable="true">
+                <i class="material-icons" style="vertical-align: bottom;">drag_indicator</i>Commodities</li>
+              <li class="collection-item asset-class">
+                <i class="material-icons" style="vertical-align: bottom;">drag_indicator</i>Crypto</li>
+            </ul>
+          </div>
+
+          <div class="col s4">
+            <div id="dropZone" style="width: 200px; height: 200px; border: 3px dashed #aaa; display: flex; justify-content: center;align-items: center;">
+              <i class="material-icons" style="color:#aaa; font-size: 5em;">shopping_cart</i>
+            </div>
+          </div>
+
+        </div><!-- end-of-row -->
+      </div><!-- end-of-container -->
+    </div><!-- end-of-page-content -->
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript">
+    "use strict";
+    function dragstart_handler(ev) {
+      // Add the target element's id to the data transfer object
+      // ev.dataTransfer.setData("text/plain", ev.target.id);
+      let nodeText = ev.target.childNodes[2].textContent;
+      ev.dataTransfer.setData("src_id", nodeText);
+      console.log("Dragging:", nodeText);
+      // ev.dataTransfer.setData("text/plain", ev.target.innerText);
+      // ev.dataTransfer.setData("text/html", ev.target.outerHTML);
+      // ev.dataTransfer.setData("text/uri-list", ev.target.ownerDocument.location.href);
+      ev.dataTransfer.dropEffect = "copy";
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Get the element by id
+      // const element = document.getElementById("p1");
+      // Add the ondragstart event listener
+      // element.addEventListener("dragstart", dragstart_handler);
+
+      let items = document.getElementsByClassName('collection-item asset-class');
+      for (let i = 0; i < items.length; i++) {
+        items[i].addEventListener('dragstart', dragstart_handler);
+      }
+    });
+
+
+    var dropZone = document.getElementById('dropZone');
+
+    // Optional.   Show the copy icon when dragging over.  Seems to only work for chrome.
+    dropZone.addEventListener('dragover', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        e.dataTransfer.dropEffect = 'move';
+    });
+
+    // Get file data on drop
+    dropZone.addEventListener('drop', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        // const data = e.dataTransfer.getData("text/plain");
+        // e.target.appendChild(document.getElementById(data));
+        const data = e.dataTransfer.getData("src_id");
+        debugger;
+        console.log(data);
+    });
+  </script>
+  
+{% endblock %}

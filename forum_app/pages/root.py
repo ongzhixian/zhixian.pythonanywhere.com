@@ -67,3 +67,8 @@ def lightbox_page():
 def file_upload_page():
     """TODO: Reorganize; GET /"""
     return render_template('file_upload.html')
+
+@app.route('/shopping-cart', methods=['GET', 'POST'])
+def shopping_cart_page():
+    """TODO: Reorganize; GET /"""
+    return render_template('shopping_cart.html')
