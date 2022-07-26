@@ -62,3 +62,8 @@ def link_dump_get():
 def lightbox_page():
     """TODO: Reorganize; GET /"""
     return render_template('lightbox.html')
+
+@app.route('/file-upload', methods=['GET', 'POST'])
+def file_upload_page():
+    """TODO: Reorganize; GET /"""
+    return render_template('file_upload.html')
