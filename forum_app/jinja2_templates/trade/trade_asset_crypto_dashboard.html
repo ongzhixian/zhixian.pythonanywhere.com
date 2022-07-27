@@ -8,11 +8,15 @@
 
       {{ macros.shared_breadcrumb(breadcrumb_list) }}
 
-      <p class="work-in-progress">Work in progress
-        <br/>
-        Some bond specific information here.
-
-      </p>
+      <div class="container">
+        <div class="row">
+          {% for instrument in instrument_list %}
+          <div class="col s6">
+            <img style="width:100%;" src="/images/external-charts/{{ instrument[2] }}-close-plot.png" alt="{{ instrument[2] }}" >
+          </div>
+          {% endfor %}
+        </div>
+      </div>
 
     </div><!-- end-of-page-content -->
 

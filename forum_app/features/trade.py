@@ -55,3 +55,4 @@ class TradeFeature(BaseFeatureInterface):
         self.update_ui()
 
     # Feature specific methods
+

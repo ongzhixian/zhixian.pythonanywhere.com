@@ -97,3 +97,8 @@ GROUP BY asset_class
 ORDER BY asset_class;
 """
         return self.db.fetch_list(sql)
+
+    def get_instrument_list_by_asset_class(self, asset_class):
+        sql = """SELECT id, name, ticker, execution_venue, is_tradable FROM trade_instrument WHERE asset_class = %s ORDER BY name;"""
+        instrument_list = self.db.fetch_list(sql, (asset_class,))
+        return instrument_list

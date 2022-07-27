@@ -25,7 +25,11 @@ def trade_asset_bond_page():
         { 'href' : None, 'text': 'Bond' }
     ]
     # There are currently about 6 bonds
-    return render_template('trade/trade_asset_bond_dashboard.html', breadcrumb_list=breadcrumbs)
+    trade_instrument = TradeInstrumentFeature()
+    instrument_list = trade_instrument.get_instrument_list_by_asset_class('BOND')
+    return render_template('trade/trade_asset_bond_dashboard.html', 
+        breadcrumb_list=breadcrumbs,
+        instrument_list=instrument_list)
 
 # COMMODITY
 # CRYPTO
@@ -39,18 +43,24 @@ def trade_asset_commodity_page():
         { 'href' : '/trade/dashboard', 'text': 'Trade dashboard' },
         { 'href' : None, 'text': 'Commodity' }
     ]
-    # There are currently about 6 bonds
-    return render_template('trade/trade_asset_commodity_dashboard.html', breadcrumb_list=breadcrumbs)
+    trade_instrument = TradeInstrumentFeature()
+    instrument_list = trade_instrument.get_instrument_list_by_asset_class('COMMODITY')
+    return render_template('trade/trade_asset_commodity_dashboard.html', 
+        breadcrumb_list=breadcrumbs,
+        instrument_list=instrument_list)
 
-@app.route('/trade/asset/cryto/dashboard')
+@app.route('/trade/asset/crypto/dashboard')
 def trade_asset_crypto_page():
     """Web page at '/trade/asset/crypto/dashboard'"""
     breadcrumbs = [
         { 'href' : '/trade/dashboard', 'text': 'Trade dashboard' },
         { 'href' : None, 'text': 'Crypto' }
     ]
-    # There are currently about 6 bonds
-    return render_template('trade/trade_asset_crypto_dashboard.html', breadcrumb_list=breadcrumbs)
+    trade_instrument = TradeInstrumentFeature()
+    instrument_list = trade_instrument.get_instrument_list_by_asset_class('CRYPTO')
+    return render_template('trade/trade_asset_crypto_dashboard.html', 
+        breadcrumb_list=breadcrumbs,
+        instrument_list=instrument_list)
 
 
 @app.route('/trade/asset/currency/dashboard')
@@ -60,8 +70,11 @@ def trade_asset_currency_page():
         { 'href' : '/trade/dashboard', 'text': 'Trade dashboard' },
         { 'href' : None, 'text': 'Currency' }
     ]
-    # There are currently about 6 bonds
-    return render_template('trade/trade_asset_currency_dashboard.html', breadcrumb_list=breadcrumbs)
+    trade_instrument = TradeInstrumentFeature()
+    instrument_list = trade_instrument.get_instrument_list_by_asset_class('CURRENCY')
+    return render_template('trade/trade_asset_currency_dashboard.html', 
+        breadcrumb_list=breadcrumbs,
+        instrument_list=instrument_list)
 
 
 @app.route('/trade/asset/index/dashboard')
@@ -71,8 +84,11 @@ def trade_asset_index_page():
         { 'href' : '/trade/dashboard', 'text': 'Trade dashboard' },
         { 'href' : None, 'text': 'Index' }
     ]
-    # There are currently about 6 bonds
-    return render_template('trade/trade_asset_index_dashboard.html', breadcrumb_list=breadcrumbs)
+    trade_instrument = TradeInstrumentFeature()
+    instrument_list = trade_instrument.get_instrument_list_by_asset_class('INDEX')
+    return render_template('trade/trade_asset_index_dashboard.html', 
+        breadcrumb_list=breadcrumbs,
+        instrument_list=instrument_list)
 
 
 @app.route('/trade/asset/<asset_class>/dashboard')

@@ -20,7 +20,10 @@ def api_test_upload_file():
     logging.debug("api_test_upload_file called")
     for file_key in request.files:
         upload_file = request.files[file_key]
-        upload_file.save(path.join(app_path, "data", "uploads", upload_file.filename))
+        if upload_file.filename.endswith('-close-plot.png'):
+            upload_file.save(path.join(app_path, 'wwwroot', 'images', 'external-charts', upload_file.filename))
+        else:
+            upload_file.save(path.join(app_path, "data", "uploads", upload_file.filename))
     
     return "OK", 200
     
