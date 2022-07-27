@@ -1,7 +1,9 @@
+from os import path
+from forum_app import app_path
 from forum_app.modules import app_state, log
-from forum_app.features import BaseFeatureInterface
+from forum_app.features import BaseFeatureInterface, BaseMenuInterface
 
-class InventoryFeature(BaseFeatureInterface):
+class WmsFeature(BaseFeatureInterface):
 
     def __init__(self):
         super().__init__()
@@ -9,12 +11,12 @@ class InventoryFeature(BaseFeatureInterface):
     @property
     def feature_name(self):
         """feature_name getter property. (required)"""
-        return "Inventory"
+        return "Warehouse Management System"
 
     @property
     def feature_description(self):
         """feature_description getter property. (required)"""
-        return "Enable inventory module"
+        return "Enable Warehouse Management System module"
 
     def initialize(self):
         """Things to do when feature is initialized (eg. restore state from persistence storage) (on initialize_features)"""
@@ -25,12 +27,10 @@ class InventoryFeature(BaseFeatureInterface):
     def register(self):
         if self.is_registered(self.feature_name):
             return
+        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'wms', 'tables')
+        self.db.run_scripts_in_path(database_table_scripts_path)
         self.register_feature(self.feature_name, self.feature_description, __name__)
-        # database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'trade', 'data')
-        # self.db.run_scripts_in_path(database_table_scripts_path)
-        # self.register_feature(self.feature_name, self.feature_description, __name__)
-        # # display_name, description, href=None, parent_name=None
-        # BaseMenuInterface().add_menu_item('Trade', 'Trade module', '/trade/dashboard', 'Applications')
+        BaseMenuInterface().add_menu_item('WMS', 'Warehouse management module', '/wms/dashboard', 'Applications')
 
 
 

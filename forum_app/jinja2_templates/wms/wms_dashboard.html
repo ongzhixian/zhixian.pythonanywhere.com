@@ -1,0 +1,17 @@
+{% extends "_layouts/_home.html" %}
+
+{% block title %}WMS{% endblock %}
+
+{% block content %}
+
+    <div class="parent" style="display: grid; grid-template-columns: minmax(150px, 25%) 1fr;">
+      <div class="section yellow" contenteditable>
+      Min: 150px / Max: 25%
+      </div>
+      <div class="section purple" contenteditable>
+        This element takes the second grid position (1fr), meaning
+        it takes up the rest of the remaining space.
+      </div>
+    </div>
+
+{% endblock %}

@@ -7,7 +7,8 @@ __all__ = [
     "authentication", "login", "user_profile",
     "role_based_access_control", "role", "permission",
     "development", "development_note",
-    "trade", "trade_instrument"
+    "trade", "trade_instrument",
+    "wms"
 
     # "investment_client", "investment_portfolio", 
     # Not ready yet
