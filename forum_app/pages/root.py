@@ -72,3 +72,8 @@ def file_upload_page():
 def shopping_cart_page():
     """TODO: Reorganize; GET /"""
     return render_template('shopping_cart.html')
+
+@app.route('/stackedit', methods=['GET', 'POST'])
+def stackedit_page():
+    """TODO: Reorganize; GET /"""
+    return render_template('stackedit.html')
