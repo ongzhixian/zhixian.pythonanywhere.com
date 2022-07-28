@@ -14,11 +14,13 @@
   </head>
   <body>
 
+
     <nav class="blue darken-4">
       <div class="nav-wrapper">
         <span data-target="slide-out" class="sidenav-trigger show-on-large interactive"><i class="material-icons">menu</i></span>
         <a href="/" class="brand-logo">{{self.title()}}</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="/client/dashboard">Sample link</a></li>
           <!-- applications -->
           {%- if g.application == None %}
           <!-- <li><a href="/client/dashboard">Anonymous</a></li> -->
@@ -103,8 +105,10 @@
       {% endfor %}
     </ul>
 
+    {% block content %}Place content here{% endblock %}
+    
     {%- if g.is_development %}
-    <div class="development-toolbar" style="float:right; margin:0.367em;">
+    <div class="development-toolbar" style="position: fixed; bottom: 0; right: 0; margin:0.367em;">
       <!--
       <a href="/presentation" title="Present"><i class="material-icons">co_present</i></a>
       <a href="/form-builder" title="Form builder"><i class="material-icons">dynamic_form</i></a>
@@ -140,7 +144,6 @@
     </div>
     {% endif %}
 
-    {% block content %}Place content here{% endblock %}
     <script type="text/javascript" src="/js/materialize/materialize.min.js"></script>
     <script type="text/javascript" src="/js/site.js"></script>
     <script type="text/javascript">

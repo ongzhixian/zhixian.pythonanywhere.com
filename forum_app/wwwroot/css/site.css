@@ -149,6 +149,16 @@ form.column {
     font-size: 3em;
 }
 
+.collection div.collection-item {
+    display: block;
+    -webkit-transition: .25s;
+    transition: .25s;
+    color: #26a69a;
+}
+.collection div.collection-item:not(.active):hover {
+    background-color: #ddd;
+}
+
 
 div.footer.action {
     position: fixed;

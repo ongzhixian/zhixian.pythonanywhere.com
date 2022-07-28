@@ -4,14 +4,107 @@
 
 {% block content %}
 
-    <div class="parent" style="display: grid; grid-template-columns: minmax(150px, 25%) 1fr;">
-      <div class="section yellow" contenteditable>
-      Min: 150px / Max: 25%
-      </div>
-      <div class="section purple" contenteditable>
-        This element takes the second grid position (1fr), meaning
-        it takes up the rest of the remaining space.
+    <div class="page-content">
+      <div class="container" style="max-width:100%; width:100%;">
+        <div class="row">
+          <div class="col s2">
+            <ul class="collapsible">
+              <li>
+                <div class="collapsible-header"><i class="material-icons">filter_drama</i>Receive</div>
+                <div class="collapsible-body">
+                  <div class="collection">
+                    <div class="collection-item interactive" data-module-name="Receiving" title="Receiving">Receiving</div>
+                    <div class="collection-item interactive" data-module-name="Received" title="Received">Received</div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">place</i>Send</div>
+                <div class="collapsible-body">
+                  <div class="collection">
+                    <div class="collection-item interactive" data-module-name="Sending" title="Sending">Sending</div>
+                    <div class="collection-item interactive" data-module-name="Picking" title="Picking">Picking</div>
+                    <div class="collection-item interactive" data-module-name="Packing" title="Packing">Packing</div>
+                    <div class="collection-item interactive" data-module-name="Sent" title="Sent">Sent</div>
+                    <!-- 
+                    <a href="#!" class="collection-item">Sending</a>
+                    <a href="#!" class="collection-item">Picking</a>
+                    <a href="#!" class="collection-item">Packing</a>
+                    <a href="#!" class="collection-item">Sent</a>
+                    -->
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">whatshot</i>Reference Data</div>
+                <div class="collapsible-body">
+                  <div class="collection">
+                    <a href="#!" class="collection-item">Item Data</a>
+                    <a href="#!" class="collection-item">Supplier Data</a>
+                    <a href="#!" class="collection-item">Customer Data</a>
+                    <a href="#!" class="collection-item">Location Data</a>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">whatshot</i>Billing</div>
+                <div class="collapsible-body">
+                  <div class="collection">
+                    <a href="#!" class="collection-item">Invoice</a>
+                    <a href="#!" class="collection-item">Credit Note</a>
+                    <a href="#!" class="collection-item">Customer Data</a>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">whatshot</i>Reports</div>
+                <div class="collapsible-body">
+                  <div class="collection">
+                    <a href="#!" class="collection-item">Invoice</a>
+                    <a href="#!" class="collection-item">Credit Note</a>
+                    <a href="#!" class="collection-item">Customer Data</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="col s10" id="app_content">
+            <!-- Content here -->
+          </div>
+        </div>
       </div>
     </div>
 
+{% endblock %}
+
+
+{% block scripts %}
+<script type="text/javascript">
+    "use strict";
+    document.addEventListener('DOMContentLoaded', function() {
+      var collapsibles = M.Collapsible.init(document.querySelectorAll('.collapsible'));
+    });
+
+    function getPage(pageName) {
+      fetch(`/api/wms/${pageName}`)
+        .then(function(response) {
+          return response.text();
+        })
+        .then(function(data) {
+          document.getElementById('app_content').innerHTML = data;
+        })
+        .catch(function(e) {
+          console.error(e);
+        });
+    }
+
+    document.querySelectorAll('.collection-item.interactive').forEach(function(a) {
+      a.addEventListener('click', function(e) {
+        var module_name = e.target.dataset.moduleName;
+        getPage(module_name);
+      });
+    });
+
+
+</script>
 {% endblock %}

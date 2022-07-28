@@ -1,0 +1,10 @@
+{% import "./_macros/_wms.html" as macros with context %}
+
+{{ macros.breadcrumb(breadcrumb_list) }}
+
+<div class="page-content">
+    {% block content %}Place content here{% endblock %}
+</div><!-- end-of-page-content -->
+
+
+{%- block scripts %}{% endblock %}
