@@ -306,6 +306,15 @@ def initialize_app_state():
         lambda event_data : broadcast_app_state_changed(event_data))
     app_state.is_development = 'is_development' in app_settings and app_settings['is_development']
 
+def setup_demo():
+    from forum_app.features.login import LoginFeature
+    login = LoginFeature()
+    login.add("admin1", "admin1")
+    login.add("admin2", "admin2")
+    login.add("wmsadmin1", "wmsadmin1")
+    login.add("wmsadmin2", "wmsadmin2")
+
+
 ################################################################################
 # Define Flask application
 ################################################################################
@@ -338,6 +347,7 @@ app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_fol
 if "SESSION_SECRET_KEY" in app_secrets:
     app.secret_key = app_secrets["SESSION_SECRET_KEY"]
 
+setup_demo()
 
 ################################################################################
 # Import pages and API for application

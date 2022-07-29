@@ -215,6 +215,32 @@ class MySqlDataProvider(BaseDataProviderInterface):
         connection.close()
         return results
 
+    def fetch_record_set(self, sql, args=None):
+        """Return a first result_set in record_sets"""
+        connection = None
+        mycursor = None
+        results = []
+        try:
+            connection = self.get_connection()
+            mycursor = connection.cursor()
+            result_sets = mycursor.execute(sql, args, multi=True)
+            for result_set in result_sets:
+                if result_set.with_rows:
+                    results.append(result_set.fetchall())
+            if len(results) > 0:
+                return results[0]
+            else:
+                return []
+        except Exception as ex:
+            logging.error(ex)
+            return None
+        finally:
+            if mycursor is not None:
+                mycursor.close()
+            if connection is not None:
+                connection.close()
+        
+
     def execute(self, sql, args=None):
         connection = None
         mycursor = None

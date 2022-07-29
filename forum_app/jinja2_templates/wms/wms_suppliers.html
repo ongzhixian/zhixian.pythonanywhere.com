@@ -1,0 +1,29 @@
+{% extends "_layouts/_wms.html" %}
+{%
+    set SN, ID, NAME = 0, 1, 2
+%}
+{% block content %}
+
+    <div class="page-content">
+        
+      <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for r in data_list %}
+          <tr>
+            <td>{{ r[NAME] }}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+        
+    </div><!-- end-of-page-content -->
+
+{% endblock %}
+
+{% block scripts %}{% endblock %}

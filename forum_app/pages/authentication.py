@@ -3,7 +3,7 @@ from flask.sessions import NullSession
 
 from forum_app import app
 from forum_app.features import is_feature_enable
-from forum_app.modules.zzz_login import Login
+from forum_app.features.login import LoginFeature
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -14,7 +14,7 @@ def login():
     if request.method == 'POST':
         username = request.form.get("username_field")
         password = request.form.get("password_field")
-        login = Login()
+        login = LoginFeature()
         if login.is_valid_credential(username, password):
             session['username'] = username
             return redirect('/')

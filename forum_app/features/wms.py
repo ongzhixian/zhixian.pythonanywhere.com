@@ -53,3 +53,36 @@ class WmsFeature(BaseFeatureInterface):
             return
         log.debug(f"{self.feature_name} is_enable: {self.is_enable} event_data {event_data}")
         self.update_ui()
+
+    # Feature specific methods
+    def setup_demo(self):
+        self.add_demo_suppliers()
+        # Add Suppliers w/Login
+        # Add Customers w/Login
+        # Add Locations w/Login
+
+    def add_demo_suppliers(self):
+        pass
+        from forum_app.features.login import LoginFeature
+        login = LoginFeature()
+        login.add('supplier1', 'supplier1')
+        login.add('supplier2', 'supplier2')
+        login.add('supplier3', 'supplier3')
+        
+
+    def get_supplier_list(self):
+        sql = """
+SET @row_number = 0;
+SELECT	(@row_number:=@row_number + 1) AS row_num
+		, id
+        , name
+FROM	wms_supplier
+ORDER BY name
+LIMIT 25;
+"""
+        return self.db.fetch_record_set(sql, None)
+        # result_sets = self.db.fetch_record_sets(sql, None)
+        # if len(result_sets) > 0:
+        #     return result_sets[0]
+        # else:
+        #     return []
