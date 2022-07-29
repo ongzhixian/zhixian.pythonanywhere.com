@@ -57,3 +57,4 @@ class ForumDatabase(BaseDatabaseInterface):
         record = self.db.fetch_record(
             "SELECT table_count, view_count, procedure_count, function_count FROM schema_object_count;", None)
         return record
+    

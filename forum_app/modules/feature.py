@@ -47,7 +47,7 @@ SELECT  DISTINCT COALESCE(p.id, c.id) AS 'id'
 FROM    _feature c
 LEFT OUTER JOIN
         _feature p
-        ON c.root_parent_id = p.id
+        ON c.ancestor_id = p.id
 WHERE   c. display_name LIKE %s
 ORDER BY display_name;
         """
@@ -68,7 +68,7 @@ SELECT id, name, display_name, description FROM _feature WHERE name = %s
         sql = """
 SELECT  id, name, display_name, description
 FROM    _feature 
-WHERE   root_parent_id = (SELECT id FROM _feature WHERE name= %s)
+WHERE   ancestor_id = (SELECT id FROM _feature WHERE name= %s)
 ORDER BY level
         """
         return self.db.fetch_list(sql, (feature_name,) )

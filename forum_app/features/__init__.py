@@ -56,14 +56,14 @@ class BaseFeatureInterface:
                 (feature_name.replace(' ', '-').lower(), feature_name, feature_description, module_name))
         else:
             sql = """
-INSERT INTO _feature (name, display_name, description, module_name, level, parent_id, root_parent_id)
+INSERT INTO _feature (name, display_name, description, module_name, level, parent_id, ancestor_id)
 SELECT  %s          AS `name`
         , %s        AS `display_name`
         , %s        AS `description`
         , %s        AS 'module_name'
         , level + 1 AS 'level'
         , id        AS 'parent_id'
-        , COALESCE(root_parent_id, id)  AS 'root_parent_id'
+        , COALESCE(ancestor_id, id)  AS 'ancestor_id'
 FROM    _feature c
 WHERE   display_name = %s
 
