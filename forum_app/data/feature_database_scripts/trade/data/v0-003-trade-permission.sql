@@ -6,7 +6,7 @@ SELECT 	id AS 'feature_id'
         , permission.target
 FROM   	_feature, 
         (
-            SELECT 			'View' AS 'action', 'Trade application menu item' AS 'target'
+            SELECT 			'View application menu item' AS 'action', 'Trade' AS 'target'
 		) permission
 WHERE 	display_name = 'Trade'
 ;

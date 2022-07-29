@@ -193,9 +193,9 @@ class BaseMenuInterface:
     def __init__(self):
         self.db = MySqlDataProvider('forum')
 
-    def add_menu_item(self, display_name, description, href=None, parent_name=None):
+    def add_menu_item(self, feature_display_name, display_name, description, href=None, parent_name=None):
         sql = """
-INSERT INTO _menu (display_name, href, description, level, parent_id, ancestor_id, display_order)
+INSERT INTO _menu (display_name, href, description, level, parent_id, ancestor_id, display_order, feature_id)
 SELECT  DISTINCT
         %s AS 'display_name'
         , %s AS 'href'
@@ -208,11 +208,12 @@ SELECT  DISTINCT
             FROM    _menu 
             WHERE   parent_id = (SELECT id FROM _menu WHERE display_name = %s)
         ) AS 'display_order'
+        , (SELECT id FROM _feature WHERE display_name = %s) AS feature_id
 FROM    _menu
 WHERE   _menu.display_name = %s
         AND NOT EXISTS (SELECT 1 FROM _menu WHERE display_name = %s);
 """
-        self.db.execute(sql, (display_name, href, description, parent_name, parent_name, display_name))
+        self.db.execute(sql, (display_name, href, description, parent_name, feature_display_name, parent_name, display_name))
 
         # href, level, display_order,
 #         if parent_name is None:
@@ -234,7 +235,7 @@ WHERE   _menu.display_name = %s
 
 
     
-    def get_menu_items(self) -> bool:
+    def get_menu_items(self, username=None) -> bool:
         """Get menu items"""
         sql = """
 SELECT  c.id
@@ -250,5 +251,42 @@ LEFT OUTER JOIN
         ON c.parent_id = p.id
 ORDER BY COALESCE(p.display_order, c.display_order), p.id;
         """
-        records = self.db.fetch_list(sql, None)
+        sql = """
+
+SELECT  c.id
+        , c.display_name
+        , c.href, c.description
+        , COALESCE(p.display_name, c.display_name) as 'parent_name'
+        , COALESCE(p.display_order, c.display_order) AS 'parent_display_order'
+        , c.display_order
+        , p.id AS 'parent_id'
+        , c.feature_id
+        , user_permission.*
+FROM    _menu c
+LEFT OUTER JOIN
+        _menu p
+        ON c.parent_id = p.id
+LEFT OUTER JOIN
+        (
+            SELECT  p.target AS 'menu_display_name', p.feature_id
+            FROM    login l 
+            INNER JOIN
+                    login_role lr
+                    ON l.id = lr.login_id
+            INNER JOIN
+                    role_permission rp
+                    ON rp.role_id = lr.role_id
+            INNER JOIN
+                    permission p
+                    ON rp.permission_id = p.id
+            WHERE   username = %s
+                    AND p.action = 'View application menu item'
+        ) user_permission
+        ON user_permission.menu_display_name = c.display_name
+        AND user_permission.feature_id = c.feature_id
+WHERE   user_permission.menu_display_name IS NOT NULL
+ORDER BY COALESCE(p.display_order, c.display_order), p.id;
+
+        """
+        records = self.db.fetch_list(sql, (username,))
         return [] if records is None else records
