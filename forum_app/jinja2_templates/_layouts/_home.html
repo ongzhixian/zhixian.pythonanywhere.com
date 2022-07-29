@@ -54,12 +54,14 @@
             <img src="/images/placeholders/office.jpg">
           </div>
 
-          <a href="#user"><img class="circle" src="/images/placeholders/yuna.jpg"></a>
+          <a href="#user"><img class="circle" src="/images/profile/profile-06.png"></a>
           
           <span class="white-text name">
             
             <a class="white-text" href="/user/profile">{{ g.username }}</a>
-            <a href="/logout" class="white-text" title="Log out" style="vertical-align: middle;"><i class="material-icons">logout</i></a>
+            <a href="/logout" class="white-text" title="Log out">
+              <i class="material-icons" style="vertical-align: middle;">logout</i>
+            </a>
             
           </span>
           <a href="#email"><span class="white-text email">&nbsp;</span></a>
@@ -100,7 +102,7 @@
       -->
 
       {%- for menu_item in drawer_admin_menu %}
-      <li><a class="waves-effect" href="{{menu_item.href}}">{{menu_item.display_text}}</a></li>
+      <!-- <li><a class="waves-effect" href="{{menu_item.href}}">{{menu_item.display_text}}</a></li> -->
       {% endfor %}
     </ul>
 
