@@ -48,6 +48,7 @@ class AuthenticationFeature(BaseFeatureInterface):
         database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'authentication', 'tables')
         self.db.run_scripts_in_path(database_table_scripts_path)
         self.register_feature(self.feature_name, self.feature_description, __name__)
+        self.update_is_enable(self.feature_name, True) # Set to True to enable authentication by default
 
 
     def app_state_changed(self, event_data=None):

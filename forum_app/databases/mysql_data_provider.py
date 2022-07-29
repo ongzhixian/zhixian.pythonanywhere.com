@@ -86,12 +86,14 @@ class MySqlDataProvider(BaseDataProviderInterface):
                     result_sets = cursor.execute(sql_script, None, multi=True)
                     for result_set in result_sets:
                         pass
+                    
                     logging.info(f"Executed {file_relative_path}")
                 except Exception as e:
                     logging.error(e)
                     # logging.info("Some error occurred", e)
         
         if did_not_bring_cursor:
+            connection.commit()
             cursor.close()
             connection.close()
 

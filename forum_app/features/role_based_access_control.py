@@ -30,7 +30,7 @@ class RoleBasedAccessControlFeature(BaseFeatureInterface):
             return
         database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'role_based_access_control', 'tables')
         self.db.run_scripts_in_path(database_table_scripts_path)
-        self.register_feature(self.feature_name, self.feature_description, __name__)
+        self.register_feature(self.feature_name, self.feature_description, __name__, 'Login')
 
 
     def update_ui(self):
@@ -51,3 +51,16 @@ class RoleBasedAccessControlFeature(BaseFeatureInterface):
             return
         log.debug(f"{self.feature_name} is_enable: {self.is_enable} event_data {event_data}")
         self.update_ui()
+
+    # Feature specific methods
+
+    def assign_role(self, role_name, login_name):
+        """Assign role to login"""
+        sql = """
+INSERT INTO login_role (login_id, role_id)
+SELECT 	l.id, r.id 
+FROM	login l, role r
+WHERE	l.username = %s 
+		AND r.name = %s
+        """
+        self.db.execute(sql, (login_name, role_name))

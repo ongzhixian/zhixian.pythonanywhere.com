@@ -308,11 +308,24 @@ def initialize_app_state():
 
 def setup_demo():
     from forum_app.features.login import LoginFeature
+    from forum_app.features.role_based_access_control import RoleBasedAccessControlFeature
     login = LoginFeature()
+    rbac = RoleBasedAccessControlFeature()
     login.add("admin1", "admin1")
     login.add("admin2", "admin2")
     login.add("wmsadmin1", "wmsadmin1")
     login.add("wmsadmin2", "wmsadmin2")
+    login.add("wmsuser1", "wmsuser1")
+    login.add("wmsuser2", "wmsuser2")
+
+    login.add("tradeadmin1", "tradeadmin1")
+    login.add("tradeadmin2", "tradeadmin2")
+    login.add("tradeuser1", "tradeuser1")
+    login.add("tradeuser2", "tradeuser2")
+    rbac.assign_role("Trade user", "tradeuser1")
+    rbac.assign_role("Trade user", "tradeuser2")
+    rbac.assign_role("Trade administrator", "tradeadmin1")
+    rbac.assign_role("Trade administrator", "tradeadmin2")
 
 
 ################################################################################
