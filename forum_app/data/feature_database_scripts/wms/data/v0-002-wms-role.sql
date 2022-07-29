@@ -1,17 +1,14 @@
 SET sql_notes = 0; -- suppress warnings
 
-CREATE TABLE IF NOT EXISTS `role` (
-	`id`					INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`name` 					VARCHAR(50) NOT NULL,
-	`cre_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-	`upd_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-	PRIMARY KEY (`id`),
-	UNIQUE INDEX `name_u_idx` (`name`)
-)
-COLLATE='utf8mb4_unicode_ci'
+INSERT INTO role (feature_id, name)
+SELECT 	id AS 'feature_id'
+		, role.name AS 'name' 
+FROM 	_feature, 
+        (
+          	SELECT 			'WMS administrator' AS 'name'
+        	UNION SELECT	'WMS user'
+		) role
+WHERE 	display_name = 'Warehouse Management System'
 ;
-
-INSERT INTO `role` (`name`) VALUES ('WMS administrator');
-INSERT INTO `role` (`name`) VALUES ('WMS user');
 
 SET sql_notes = 1; -- enable warnings

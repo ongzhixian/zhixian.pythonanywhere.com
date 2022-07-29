@@ -27,10 +27,9 @@ class TradeFeature(BaseFeatureInterface):
     def register(self):
         if self.is_registered(self.feature_name):
             return
+        self.register_feature(self.feature_name, self.feature_description, __name__)
         database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'trade', 'data')
         self.db.run_scripts_in_path(database_table_scripts_path)
-        self.register_feature(self.feature_name, self.feature_description, __name__)
-        # display_name, description, href=None, parent_name=None
         BaseMenuInterface().add_menu_item('Trade', 'Trade module', '/trade/dashboard', 'Applications')
 
 
