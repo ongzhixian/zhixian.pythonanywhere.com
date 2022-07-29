@@ -317,6 +317,10 @@ def setup_demo():
     login.add("wmsadmin2", "wmsadmin2")
     login.add("wmsuser1", "wmsuser1")
     login.add("wmsuser2", "wmsuser2")
+    rbac.assign_role("WMS user", "wmsuser1")
+    rbac.assign_role("WMS user", "wmsuser2")
+    rbac.assign_role("WMS administrator", "wmsadmin1")
+    rbac.assign_role("WMS administrator", "wmsadmin2")
 
     login.add("tradeadmin1", "tradeadmin1")
     login.add("tradeadmin2", "tradeadmin2")

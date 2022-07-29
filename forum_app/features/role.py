@@ -29,6 +29,8 @@ class RoleFeature(BaseFeatureInterface):
             return
         database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'role', 'tables')
         self.db.run_scripts_in_path(database_table_scripts_path)
+        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'role', 'views')
+        self.db.run_scripts_in_path(database_table_scripts_path)
         self.register_feature(self.feature_name, self.feature_description, __name__, 'Role-based access control')
 
 
