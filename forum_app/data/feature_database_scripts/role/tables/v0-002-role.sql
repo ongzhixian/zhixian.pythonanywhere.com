@@ -11,7 +11,11 @@ CREATE TABLE IF NOT EXISTS `role` (
 COLLATE='utf8mb4_unicode_ci'
 ;
 
-INSERT INTO `role` (`name`) VALUES ('System administrator');
-INSERT INTO `role` (`name`) VALUES ('Authenticated user');
+INSERT INTO role (feature_id, name)
+SELECT 	id AS 'feature_id'
+		, 'System administrator' AS 'name' 
+FROM 	_feature 
+WHERE 	name = 'login'
+;
 
 SET sql_notes = 1; -- enable warnings

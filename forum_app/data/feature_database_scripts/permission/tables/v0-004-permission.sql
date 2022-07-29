@@ -2,12 +2,13 @@ SET sql_notes = 0; -- suppress warnings
 
 CREATE TABLE IF NOT EXISTS `permission` (
 	`id`					INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`feature_id` 			INT UNSIGNED NOT NULL,
 	`action` 				VARCHAR(50) NOT NULL,
 	`target` 				VARCHAR(50) NOT NULL, 
 	`cre_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	`upd_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	PRIMARY KEY (`id`),
-	UNIQUE INDEX `action_u_idx` (`name`, `entity`)
+	UNIQUE INDEX `feature_action_target_u_idx` (`feature_id`, `action`, `target`)
 )
 COLLATE='utf8mb4_unicode_ci'
 ;
