@@ -42,27 +42,27 @@ WHERE NOT EXISTS (SELECT 1 FROM _menu WHERE display_name = 'Administration')
 LIMIT 1;
 
 
-INSERT INTO _menu (display_name, href, description, level, parent_id, ancestor_id, display_order)
-SELECT  'Database' AS display_name
-        , '/database' AS href
-        , 'Database module' AS description
-        , level + 1 AS level
-        , id AS parent_id
-        , COALESCE(ancestor_id, id) AS ancestor_id
-        , 1 AS display_order
-FROM    _menu
-WHERE   display_name = 'Administration' AND NOT EXISTS (SELECT 1 FROM _menu WHERE display_name = 'Database');
+-- INSERT INTO _menu (display_name, href, description, level, parent_id, ancestor_id, display_order)
+-- SELECT  'Database' AS display_name
+--         , '/database' AS href
+--         , 'Database module' AS description
+--         , level + 1 AS level
+--         , id AS parent_id
+--         , COALESCE(ancestor_id, id) AS ancestor_id
+--         , 1 AS display_order
+-- FROM    _menu
+-- WHERE   display_name = 'Administration' AND NOT EXISTS (SELECT 1 FROM _menu WHERE display_name = 'Database');
 
-INSERT INTO _menu (display_name, href, description, level, parent_id, ancestor_id, display_order)
-SELECT  'Feature' AS display_name
-        , '/feature' AS href
-        , 'Feature module' AS description
-        , level + 1 AS level
-        , id AS parent_id
-        , COALESCE(ancestor_id, id) AS ancestor_id
-        , 2 AS display_order
-FROM    _menu
-WHERE   display_name = 'Administration' AND NOT EXISTS (SELECT 1 FROM _menu WHERE display_name = 'Feature') ;
+-- INSERT INTO _menu (display_name, href, description, level, parent_id, ancestor_id, display_order)
+-- SELECT  'Feature' AS display_name
+--         , '/feature' AS href
+--         , 'Feature module' AS description
+--         , level + 1 AS level
+--         , id AS parent_id
+--         , COALESCE(ancestor_id, id) AS ancestor_id
+--         , 2 AS display_order
+-- FROM    _menu
+-- WHERE   display_name = 'Administration' AND NOT EXISTS (SELECT 1 FROM _menu WHERE display_name = 'Feature') ;
 
 
 SET sql_notes = 1; -- enable warnings

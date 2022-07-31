@@ -313,6 +313,14 @@ def setup_demo():
     rbac = RoleBasedAccessControlFeature()
     login.add("admin1", "admin1")
     login.add("admin2", "admin2")
+
+    login.add("dev1", "dev1")
+    login.add("dev2", "dev2")
+
+    rbac.assign_role("WMS user", "dev1")
+    rbac.assign_role("WMS administrator", "dev1")
+    rbac.assign_role("Trade user", "dev1")
+    rbac.assign_role("Trade administrator", "dev1")
     
     login.add("wmsadmin1", "wmsadmin1")
     login.add("wmsadmin2", "wmsadmin2")

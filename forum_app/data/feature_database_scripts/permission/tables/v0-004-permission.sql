@@ -13,6 +13,19 @@ CREATE TABLE IF NOT EXISTS `permission` (
 COLLATE='utf8mb4_unicode_ci'
 ;
 
+
+-- INSERT INTO role (feature_id, name)
+-- SELECT 	id AS 'feature_id'
+-- 		, role.name AS 'name' 
+-- FROM 	_feature, 
+--         (
+--           	SELECT 			'Trade administrator' AS 'name'
+--         	UNION SELECT	'Trade user'
+-- 		) role
+-- WHERE 	display_name = 'Trade'
+-- ;
+
+
 -- INSERTs should be defined by the individual features that support permission
 -- INSERT INTO permission (action, target) VALUES ('add', 'user');
 -- INSERT INTO permission (action, target) VALUES ('update', 'user');

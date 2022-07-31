@@ -15,7 +15,7 @@ def before_each_request():
     g.application = session["application"] if "application" in session else None
     g.is_development = app_state.is_development
     # Get menu (depends if its accessed by authenticated user)
-    menu_items = BaseMenuInterface().get_menu_items()
+    menu_items = BaseMenuInterface().get_menu_items(g.username)
     # breakpoint()
     g.menu_items = menu_items
     

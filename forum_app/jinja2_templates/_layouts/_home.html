@@ -71,10 +71,11 @@
       {% endif %}
 
       <li><a href="/"><i class="material-icons">home</i>Home</a></li>
+
       
       {% for menu_item in g.menu_items %}
       
-      {% if menu_item[7] == None %}
+      {% if menu_item[4] == None %}
       <li><div class="divider"></div></li>
       <li><a class="subheader">{{ menu_item[1] }}</a></li>
       {% else %}

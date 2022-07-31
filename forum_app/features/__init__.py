@@ -4,12 +4,18 @@
 
 # Note: The sequence is important. Dependents should be loaded after the parent feature
 __all__ = [
+    # Core
     "authentication", "login", "user_profile",
     "role_based_access_control", "role", "permission",
-    "development", "development_note",
+    # Administrative
+    "feature", "database",
+    # Application
     "trade", "trade_instrument",
-    "wms"
+    "wms",
+    # Functional
+    "development", "development_note"
 
+    # To develop
     # "investment_client", "investment_portfolio", 
     # Not ready yet
     # "inventory",
@@ -286,6 +292,31 @@ LEFT OUTER JOIN
         AND user_permission.feature_id = c.feature_id
 WHERE   user_permission.menu_display_name IS NOT NULL
 ORDER BY COALESCE(p.display_order, c.display_order), p.id;
+
+        """
+
+        sql = """
+SELECT  p.id
+        , p.display_name
+        , p.href
+        , p.description
+        , p.ancestor_id
+FROM    login_menu_item_view lm
+INNER JOIN 
+        _menu m
+        ON lm.feature_id = m.feature_id
+        AND lm.menu_display_name = m.display_name
+LEFT OUTER JOIN
+        _menu p
+ON      m.ancestor_id = COALESCE(p.ancestor_id, p.id)
+WHERE   ( 
+            p.ancestor_id = m.parent_id IS NULL
+            OR (
+                lm.feature_id = p.feature_id 
+                AND lm.menu_display_name = p.display_name
+            )
+        )
+        AND lm.username = %s
 
         """
         records = self.db.fetch_list(sql, (username,))
