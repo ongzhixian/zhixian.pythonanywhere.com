@@ -373,7 +373,7 @@ app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_fol
 if "SESSION_SECRET_KEY" in app_secrets:
     app.secret_key = app_secrets["SESSION_SECRET_KEY"]
 
-setup_demo()
+# setup_demo()
 
 ################################################################################
 # Import pages and API for application

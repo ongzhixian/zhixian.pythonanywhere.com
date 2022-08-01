@@ -6,7 +6,6 @@ SELECT 	 c.id
         , c.module_name
         , COALESCE(p.is_enable, c.is_enable) AS `is_enable`
         , c.parent_id
-        , c.apply_dt
 FROM 	_feature c
 LEFT OUTER JOIN	
 		_feature p

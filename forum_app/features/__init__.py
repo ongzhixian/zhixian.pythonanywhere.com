@@ -13,7 +13,10 @@ __all__ = [
     "trade", "trade_instrument",
     "wms",
     # Functional
-    "development", "development_note"
+    "development", "development_note",
+    # Practice / Demo / Test / Trial (whatever you want to call it)
+    "practice_account"
+
 
     # To develop
     # "investment_client", "investment_portfolio", 

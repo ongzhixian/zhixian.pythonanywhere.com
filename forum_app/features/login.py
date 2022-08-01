@@ -31,6 +31,8 @@ class LoginFeature(BaseFeatureInterface):
             return
         database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'login', 'tables')
         self.db.run_scripts_in_path(database_table_scripts_path)
+        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'login', 'views')
+        self.db.run_scripts_in_path(database_table_scripts_path)
         self.register_feature(self.feature_name, self.feature_description, __name__, "Authentication")
 
     def update_ui(self):
