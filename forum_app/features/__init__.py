@@ -299,7 +299,8 @@ ORDER BY COALESCE(p.display_order, c.display_order), p.id;
         """
 
         sql = """
-SELECT  p.id
+SELECT  DISTINCT
+        p.id
         , p.display_name
         , p.href
         , p.description

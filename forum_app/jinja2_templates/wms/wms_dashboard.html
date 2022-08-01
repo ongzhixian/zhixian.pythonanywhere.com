@@ -4,9 +4,15 @@
 
 {% block content %}
 
-    <div class="page-content">
+    <!-- <div class="page-contentz"> -->
 
       <div class="container" style="max-width:100%; width:100%;">
+        <!-- Need to think more the design 
+        <div class="wms-toolbar" style="margin:0.367em;">
+          <a class="menu-trigger" href="#toggle-menu" title="Display/Hide menu"><i class="material-icons">menu_open</i></a>
+        </div>
+        -->
+
         <div class="row">
           <div class="col s2">
             <ul class="collapsible">
@@ -74,7 +80,8 @@
           </div>
         </div>
       </div>
-    </div>
+
+    </div><!-- end-of-page-content -->
 
 {% endblock %}
 
@@ -82,9 +89,26 @@
 {% block scripts %}
 <script type="text/javascript">
     "use strict";
+
+    var collapsibles;
+
+    function initializeComponents() {
+      collapsibles = M.Collapsible.init(document.querySelectorAll('.collapsible'));
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      var collapsibles = M.Collapsible.init(document.querySelectorAll('.collapsible'));
+      // Initialize state
+      // window.history.replaceState(state, null, "");
+      initializeComponents();
     });
+
+    // window.onpopstate = function (event) {
+    //   console.log('pop state');
+    //   if (event.state) { 
+    //     state = event.state; 
+    //   }  
+    //   render(state); // See example render function in summary below
+    // };
 
     function getPage(pageName) {
       fetch(`/api/wms/${pageName}`)
@@ -93,6 +117,38 @@
         })
         .then(function(data) {
           document.getElementById('app_content').innerHTML = data;
+          // Update state
+          // window.history.pushState(state, null, "");
+        })
+        .catch(function(e) {
+          console.error(e);
+        });
+    }
+
+    function postForm(id) {
+      let form = document.getElementById(id);
+      let formData = new FormData(form);
+      for (const [key, value] of formData) {
+        console.log(`formData has: ${key}: ${value}\n`);
+      }
+
+      fetch(form.action, {
+        method: 'POST',
+        // We should not need to set headers for FormData; the browser will automatically set them together with the boundary delimiter
+        // headers: {
+        //   // 'Content-Type': 'application/json'
+        //   // 'Content-Type': 'application/x-www-form-urlencoded',
+        //   //'Content-Type': 'multipart/form-data'//
+        // },
+        body: formData
+      })
+        .then(function(response) {
+          return response.text();
+        })
+        .then(function(data) {
+          document.getElementById('app_content').innerHTML = data;
+          // Update state
+          // window.history.pushState(state, null, "");
         })
         .catch(function(e) {
           console.error(e);

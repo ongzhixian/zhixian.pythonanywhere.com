@@ -4,13 +4,13 @@
 ################################################################################
 
 # import json
-# import logging
+import logging
 
 # from os import environ, path
 # from datetime import datetime
 # from time import time,sleep
 #from flask import render_template, redirect, url_forrequest, make_response, abort
-from flask import render_template
+from flask import render_template, request
 
 from forum_app import app, app_path
 # from forum_app.databases.forum_database import ForumDatabase
@@ -25,6 +25,29 @@ def api_wms_suppliers():
     supplier_list = WmsFeature().get_supplier_list()
     print(len(supplier_list))
     return render_template(f'wms/wms_suppliers.html', 
+        breadcrumb_list=breadcrumbs,
+        data_list=supplier_list
+        ), 200
+
+
+@app.route('/api/wms/add-supplier', methods=['GET', 'POST'])
+def api_wms_add_supplier():
+    breadcrumbs = [
+        { 'href' : '/wms/dashboard', 'text': 'WMS' },
+        { 'href' : None, 'text': 'Suppliers' }
+    ]
+    from forum_app.features.wms import WmsFeature
+    supplier_list = WmsFeature().get_supplier_list()
+    if request.method == 'POST':
+        logging.debug("api_wms_add_supplier (POST) called.")
+        if 'supplier_name_field' in request.form:
+            logging.debug('supplier_name_field found in request.form.')
+            supplier_name = request.form['supplier_name_field']
+            # Todo: add supplier to database
+        else:
+            logging.debug('supplier_name_field missing in request.form.')
+        breakpoint()
+    return render_template(f'wms/wms_add_supplier.html', 
         breadcrumb_list=breadcrumbs,
         data_list=supplier_list
         ), 200

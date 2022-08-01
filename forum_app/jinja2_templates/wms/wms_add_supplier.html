@@ -1,0 +1,35 @@
+{% extends "_layouts/_wms.html" %}
+{%
+    set SN, ID, NAME = 0, 1, 2
+%}
+{% block content %}
+
+<div class="row">
+  <form class="col s12" method="post" action="/api/wms/add-supplier" id="add_supplier_form">
+    <div class="row">
+      <div class="input-field col s6">
+        <input id="supplier_name_field" name="supplier_name_field" type="text" class="validate">
+        <label for="supplier_name_field">Supplier Name</label>
+      </div>
+    </div>
+    <div class="row">
+      <button type="button" class="waves-effect waves-light btn" onclick="postForm('add_supplier_form');">Add supplier</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    "use strict";
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // var collapsibles = M.Collapsible.init(document.querySelectorAll('.collapsible'));
+      // Initialize state
+      // window.history.replaceState(state, null, "");
+      console.log('DOMContentLoaded from wms_add_supplier');
+    });
+
+</script>
+{% endblock %}

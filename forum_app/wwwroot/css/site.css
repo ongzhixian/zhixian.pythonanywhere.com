@@ -300,6 +300,12 @@ table.user tbody tr td a {
     width: 100%;
 }
 
+.container.full-width {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
 /* .action-card h3 {
     text-align: center;
     width: 100%;
