@@ -18,28 +18,31 @@
 
     <div class="container">
 
-      <form method="post" action="update-user-profile">
+      <form method="post">
+
         <div class="row">
           <div class="input-field col s4">
-            <input id="first_name" type="text" class="validate">
+            <input id="first_name" name="first_name_field" type="text" class="validate">
             <label for="first_name">First Name</label>
           </div>
           <div class="input-field col s4">
-            <input id="last_name" type="text" class="validate">
+            <input id="last_name" name="last_name_field" type="text" class="validate">
             <label for="last_name">Last Name</label>
           </div>
         </div>
 
+        <!-- 
         <div class="row">
           <div class="input-field col s4">
-            <input id="email_field" type="email" class="validate">
+            <input id="email_field" name="email_field" type="email" class="validate">
             <label for="email_field">Email</label>
           </div>
         </div>
+        -->
 
         <div class="row">
           <div class="col s4">
-            <button class="btn blue waves-effect waves-light" type="submit" name="action">Update
+            <button class="btn blue waves-effect waves-light" type="submit" name="action" value="update-user-profile">Update
               <i class="material-icons right">send</i>
             </button>
           </div>
@@ -47,19 +50,21 @@
 
       </form>
 
+      <!-- 
       <hr/>
 
       <form method="post" action="update-user-password">
+
         <div class="row">
           <div class="input-field col s4">
-            <input id="password_field" type="text" class="validate">
+            <input id="password_field" type="password" class="validate">
             <label for="password_field">Password</label>
           </div>
         </div>
 
         <div class="row">
           <div class="input-field col s4">
-            <input id="confirm_password_field" type="text" class="validate">
+            <input id="confirm_password_field" type="password" class="validate">
             <label for="confirm_password_field">Confirm password</label>
           </div>
         </div>
@@ -73,7 +78,8 @@
         </div>
 
       </form>
-
+      -->
+      
       <hr/>
 
       <div class="row">
@@ -84,7 +90,7 @@
           <form method="post" action="update-profile-picture">
 
             <div style="text-align:center;">
-              <img src="/images/profile/profile-01.png">
+              <img src="/images/profile/{{ g.username }}-portrait.png">
             </div>
 
             <div class="file-field input-field">
@@ -115,6 +121,17 @@
               <img style="width:512px" src="/images/background/italy-bg.jpg">
             </div>
 
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="bg_x_position" type="text" class="validate">
+                <label for="bg_x_position">x-position </label>
+              </div>
+              <div class="input-field col s6">
+                <input id="bg_y_position" type="text" class="validate">
+                <label for="bg_y_position">y-position</label>
+              </div>
+            </div>
+            
             <div class="file-field input-field">
               <div class="btn blue">
                 <span>File</span>

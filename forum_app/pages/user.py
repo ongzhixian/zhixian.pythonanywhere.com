@@ -62,6 +62,42 @@ def user_profile_page():
     return render_template('user/user_profile.html')
 
 
+def update_user_profile(form):
+    pass
+    first_name_field = form['first_name_field']
+    last_name_field = form['last_name_field']
+    email_field = form['email_field']
+    from forum_app.features.user_profile import UserProfileFeature
+    user_profile = UserProfileFeature()
+    user_profile.update_profile(
+        first_name_field, 
+        last_name_field,
+        email_field
+    )
+    breakpoint()
+
+@app.route('/user/profile', methods=['POST'])
+def user_profile_post():
+    """Web page at '/user/profile'"""
+    # update-user-profile
+    # update-user-password
+    # update-profile-picture
+    # update-background-picture
+    actions = {
+        'update-user-profile': update_user_profile,
+        'update-user-password': update_user_profile,
+        'update-profile-picture': update_user_profile,
+        'update-background-picture': update_user_profile,
+    }
+    if 'action' not in request.form:
+        return render_template('user/user_profile.html')
+
+    action = request.form['action']
+    if action in actions:
+        actions[action](request.form)
+    return render_template('user/user_profile.html')
+
+
 @app.route('/user/password-test')
 def user_password_test_page():
     """Web page at '/user/password-test'"""

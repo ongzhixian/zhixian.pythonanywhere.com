@@ -51,3 +51,10 @@ class UserProfileFeature(BaseFeatureInterface):
             return
         log.debug(f"{self.feature_name} is_enable: {self.is_enable} event_data {event_data}")
         self.update_ui()
+
+
+    # Feature specific methods
+
+    def update_profile(self, first_name_field, last_name_field, email_field):
+        pass
+        
