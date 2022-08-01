@@ -90,98 +90,106 @@
 <script type="text/javascript">
     "use strict";
 
-    var collapsibles;
+    let app = {
+        state: null,
+        collapsibles : null,
 
-    function initializeComponents() {
-      collapsibles = M.Collapsible.init(document.querySelectorAll('.collapsible'));
-    }
+        // init: function() {
+        //     this.bindEvents();
+        // },
+        // bindEvents: function() {
+        //     document.addEventListener('DOMContentLoaded', this.onLoad);
+        // },
+        // onLoad: function() {
+        //     app.loadModule('Receiving');
+        // }
+        getPage : function (pageName) {
+          fetch(`/api/wms/${pageName.toLocaleLowerCase()}`)
+            .then(function(response) {
+              return response.text();
+            })
+            .then(function(data) {
+              document.getElementById('app_content').innerHTML = data;
+              // Update state
+              // window.history.pushState(state, null, "");
+            })
+            .catch(function(e) {
+              console.error(e);
+            });
+        },
+
+        postForm: function postForm(id) {
+          let form = document.getElementById(id);
+          let formData = new FormData(form);
+          for (const [key, value] of formData) {
+            console.log(`formData has: ${key}: ${value}\n`);
+          }
+
+          fetch(form.action, {
+            method: 'POST',
+            // We should not need to set headers for FormData; the browser will automatically set them together with the boundary delimiter
+            // headers: {
+            //   // 'Content-Type': 'application/json'
+            //   // 'Content-Type': 'application/x-www-form-urlencoded',
+            //   //'Content-Type': 'multipart/form-data'//
+            // },
+            body: formData
+          })
+            .then(function(response) {
+              return response.text();
+            })
+            .then(function(data) {
+              document.getElementById('app_content').innerHTML = data;
+              // Update state
+              // window.history.pushState(state, null, "");
+              M.toast({html: 'OK', classes: 'green'});
+            })
+            .catch(function(e) {
+              console.error(e);
+            });
+        },
+
+        openMenu: function(menuName) {
+          // If query string has 'menu-item', open the menu there.
+          // collapsibles[0].open(2)
+          let urlSearchParams = (new URL(document.location)).searchParams;
+          let menuItemName = urlSearchParams.get('menu-item');
+          console.log("menuItemName", menuItemName);
+          
+          // var menuItem = Array.from(document.querySelectorAll('.collection-item.interactive')).find(element => element.innerText === menuItemName);
+          // Same as above, but using ... (spread syntax); 
+          var menuItem = [...document.querySelectorAll('.collection-item.interactive')].find(element => element.innerText === menuItemName);
+          if (menuItem) {
+            // let listItemIndex = Array.from(document.getElementById('wms_menu').children).indexOf(menuItem.parentElement.parentElement.parentElement);
+            // Same as above; but using spread syntax and closest
+            let listItemIndex =[...document.getElementById('wms_menu').children].indexOf(menuItem.closest('li'));
+            
+            // Open menu section of menu-item
+            app.collapsibles[0].open(listItemIndex);
+            // Click menu-item
+            menuItem.click();
+          }
+        },
+
+        initializeComponents : function() {
+            app.collapsibles = M.Collapsible.init(document.querySelectorAll('.collapsible'));
+
+            document.querySelectorAll('.collection-item.interactive').forEach(function(collectionItem) {
+              collectionItem.addEventListener('click', function(e) {
+                let module_name = e.target.dataset.moduleName;
+                app.getPage(module_name);
+              });
+            });
+        },
+    };  
 
     document.addEventListener('DOMContentLoaded', function() {
       // Initialize state
       // window.history.replaceState(state, null, "");
-      initializeComponents();
-
-      // If query string has 'menu-item', open the menu there.
-      // collapsibles[0].open(2)
-      let urlSearchParams = (new URL(document.location)).searchParams;
-      let menuItemName = urlSearchParams.get('menu-item');
-      console.log("menuItemName", menuItemName);
-      
-      // var menuItem = Array.from(document.querySelectorAll('.collection-item.interactive')).find(element => element.innerText === menuItemName);
-      // Same as above, but using ... (spread syntax); 
-      var menuItem = [...document.querySelectorAll('.collection-item.interactive')].find(element => element.innerText === menuItemName);
-      if (menuItem) {
-        // let listItemIndex = Array.from(document.getElementById('wms_menu').children).indexOf(menuItem.parentElement.parentElement.parentElement);
-        // Same as above; but using spread syntax and closest
-        let listItemIndex =[...document.getElementById('wms_menu').children].indexOf(menuItem.closest('li'));
-        
-        // Open menu section of menu-item
-        collapsibles[0].open(listItemIndex);
-        // Click menu-item
-        menuItem.click();
-      }
+      app.state = {};
+      app.initializeComponents();
+      app.openMenu();
     });
-
-    // window.onpopstate = function (event) {
-    //   console.log('pop state');
-    //   if (event.state) { 
-    //     state = event.state; 
-    //   }  
-    //   render(state); // See example render function in summary below
-    // };
-
-    function getPage(pageName) {
-      fetch(`/api/wms/${pageName}`)
-        .then(function(response) {
-          return response.text();
-        })
-        .then(function(data) {
-          document.getElementById('app_content').innerHTML = data;
-          // Update state
-          // window.history.pushState(state, null, "");
-        })
-        .catch(function(e) {
-          console.error(e);
-        });
-    }
-
-    function postForm(id) {
-      let form = document.getElementById(id);
-      let formData = new FormData(form);
-      for (const [key, value] of formData) {
-        console.log(`formData has: ${key}: ${value}\n`);
-      }
-
-      fetch(form.action, {
-        method: 'POST',
-        // We should not need to set headers for FormData; the browser will automatically set them together with the boundary delimiter
-        // headers: {
-        //   // 'Content-Type': 'application/json'
-        //   // 'Content-Type': 'application/x-www-form-urlencoded',
-        //   //'Content-Type': 'multipart/form-data'//
-        // },
-        body: formData
-      })
-        .then(function(response) {
-          return response.text();
-        })
-        .then(function(data) {
-          document.getElementById('app_content').innerHTML = data;
-          // Update state
-          // window.history.pushState(state, null, "");
-        })
-        .catch(function(e) {
-          console.error(e);
-        });
-    }
-
-    document.querySelectorAll('.collection-item.interactive').forEach(function(a) {
-      a.addEventListener('click', function(e) {
-        var module_name = e.target.dataset.moduleName;
-        getPage(module_name);
-      });
-    });
-
 
 </script>
 {% endblock %}

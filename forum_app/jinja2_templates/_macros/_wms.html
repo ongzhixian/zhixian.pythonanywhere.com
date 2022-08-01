@@ -19,3 +19,22 @@
 {% endif %}
 {% endmacro %}
 
+{% macro spa_breadcrumb(breadcrumb_list) %}
+{% if breadcrumb_list %}
+<div class="breadcrumb-row">
+  <span href="{{ breadcrumb_list[0].href }}">{{ breadcrumb_list[0].text }}</span>
+  
+  {% for breadcrumb in breadcrumb_list[1:] %}
+  <span class="material-icons">chevron_right</span>
+  
+  {% if breadcrumb.href %}
+  <span href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</span>
+  {% else %}
+  <span>{{ breadcrumb.text }}</span>
+  {% endif %}
+  
+  {% endfor %}
+</div>
+{% endif %}
+{% endmacro %}
+

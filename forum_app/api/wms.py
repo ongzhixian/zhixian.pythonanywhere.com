@@ -15,8 +15,24 @@ from flask import render_template, request
 from forum_app import app, app_path
 # from forum_app.databases.forum_database import ForumDatabase
 
-@app.route('/api/wms/Supplier', methods=['GET', 'POST'])
-def api_wms_suppliers():
+@app.route('/api/wms/supplier-item', methods=['GET', 'POST'])
+def api_wms_supplier_item():
+    breadcrumbs = [
+        { 'href' : '/wms/dashboard', 'text': 'WMS' },
+        { 'href' : '/wms/dashboard?menu-item=Supplier&page=2', 'text': 'Supplier' },
+        { 'href' : None, 'text': 'Supplier item' },
+    ]
+    from forum_app.features.wms import WmsFeature
+    supplier_list = WmsFeature().get_supplier_list()
+    return render_template(f'wms/wms_supplier_item.html', 
+        breadcrumb_list=breadcrumbs,
+        data_list=supplier_list
+        ), 200
+
+
+
+@app.route('/api/wms/supplier', methods=['GET', 'POST'])
+def api_wms_supplier():
     breadcrumbs = [
         { 'href' : '/wms/dashboard', 'text': 'WMS' },
         { 'href' : None, 'text': 'Supplier' }

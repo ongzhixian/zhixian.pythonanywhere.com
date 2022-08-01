@@ -4,8 +4,9 @@ from forum_app import app
 
 @app.route('/wms/')
 def wms_get():
-    """Web page at '/investment'"""
-    return redirect(url_for('wms_dashboard_page'))
+    """Web page at '/wms'"""
+    return render_template('wms/wms_dashboard.html')
+    # return redirect(url_for('wms_dashboard_page'))
 
 @app.route('/wms/dashboard')
 def wms_dashboard_page():
