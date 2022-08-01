@@ -61,6 +61,12 @@ class WmsSupplierFeature(BaseFeatureInterface):
         self.update_ui()
 
     # Feature specific methods
+
+    def add(self, supplier_name):
+        sql = """insert into wms_supplier (name) values (%s);"""
+        self.db.execute(sql, (supplier_name,))
+
+
     def setup_demo(self):
         self.add_demo_suppliers()
         # Add Suppliers w/Login

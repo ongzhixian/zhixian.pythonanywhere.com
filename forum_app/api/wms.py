@@ -15,16 +15,15 @@ from flask import render_template, request
 from forum_app import app, app_path
 # from forum_app.databases.forum_database import ForumDatabase
 
-@app.route('/api/wms/Suppliers', methods=['GET', 'POST'])
+@app.route('/api/wms/Supplier', methods=['GET', 'POST'])
 def api_wms_suppliers():
     breadcrumbs = [
         { 'href' : '/wms/dashboard', 'text': 'WMS' },
-        { 'href' : None, 'text': 'Suppliers' }
+        { 'href' : None, 'text': 'Supplier' }
     ]
     from forum_app.features.wms import WmsFeature
     supplier_list = WmsFeature().get_supplier_list()
-    print(len(supplier_list))
-    return render_template(f'wms/wms_suppliers.html', 
+    return render_template(f'wms/wms_supplier.html', 
         breadcrumb_list=breadcrumbs,
         data_list=supplier_list
         ), 200
@@ -34,22 +33,27 @@ def api_wms_suppliers():
 def api_wms_add_supplier():
     breadcrumbs = [
         { 'href' : '/wms/dashboard', 'text': 'WMS' },
-        { 'href' : None, 'text': 'Suppliers' }
+        { 'href' : '/wms/dashboard?menu-item=Supplier&page=2', 'text': 'Supplier' },
+        { 'href' : None, 'text': 'Add Supplier' },
     ]
+    message = ""
     from forum_app.features.wms import WmsFeature
     supplier_list = WmsFeature().get_supplier_list()
     if request.method == 'POST':
+        message = "Invalid data."
         logging.debug("api_wms_add_supplier (POST) called.")
         if 'supplier_name_field' in request.form:
             logging.debug('supplier_name_field found in request.form.')
             supplier_name = request.form['supplier_name_field']
             # Todo: add supplier to database
-        else:
-            logging.debug('supplier_name_field missing in request.form.')
-        breakpoint()
+            from forum_app.features.wms_supplier import WmsSupplierFeature
+            wms_supplier = WmsSupplierFeature()
+            wms_supplier.add(supplier_name)
+            message = "Supplier added."
     return render_template(f'wms/wms_add_supplier.html', 
         breadcrumb_list=breadcrumbs,
-        data_list=supplier_list
+        data_list=supplier_list,
+        message=message
         ), 200
 
 
@@ -63,7 +67,7 @@ def api_wms_module(module_name):
         'Packing',
         'Sent',
         'Item_Data',
-        'Suppliers',
+        'Supplier',
         'Customer',
         'Location',
         'Invoice',

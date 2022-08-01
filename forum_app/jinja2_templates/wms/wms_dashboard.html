@@ -15,7 +15,7 @@
 
         <div class="row">
           <div class="col s2">
-            <ul class="collapsible">
+            <ul class="collapsible" id="wms_menu">
               <li>
                 <div class="collapsible-header"><i class="material-icons">place</i>Receive</div>
                 <div class="collapsible-body">
@@ -47,8 +47,8 @@
                 <div class="collapsible-body">
                   <div class="collection">
                     <div class="collection-item interactive" data-module-name="Item Data" title="Item Data">Item Data</div>
-                    <div class="collection-item interactive" data-module-name="Suppliers" title="Suppliers">Suppliers</div>
-                    <div class="collection-item interactive" data-module-name="Customers" title="Customers">Customers</div>
+                    <div class="collection-item interactive" data-module-name="Supplier" title="Supplier">Supplier</div>
+                    <div class="collection-item interactive" data-module-name="Customer" title="Customer">Customer</div>
                     <div class="collection-item interactive" data-module-name="Location" title="Location">Location</div>
                   </div>
                 </div>
@@ -100,6 +100,26 @@
       // Initialize state
       // window.history.replaceState(state, null, "");
       initializeComponents();
+
+      // If query string has 'menu-item', open the menu there.
+      // collapsibles[0].open(2)
+      let urlSearchParams = (new URL(document.location)).searchParams;
+      let menuItemName = urlSearchParams.get('menu-item');
+      console.log("menuItemName", menuItemName);
+      
+      // var menuItem = Array.from(document.querySelectorAll('.collection-item.interactive')).find(element => element.innerText === menuItemName);
+      // Same as above, but using ... (spread syntax); 
+      var menuItem = [...document.querySelectorAll('.collection-item.interactive')].find(element => element.innerText === menuItemName);
+      if (menuItem) {
+        // let listItemIndex = Array.from(document.getElementById('wms_menu').children).indexOf(menuItem.parentElement.parentElement.parentElement);
+        // Same as above; but using spread syntax and closest
+        let listItemIndex =[...document.getElementById('wms_menu').children].indexOf(menuItem.closest('li'));
+        
+        // Open menu section of menu-item
+        collapsibles[0].open(listItemIndex);
+        // Click menu-item
+        menuItem.click();
+      }
     });
 
     // window.onpopstate = function (event) {

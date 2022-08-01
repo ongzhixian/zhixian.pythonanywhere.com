@@ -1,0 +1,64 @@
+{% extends "_layouts/_wms.html" %}
+{%
+    set SN, ID, NAME = 0, 1, 2
+%}
+{% block content %}
+
+    <div class="container full-width">
+      <div class="row">
+
+        <div class="col s8">
+          <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for r in data_list %}
+              <tr>
+                <td>{{ r[NAME] }}
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col s4">
+
+          <ul class="collection with-header">
+
+            <li class="collection-header"><h4>Search filter</h4></li>
+            <li class="collection-item">
+              <div class="input-field">
+                <input id="supplier_name_field" name="supplier_name_field" type="text" class="validate">
+                <label class="active" for="supplier_name_field">Supplier</label>
+              </div>
+            </li>
+
+            <li class="collection-header"><h4>Actions</h4></li>
+            <li class="collection-item">
+              <div class="action-bar" >
+                <button class="waves-effect waves-light btn" onclick="getPage('add-supplier');">Add supplier</button>
+              </div>
+            </li>
+            
+          </ul>
+          
+          <!-- <div class="action-bar" style="float: left;">
+              <div class="input-field">
+                <input id="supplier_name_field" name="supplier_name_field" type="text" class="validate">
+                <label class="active" for="supplier_name_field">Supplier</label>
+              </div>
+          </div> -->
+        </div>
+
+
+      </div>
+
+    </div>
+
+      
+
+{% endblock %}
