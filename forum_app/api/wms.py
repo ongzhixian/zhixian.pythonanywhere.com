@@ -102,10 +102,10 @@ def api_wms_location():
     ]
     from forum_app.features.wms_location import WmsLocationFeature
     wms_location = WmsLocationFeature()
-    location_type_list = wms_location.get_location_type_list()
+    location_list = wms_location.get_location_list()
     return render_template(f'wms/wms_location.html', 
         breadcrumb_list=breadcrumbs,
-        location_type_list=location_type_list
+        location_list=location_list
         ), 200
 
 # Fallback route for pages to be developed

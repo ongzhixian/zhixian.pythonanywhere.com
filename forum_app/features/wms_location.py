@@ -75,8 +75,18 @@ FROM	wms_location_type
 ORDER BY name;
 """
         return self.db.fetch_record_set(sql, None)
-        # result_sets = self.db.fetch_record_sets(sql, None)
-        # if len(result_sets) > 0:
-        #     return result_sets[0]
-        # else:
-        #     return []
+
+    def get_location_list(self):
+        sql = """
+SET @row_number = 0;
+SELECT	(@row_number:=@row_number + 1) AS row_num
+        , l.id AS 'location_id'
+        , l.name AS 'location_name'
+        , lt.name AS 'location_type_name'
+from    wms_location l
+inner join
+        wms_location_type lt
+        ON l.location_type_id = lt.id
+LIMIT 25;
+"""
+        return self.db.fetch_record_set(sql, None)

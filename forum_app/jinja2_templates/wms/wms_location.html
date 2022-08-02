@@ -1,6 +1,6 @@
 {% extends "_layouts/_wms.html" %}
 {%
-    set SN, ID, NAME = 0, 1, 2
+    set SN, ID, NAME, TYPE_NAME = 0, 1, 2, 3
 %}
 {% block content %}
 
@@ -12,13 +12,14 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Type</th>
                 </tr>
             </thead>
             <tbody>
-            {% for r in data_list %}
+            {% for r in location_list %}
               <tr>
-                <td>{{ r[NAME] }}
-                </td>
+                <td>{{ r[NAME] }}</td>
+                <td>{{ r[TYPE_NAME] }}</td>
               </tr>
             {% endfor %}
             </tbody>
