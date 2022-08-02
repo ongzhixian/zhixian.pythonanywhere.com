@@ -7,6 +7,7 @@ FROM 	_feature,
         (
           	SELECT 			'WMS administrator' AS 'name'
         	UNION SELECT	'WMS user'
+			UNION SELECT	'WMS customer'
 		) role
 WHERE 	display_name = 'Warehouse Management System'
 ;

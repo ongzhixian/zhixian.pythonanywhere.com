@@ -1,8 +1,10 @@
 CREATE OR REPLACE VIEW `role_permission_view` AS
-SELECT 	l.username, r.name AS 'role_name'
-FROM	login_role lr
-JOIN 	login l
-		ON lr.login_id = l.id
+SELECT 	r.name AS 'role_name'
+        , p.action AS 'action'
+        , p.target AS 'target'
+FROM	role_permission rp
 JOIN 	role r
-		ON lr.role_id = r.id
+		ON rp.role_id = r.id
+JOIN 	permission p
+		ON rp.permission_id = p.id
 ;

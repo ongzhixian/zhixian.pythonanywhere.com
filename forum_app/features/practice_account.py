@@ -43,20 +43,6 @@ class PracticeAccountFeature(BaseFeatureInterface):
         login.add("dev1", "dev1")
         login.add("dev2", "dev2")
 
-        rbac.assign_role("WMS user", "dev1")
-        rbac.assign_role("WMS administrator", "dev1")
-        rbac.assign_role("Trade user", "dev1")
-        rbac.assign_role("Trade administrator", "dev1")
-        
-        login.add("wmsadmin1", "wmsadmin1")
-        login.add("wmsadmin2", "wmsadmin2")
-        login.add("wmsuser1", "wmsuser1")
-        login.add("wmsuser2", "wmsuser2")
-        rbac.assign_role("WMS user", "wmsuser1")
-        rbac.assign_role("WMS user", "wmsuser2")
-        rbac.assign_role("WMS administrator", "wmsadmin1")
-        rbac.assign_role("WMS administrator", "wmsadmin2")
-
         login.add("tradeadmin1", "tradeadmin1")
         login.add("tradeadmin2", "tradeadmin2")
         login.add("tradeuser1", "tradeuser1")
@@ -65,6 +51,28 @@ class PracticeAccountFeature(BaseFeatureInterface):
         rbac.assign_role("Trade user", "tradeuser2")
         rbac.assign_role("Trade administrator", "tradeadmin1")
         rbac.assign_role("Trade administrator", "tradeadmin2")
+
+        rbac.assign_role("WMS user", "dev1")
+        rbac.assign_role("WMS administrator", "dev1")
+        rbac.assign_role("Trade user", "dev1")
+        rbac.assign_role("Trade administrator", "dev1")
+        
+        login.add("wmsadmin1", "wmsadmin1")
+        login.add("wmsadmin2", "wmsadmin2")
+        rbac.assign_role("WMS administrator", "wmsadmin1")
+        # rbac.assign_role("WMS administrator", "wmsadmin2")
+
+        login.add("wmscust1", "wmscust1")
+        login.add("wmscust2", "wmscust2")
+        rbac.assign_role("WMS customer", "wmscust1")
+        rbac.assign_role("WMS customer", "wmscust2")
+
+        # Refers to internal users 
+        login.add("wmsuser1", "wmsuser1")
+        login.add("wmsuser2", "wmsuser2")
+        rbac.assign_role("WMS user", "wmsuser1")
+        rbac.assign_role("WMS user", "wmsuser2")
+
 
 
     def update_ui(self):
