@@ -77,6 +77,15 @@
           </div>
           <div class="col s10" id="app_content">
             <!-- Content here -->
+            <!--
+            <button onclick="runA()">Run With `setInnerHTML(el, HTML)`</button>
+            <button onclick="runB()">Run With `el.innerHTML = HTML`</button>
+            <hr />
+            <div id="contents">
+              Replace this with HTML with `&lt;script&gt;`
+            </div>
+            -->
+
           </div>
         </div>
       </div>
@@ -89,6 +98,31 @@
 {% block scripts %}
 <script type="text/javascript">
     "use strict";
+    var setInnerHtml = function(element, html) {
+      element.innerHTML = html;
+      Array.from(element.querySelectorAll("script")).forEach(embeddedScript => {
+        const runnableScript = document.createElement("script");
+        Array.from(embeddedScript.attributes).forEach(attr => runnableScript.setAttribute(attr.name, attr.value));
+        runnableScript.appendChild(document.createTextNode(embeddedScript.innerHTML));
+        embeddedScript.parentNode.replaceChild(runnableScript, embeddedScript);
+      });
+    }
+
+    // var HTML = `
+    //   <div>Replaced</div>
+    //   <script>alert("replaced");<\/script>
+    // `;
+
+    // function runA() {
+    //   console.log('runA');
+    //   document.querySelector('#contents').innerHTML = HTML;
+      
+    // }
+
+    // function runB() {
+    //   console.log('runB');
+    //   setInnerHTML(document.querySelector('#contents'), HTML);
+    // }
 
     let app = {
         state: null,
@@ -109,7 +143,14 @@
               return response.text();
             })
             .then(function(data) {
-              document.getElementById('app_content').innerHTML = data;
+              setInnerHtml(document.getElementById('app_content'), data);
+              // document.getElementById('app_content').innerHTML = data;
+
+              // const newScript = document.createElement("script");
+              // newScript.appendChild(document.createTextNode('console.log("OKOK");'));
+              // document.getElementById('app_content').appendChild(newScript);
+              //setInnerHtml(document.querySelector('#contents'), HTML);
+              //runB();
               // Update state
               // window.history.pushState(state, null, "");
             })
