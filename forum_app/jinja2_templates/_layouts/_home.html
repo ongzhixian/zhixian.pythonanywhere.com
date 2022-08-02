@@ -14,38 +14,6 @@
   </head>
   <body>
 
-    <nav class="blue darken-4">
-      <div class="nav-wrapper">
-        <span data-target="slide-out" class="sidenav-trigger show-on-large interactive"><i class="material-icons">menu</i></span>
-        <a href="/" class="brand-logo">{{self.title()}}</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          
-          <!-- applications -->
-          {%- if g.application == None %}
-          <!-- <li><a href="/client/dashboard">Anonymous</a></li> -->
-          {%- else %}
-          <li><a href="/client/dashboard">Clients</a></li>
-          <li><a href="/portfolio/dashboard">Portfolios</a></li>
-          {% endif %}
-
-          
-          {%- if g.username %}
-          <!-- 
-          <li><a href="/logout" title="Log out">
-            <i class="material-icons">logout</i>
-          </a></li> 
-          -->
-          {%- endif %}
-
-          <!-- 
-          <li><a href="collapsible.html">Miscellaneous</a></li> 
-          <li><a href="/user/dashboard">Users</a></li>
-          <li><a href="/role/dashboard">Roles</a></li>
-          -->
-        </ul>
-      </div>
-    </nav>
-
     <ul id="slide-out" class="sidenav">
       {%- if g.username %}
       <li>
@@ -107,7 +75,44 @@
       {% endfor %}
     </ul>
 
+    <div style="display: flex; flex-direction: column; height: 100vh;">
+
+    <nav class="blue darken-4">
+      <div class="nav-wrapper">
+        <span data-target="slide-out" class="sidenav-trigger show-on-large interactive"><i class="material-icons">menu</i></span>
+        <a href="/" class="brand-logo">{{self.title()}}</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          
+          <!-- applications -->
+          {%- if g.application == None %}
+          <!-- <li><a href="/client/dashboard">Anonymous</a></li> -->
+          {%- else %}
+          <li><a href="/client/dashboard">Clients</a></li>
+          <li><a href="/portfolio/dashboard">Portfolios</a></li>
+          {% endif %}
+
+          {%- if g.username %}
+          <!-- 
+          <li><a href="/logout" title="Log out">
+            <i class="material-icons">logout</i>
+          </a></li> 
+          -->
+          {%- endif %}
+
+          <!-- 
+          <li><a href="collapsible.html">Miscellaneous</a></li> 
+          <li><a href="/user/dashboard">Users</a></li>
+          <li><a href="/role/dashboard">Roles</a></li>
+          -->
+        </ul>
+      </div>
+    </nav>
+
+    <div style="height: 100%;">
     {% block content %}Place content here{% endblock %}
+    </div>
+
+    </div>
     
     {%- if g.is_development %}
     <div class="development-toolbar" style="position: fixed; bottom: 0; right: 0; margin:0.367em;">
@@ -234,6 +239,9 @@
             });
 
       document.getElementById("add_development_note_button").addEventListener("click", addNote);
+      // $(".dropdown-trigger").dropdown();
+      M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
+      
     });
     </script>
     {%- block scripts %}{% endblock %}
