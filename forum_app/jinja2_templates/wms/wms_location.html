@@ -18,7 +18,10 @@
             <tbody>
             {% for r in location_list %}
               <tr>
-                <td>{{ r[NAME] }}</td>
+                <td>
+                  <span class="interactive" onclick="app.getPage('location/detail/{{ r[ID] }}');">{{ r[NAME] }}</span>
+
+                </td>
                 <td>{{ r[TYPE_NAME] }}</td>
               </tr>
             {% endfor %}
