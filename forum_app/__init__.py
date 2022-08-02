@@ -11,7 +11,7 @@ __all__ = ["pages", "api"]
 import json
 import logging
 from mimetypes import init
-from os import environ, path
+from os import environ, path, makedirs
 from importlib import import_module
 from inspect import getmembers, isclass
 from flask import Flask, current_app
@@ -143,8 +143,14 @@ def get_logging_format(logger_name='console'):
     # logging_format = logging.Formatter('%(levelname).3s|%(module)-12s|%(message)s -- %(pathname)s')
     # Use "%(funcName)-20s" to show which function is does log comes from:
     # logging_format = logging.Formatter('%(levelname).3s|%(module)-12s|%(funcName)-20s|%(message)s')
-    
-    return logging.Formatter('%(levelname).3s|%(module)-12s|%(message)s') if logger_name == 'console' else logging.BASIC_FORMAT
+    logging_formats = {
+        'console': logging.Formatter('%(levelname).3s|%(module)-12s|%(message)s'),
+        'file': logging.Formatter('%(asctime)s|%(levelname).3s|%(module)-12s|%(message)s'),
+    }
+    if logger_name in logging_formats:
+        return logging_formats[logger_name]
+    return logging.BASIC_FORMAT
+    # return logging.Formatter('%(levelname).3s|%(module)-12s|%(message)s') if logger_name == 'console' else logging.BASIC_FORMAT
 
 def setup_default_logging():
     try:
@@ -158,9 +164,32 @@ def setup_default_logging():
         #     # logging.info(str(h.name))
 
         root_logger = logging.getLogger()
+        root_logger.handlers.clear()
         root_logger.setLevel(logging.NOTSET)
         root_logger.addHandler(console_logger)
         logging.debug("Default logging configured.")
+    except Exception as e:
+        logging.error(e)
+
+def setup_file_logging(app_settings):
+    try:
+        if 'log_file_path' not in app_settings:
+            return
+
+        log_file_path = app_settings['log_file_path']
+
+        # Create log file directory if it doesn't exist
+        log_dir_name = path.dirname(log_file_path)
+        if not path.exists(log_dir_name):
+            logging.debug(f"Creating log directory {path.abspath(log_dir_name)}")
+            makedirs(log_dir_name)
+
+        file_logger = logging.FileHandler(log_file_path)
+        file_logger.setFormatter(get_logging_format('file'))
+
+        root_logger = logging.getLogger()
+        root_logger.addHandler(file_logger)
+
     except Exception as e:
         logging.error(e)
 
@@ -201,6 +230,7 @@ def apply_logging_settings(app_settings):
 
 def configure_logging(app_settings):
     setup_default_logging()
+    setup_file_logging(app_settings)
     apply_logging_settings(app_settings)
     logging.debug("Logging configured.")
 
