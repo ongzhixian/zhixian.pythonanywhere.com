@@ -6,12 +6,12 @@ SELECT 	id AS 'feature_id'
         , permission.target
 FROM   	_feature, 
         (
-            SELECT 			'List'                      AS 'action', 'WMS Location' AS 'target'
+            SELECT          'View dashboard'            AS 'action', 'WMS Location' AS 'target'
+            UNION SELECT    'List'                      AS 'action', 'WMS Location' AS 'target'
             UNION SELECT    'Add'                       AS 'action', 'WMS Location' AS 'target'
             UNION SELECT    'Update'                    AS 'action', 'WMS Location' AS 'target'
             UNION SELECT    'Remove'                    AS 'action', 'WMS Location' AS 'target'
             UNION SELECT    'View'                      AS 'action', 'WMS Location' AS 'target'
-            UNION SELECT    'Access'                    AS 'action', 'WMS Location' AS 'target'
 		) permission
 WHERE 	display_name = 'Warehouse Management System'
 ;

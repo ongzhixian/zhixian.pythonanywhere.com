@@ -116,12 +116,21 @@ ORDER BY name;
 #         # else:
 #         #     return []
 
-    def get_location_type_list(self):
+    def get_dashboard_list(self):
         sql = """
-SELECT  * 
-from    permission 
-where   feature_id = (select id from _feature WHERE display_name = 'Warehouse Management System')
-        AND action = 'View dashboard item'
-
+SELECT  wpu.id
+        , wpu.url
+        , wpu.display_text
+        , wpu.description
+FROM    permission p
+INNER JOIN
+        wms_permission_url wpu
+        ON p.id = wpu.permission_id
+WHERE   action = 'List'
+        AND feature_id = (
+            SELECT  id 
+            FROM    _feature 
+            WHERE   display_name = %s
+        );
 """
-        return self.db.fetch_record_set(sql, None)
+        return self.db.fetch_record_set(sql, (self.feature_name,))
