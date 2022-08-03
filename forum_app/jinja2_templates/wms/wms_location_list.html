@@ -1,0 +1,52 @@
+{% extends "_layouts/_wms.html" %}
+{%
+    set SN, ID, NAME, TYPE_NAME = 0, 1, 2, 3
+%}
+
+{% block content %}
+
+<div class="page-content">
+
+  {{ macros.breadcrumb(breadcrumbs) }}
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col s12">
+
+        <table>
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Item Name</th>
+                <th>Item Price</th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <tr>
+              <td>Alvin</td>
+              <td>Eclair</td>
+              <td>$0.87</td>
+            </tr>
+            <tr>
+              <td>Alan</td>
+              <td>Jellybean</td>
+              <td>$3.76</td>
+            </tr>
+            <tr>
+              <td>Jonathan</td>
+              <td>Lollipop</td>
+              <td>$7.00</td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+
+    </div><!-- end-of-row -->
+  </div><!-- end-of-container -->
+</div><!-- end-of-page-content -->
+
+      
+{% endblock %}

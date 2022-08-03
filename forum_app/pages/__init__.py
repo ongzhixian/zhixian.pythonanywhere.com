@@ -9,7 +9,7 @@ __all__ = [
     "dice", "note",
     "investment", "investment_client", "investment_portfolio",
     "trade", "trade_portfolio",
-    "wms",
+    "wms", "wms_location",
     "logistics"]
 
 # Page UI Components

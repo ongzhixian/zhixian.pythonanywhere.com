@@ -1,16 +1,259 @@
 {% import "./_macros/_wms.html" as macros with context %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}WMS{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="/css/materialize/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="/css/site.css" />
+    {%- block head_link %}{% endblock %}
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+  </head>
+  <body>
 
-<!--
-<div class="action-bar">
-    <button class="waves-effect waves-light btn">Add supplier</button>
-</div>
--->
+    {% block sidenav %}
+    <ul id="slide-out" class="sidenav">
+      {%- if g.username %}
+      <li>
+        <div class="user-view">
+          <div class="background">
+            <img src="/images/placeholders/office.jpg">
+          </div>
 
+          <a href="#user"><img class="circle" src="/images/profile/{{ g.username }}-portrait.png"></a>
+          
+          <span class="white-text name">
+            
+            <a class="white-text" href="/user/profile">{{ g.username }}</a>
+            <a href="/logout" class="white-text" title="Log out">
+              <i class="material-icons" style="vertical-align: middle;">logout</i>
+            </a>
+            
+          </span>
+          <a href="#email"><span class="white-text email">&nbsp;</span></a>
+          
+        </div>
+      </li>
+      {% endif %}
 
-{{ macros.spa_breadcrumb(breadcrumb_list) }}
+      <li><a href="/"><i class="material-icons">home</i>Home</a></li>
 
+      
+      {% for menu_item in g.menu_items %}
+      
+      {% if menu_item[4] == None %}
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">{{ menu_item[1] }}</a></li>
+      {% else %}
+      <li><a href="{{ menu_item[2] }}" title="{{ menu_item[3] }}">{{ menu_item[1] }}</a></li>
+      {% endif %}
 
-{% block content %}Place content here{% endblock %}
+      {% endfor %}
+      <!-- TODO: Make data driven
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Applications</a></li>
+      <li><a href="/investment/dashboard">Investment</a></li>
+      <li><a href="/trade/dashboard">Trade</a></li>
+      <li><a href="/logistics/dashboard">Logistics</a></li>
+      -->
+      
+      <!-- 
+      <li><a href="/other/dashboard">Others...</a></li> 
+      -->
 
+      <!-- TODO: make data driven  
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Administration</a></li>
+      <li><a class="waves-effect" href="/database/dashboard">Database</a></li>
+      <li><a class="waves-effect" href="/feature/dashboard">Feature</a></li>
+      -->
 
-{%- block scripts %}{% endblock %}
+      {%- for menu_item in drawer_admin_menu %}
+      <!-- <li><a class="waves-effect" href="{{menu_item.href}}">{{menu_item.display_text}}</a></li> -->
+      {% endfor %}
+    </ul>
+    {% endblock %}
+
+    <div style="display: flex; flex-direction: column; height: 100vh;">
+
+      {% block navbar %}
+      <nav class="blue darken-4">
+        <div class="nav-wrapper">
+          <span data-target="slide-out" class="sidenav-trigger show-on-large interactive"><i class="material-icons">menu</i></span>
+          <a href="/" class="brand-logo">{{self.title()}}</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <!-- applications -->
+            {%- if g.application == None %}
+            <!-- <li><a href="/client/dashboard">Anonymous</a></li> -->
+            {%- else %}
+            <li><a href="/client/dashboard">Clients</a></li>
+            <li><a href="/portfolio/dashboard">Portfolios</a></li>
+            {% endif %}
+
+            {%- if g.username %}
+            <!-- 
+            <li><a href="/logout" title="Log out">
+              <i class="material-icons">logout</i>
+            </a></li> 
+            -->
+            {%- endif %}
+
+            <!-- 
+            <li><a href="collapsible.html">Miscellaneous</a></li> 
+            <li><a href="/user/dashboard">Users</a></li>
+            <li><a href="/role/dashboard">Roles</a></li>
+            -->
+            <li>
+              <form>
+                  <input id="site_search_field" type="text" placeholder="SEARCH" style="color:aliceblue;">
+                  <!-- <label class="label-icon" for="site_search_field"><i class="material-icons">search</i></label> -->
+              </form>
+            </li>
+          </ul>
+          
+        </div>
+      </nav>
+      {% endblock %}
+
+      <div style="height: 100%;">
+      {% block content %}Place content here{% endblock %}
+      </div>
+
+    </div>
+    
+    {%- if g.is_development %}
+    <div class="development-toolbar" style="position: fixed; bottom: 0; right: 0; margin:0.367em;">
+      <!--
+      <a href="/presentation" title="Present"><i class="material-icons">co_present</i></a>
+      <a href="/form-builder" title="Form builder"><i class="material-icons">dynamic_form</i></a>
+      <a href="/test-builder" title="Test builder"><i class="material-icons">quiz</i></a>
+      <a href="/report-bug" title="Report bug"><i class="material-icons">bug_report</i></a>
+      <a href="/report-problem" title="Report problem"><i class="material-icons">report_problem</i></a>
+      -->
+      <a href="/shopping-cart" title="Shopping cart"><i class="material-icons">shopping_cart</i></a>
+      <a href="/file-upload" title="File upload"><i class="material-icons">file_upload</i></a>
+      <a href="/lightbox" title="Lightbox"><i class="material-icons">gif_box</i></a>
+      <a href="/database" title="Database"><i class="material-icons">table_view</i></a>
+      <a href="/feature" title="Feature"><i class="material-icons">featured_play_list</i></a>
+      <a class="modal-trigger" href="#add-development-note" title="Add note"><i class="material-icons">note_add</i></a>
+      <div id="add-development-note" class="modal">
+        <div class="modal-content">
+          <div class="input-field">
+            
+            <textarea id="note_content" class="materialize-textarea"></textarea>
+            <label for="note_content">Note content</label>
+            <div id="add_note_operation_status" class="operation-status">
+              <span id="add_note_operation_status_text"></span>
+              <i id="add_note_operation_status_icon" class="material-icons" style="vertical-align: middle;"></i>
+            </div>
+            
+          </div>
+        </div><!-- end of model-content -->
+        <div class="modal-footer">
+          <button type="button" class="modal-close waves-effect waves-blue btn-flat">Close</button>
+          <button type="button" id="add_development_note_button" class="waves-effect waves-blue btn-flat">Save note</button>
+        </div>
+      </div>
+      <!-- <a class="modal-trigger" href="#add-test-data" title="Add test data"><i class="material-icons">model_training</i></a> -->
+    </div>
+    {% endif %}
+
+    <script type="text/javascript" src="/js/materialize/materialize.min.js"></script>
+    <script type="text/javascript" src="/js/site.js"></script>
+    <script type="text/javascript">
+    "use strict";
+
+    function AddNoteForm() {
+      this.status_element = document.getElementById('add_note_operation_status');
+      this.status_text_element = document.getElementById('add_note_operation_status_text');
+      this.status_icon_element = document.getElementById('add_note_operation_status_icon');
+      this.note_content_element = document.getElementById("note_content");
+
+      this.resetForm = function() {
+        this.status_element.classList.remove('fail', 'done');
+        this.status_text_element.innerText = '';
+        this.status_icon_element.innerText = '';
+      }
+
+      this.updateForm = function(data) {
+        this.status_element.classList.add(data['type']);
+        this.status_text_element.innerText = data['text'];
+        this.status_icon_element.innerText = data['type'];
+        // Clear note content
+        this.note_content_element.value = '';
+      }
+
+      this.postForm = function() {
+        postData('/api/development/note', { 
+          'route': window.location.pathname,
+          'note_content': this.note_content_element.value
+        })
+        .then(data => this.updateForm(data))
+        .catch(function(error) {
+          console.error(error.message)
+        });
+      }
+
+    }
+    
+    function addNote() {
+      console.log('Add note');
+      let addNoteForm = new AddNoteForm();
+      addNoteForm.postForm();
+
+      // var status_element = document.getElementById('add_note_operation_status');
+      // var status_text_element = document.getElementById('add_note_operation_status_text');
+      // var status_icon_element = document.getElementById('add_note_operation_status_icon');
+      
+      // let note_content_element = document.getElementById("note_content");
+
+      // // Reset
+      // status_element.classList.remove('fail', 'done');
+      // status_text_element.innerText = '';
+      // status_icon_element.innerText = '';
+
+      // postData('/api/development/note', { 
+      //   'route': window.location.pathname,
+      //   'note_content': note_content_element.value
+      // })
+      // .then(data => {
+      //   // Reset
+      //   //status_element.classList.remove('fail', 'done');
+      //   // console.log(data); // JSON data parsed by `data.json()` call
+        
+      //   status_element.classList.add(data['type']);
+      //   status_text_element.innerText = data['text'];
+      //   status_icon_element.innerText = data['type'];
+      //   debugger;
+
+      //   note_content_element.value = '';
+      //   //debugger;
+      //   // Clear content
+      //   // note_content_element.value = "";
+      // })
+      // .catch(function(error) {
+      //   console.error(error.message)
+      // });
+      
+      // note_content_element.value
+      // Do a HTTP post 
+      
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      const side_nav_list = M.Sidenav.init(document.querySelectorAll('.sidenav')),
+            modal_list    = M.Modal.init(document.querySelectorAll('.modal'), {
+              'dismissible': false
+            });
+
+      document.getElementById("add_development_note_button").addEventListener("click", addNote);
+      // $(".dropdown-trigger").dropdown();
+      M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
+      
+    });
+    </script>
+    {%- block scripts %}{% endblock %}
+  </body>
+</html>
