@@ -10,5 +10,6 @@ def wms_get():
 
 @app.route('/wms/dashboard')
 def wms_dashboard_page():
-    """Web page at '/wms/dashboard'"""
+    """Web page at /wms/dashboard"""
+    # Pull 
     return render_template('wms/wms_dashboard.html')

@@ -11,7 +11,7 @@ __all__ = [
     "feature", "database",
     # Application
     "trade", "trade_instrument",
-    "wms",
+    "wms", "wms_location",
     # Functional
     "development", "development_note",
     # Practice / Demo / Test / Trial (whatever you want to call it)

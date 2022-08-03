@@ -27,16 +27,12 @@ class WmsLocationFeature(BaseFeatureInterface):
     def register(self):
         if self.is_registered(self.feature_name):
             return
-        # 
-        # database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'wms', 'tables')
-        # self.db.run_scripts_in_path(database_table_scripts_path)
-        # Register featre 
         self.register_feature(self.feature_name, self.feature_description, __name__, "Warehouse Management System")
-
-        # database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'wms', 'data')
-        # self.db.run_scripts_in_path(database_table_scripts_path)
+        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'wms_location', 'tables')
+        self.db.run_scripts_in_path(database_table_scripts_path)
+        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'wms_location', 'data')
+        self.db.run_scripts_in_path(database_table_scripts_path)
         # Add application menu item (if applicable)
-        
         # BaseMenuInterface().add_menu_item(self.feature_name, 'WMS', 'Warehouse management module', '/wms/dashboard', 'Applications')
 
 

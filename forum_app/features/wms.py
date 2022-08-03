@@ -115,3 +115,13 @@ ORDER BY name;
 #         #     return result_sets[0]
 #         # else:
 #         #     return []
+
+    def get_location_type_list(self):
+        sql = """
+SELECT  * 
+from    permission 
+where   feature_id = (select id from _feature WHERE display_name = 'Warehouse Management System')
+        AND action = 'View dashboard item'
+
+"""
+        return self.db.fetch_record_set(sql, None)

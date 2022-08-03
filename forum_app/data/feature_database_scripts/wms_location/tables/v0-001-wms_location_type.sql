@@ -7,7 +7,6 @@ SET sql_notes = 0; -- suppress warnings
 -- Rack
 -- Bin
 
-
 CREATE TABLE IF NOT EXISTS `wms_location_type` (
 	`id`					INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name` 					VARCHAR(50) NULL,
@@ -18,16 +17,5 @@ CREATE TABLE IF NOT EXISTS `wms_location_type` (
 )
 COLLATE='utf8mb4_unicode_ci'
 ;
-
-INSERT INTO `wms_location_type` (`name`) 
-	VALUES ('Warehouse'),
-		   ('Building'),
-		   ('Floor'),
-		   ('Section'),
-		   ('Room'),
-		   ('Shelf'),
-		   ('Rack'),
-		   ('Bin');
-
 
 SET sql_notes = 1; -- enable warnings

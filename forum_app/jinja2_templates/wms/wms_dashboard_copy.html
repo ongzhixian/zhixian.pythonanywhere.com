@@ -1,0 +1,276 @@
+{% extends "_layouts/_home.html" %}
+
+{% block title %}WMS{% endblock %}
+
+{% block content %}
+
+<div class="page-content">
+  <!-- Your content goes here -->
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m4">
+        <a href="#sad">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Some func</span>
+            <p>Functiond description</p>
+          </div>
+        </div><!-- end-of-card -->
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Dropdown Structure -->
+
+<!-- 
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href="#!">one</a></li>
+  <li><a href="#!">two</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">three</a></li>
+</ul>
+<nav class="blue darken-4">
+  <div class="nav-wrapper">
+    <ul id="nav-mobile" class="left hide-on-med-and-down">
+      <li><a href="sass.html">Sass</a></li>
+      <li><a href="badges.html">Components</a></li>
+      <li><a href="collapsible.html">JavaScript</a></li>
+      <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+    </ul>
+  </div>
+</nav>
+-->
+
+    <!-- <div class="page-contentz"> -->
+
+      <div class="container" style="max-width:100%; width:100%;">
+        <!-- Need to think more the design 
+        <div class="wms-toolbar" style="margin:0.367em;">
+          <a class="menu-trigger" href="#toggle-menu" title="Display/Hide menu"><i class="material-icons">menu_open</i></a>
+        </div>
+        -->
+
+        <div class="row">
+          <div class="col s2">
+            <ul class="collapsible" id="wms_menu">
+              <li>
+                <div class="collapsible-header"><i class="material-icons">place</i>Receive</div>
+                <div class="collapsible-body">
+                  <div class="collection">
+                    <div class="collection-item interactive" data-module-name="Receiving" title="Receiving">Receiving</div>
+                    <div class="collection-item interactive" data-module-name="Received" title="Received">Received</div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">local_shipping</i>Send</div>
+                <div class="collapsible-body">
+                  <div class="collection">
+                    <div class="collection-item interactive" data-module-name="Sending" title="Sending">Sending</div>
+                    <div class="collection-item interactive" data-module-name="Picking" title="Picking">Picking</div>
+                    <div class="collection-item interactive" data-module-name="Packing" title="Packing">Packing</div>
+                    <div class="collection-item interactive" data-module-name="Sent" title="Sent">Sent</div>
+                    <!-- 
+                    <a href="#!" class="collection-item">Sending</a>
+                    <a href="#!" class="collection-item">Picking</a>
+                    <a href="#!" class="collection-item">Packing</a>
+                    <a href="#!" class="collection-item">Sent</a>
+                    -->
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">laptop_chromebook</i>Reference Data</div>
+                <div class="collapsible-body">
+                  <div class="collection">
+                    <div class="collection-item interactive" data-module-name="Item Data" title="Item Data">Item Data</div>
+                    <div class="collection-item interactive" data-module-name="Supplier" title="Supplier">Supplier</div>
+                    <div class="collection-item interactive" data-module-name="Customer" title="Customer">Customer</div>
+                    <div class="collection-item interactive" data-module-name="Location" title="Location">Location</div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">paid</i>Billing</div>
+                <div class="collapsible-body">
+                  <div class="collection">
+                    <div class="collection-item interactive" data-module-name="Invoice" title="Invoice">Invoice</div>
+                    <div class="collection-item interactive" data-module-name="Credit Note" title="Credit Note">Credit Note</div>
+                    <div class="collection-item interactive" data-module-name="Customer Data" title="Customer Data">Customer Data</div>
+                  </div>
+                </div>
+              </li>
+              
+              <li>
+                <div class="collapsible-header"><i class="material-icons">whatshot</i>Reports</div>
+                <div class="collapsible-body">
+                  <div class="collection">
+                    <a href="#!" class="collection-item">Billing reports</a>
+                    <a href="#!" class="collection-item">Inventory reports</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="col s10" id="app_content">
+            <!-- Content here -->
+            <!--
+            <button onclick="runA()">Run With `setInnerHTML(el, HTML)`</button>
+            <button onclick="runB()">Run With `el.innerHTML = HTML`</button>
+            <hr />
+            <div id="contents">
+              Replace this with HTML with `&lt;script&gt;`
+            </div>
+            -->
+
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end-of-page-content -->
+
+{% endblock %}
+
+
+{% block scripts %}
+<script type="text/javascript">
+    "use strict";
+    var setInnerHtml = function(element, html) {
+      element.innerHTML = html;
+      Array.from(element.querySelectorAll("script")).forEach(embeddedScript => {
+        const runnableScript = document.createElement("script");
+        Array.from(embeddedScript.attributes).forEach(attr => runnableScript.setAttribute(attr.name, attr.value));
+        runnableScript.appendChild(document.createTextNode(embeddedScript.innerHTML));
+        embeddedScript.parentNode.replaceChild(runnableScript, embeddedScript);
+      });
+    }
+
+    // var HTML = `
+    //   <div>Replaced</div>
+    //   <script>alert("replaced");<\/script>
+    // `;
+
+    // function runA() {
+    //   console.log('runA');
+    //   document.querySelector('#contents').innerHTML = HTML;
+      
+    // }
+
+    // function runB() {
+    //   console.log('runB');
+    //   setInnerHTML(document.querySelector('#contents'), HTML);
+    // }
+
+    let app = {
+        state: null,
+        collapsibles : null,
+
+        // init: function() {
+        //     this.bindEvents();
+        // },
+        // bindEvents: function() {
+        //     document.addEventListener('DOMContentLoaded', this.onLoad);
+        // },
+        // onLoad: function() {
+        //     app.loadModule('Receiving');
+        // }
+        getPage : function (pageName) {
+          fetch(`/api/wms/${pageName.toLocaleLowerCase()}`)
+            .then(function(response) {
+              return response.text();
+            })
+            .then(function(data) {
+              setInnerHtml(document.getElementById('app_content'), data);
+              // document.getElementById('app_content').innerHTML = data;
+
+              // const newScript = document.createElement("script");
+              // newScript.appendChild(document.createTextNode('console.log("OKOK");'));
+              // document.getElementById('app_content').appendChild(newScript);
+              //setInnerHtml(document.querySelector('#contents'), HTML);
+              //runB();
+              // Update state
+              // window.history.pushState(state, null, "");
+            })
+            .catch(function(e) {
+              console.error(e);
+            });
+        },
+
+        postForm: function postForm(id) {
+          let form = document.getElementById(id);
+          let formData = new FormData(form);
+          for (const [key, value] of formData) {
+            console.log(`formData has: ${key}: ${value}\n`);
+          }
+
+          fetch(form.action, {
+            method: 'POST',
+            // We should not need to set headers for FormData; the browser will automatically set them together with the boundary delimiter
+            // headers: {
+            //   // 'Content-Type': 'application/json'
+            //   // 'Content-Type': 'application/x-www-form-urlencoded',
+            //   //'Content-Type': 'multipart/form-data'//
+            // },
+            body: formData
+          })
+            .then(function(response) {
+              return response.text();
+            })
+            .then(function(data) {
+              document.getElementById('app_content').innerHTML = data;
+              // Update state
+              // window.history.pushState(state, null, "");
+              M.toast({html: 'OK', classes: 'green'});
+            })
+            .catch(function(e) {
+              console.error(e);
+            });
+        },
+
+        openMenu: function(menuName) {
+          // If query string has 'menu-item', open the menu there.
+          // collapsibles[0].open(2)
+          let urlSearchParams = (new URL(document.location)).searchParams;
+          let menuItemName = urlSearchParams.get('menu-item');
+          console.log("menuItemName", menuItemName);
+          
+          // var menuItem = Array.from(document.querySelectorAll('.collection-item.interactive')).find(element => element.innerText === menuItemName);
+          // Same as above, but using ... (spread syntax); 
+          var menuItem = [...document.querySelectorAll('.collection-item.interactive')].find(element => element.innerText === menuItemName);
+          if (menuItem) {
+            // let listItemIndex = Array.from(document.getElementById('wms_menu').children).indexOf(menuItem.parentElement.parentElement.parentElement);
+            // Same as above; but using spread syntax and closest
+            let listItemIndex =[...document.getElementById('wms_menu').children].indexOf(menuItem.closest('li'));
+            
+            // Open menu section of menu-item
+            app.collapsibles[0].open(listItemIndex);
+            // Click menu-item
+            menuItem.click();
+          }
+        },
+
+        initializeComponents : function() {
+            app.collapsibles = M.Collapsible.init(document.querySelectorAll('.collapsible'));
+
+            document.querySelectorAll('.collection-item.interactive').forEach(function(collectionItem) {
+              collectionItem.addEventListener('click', function(e) {
+                let module_name = e.target.dataset.moduleName;
+                app.getPage(module_name);
+              });
+            });
+        },
+    };  
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize state
+      // window.history.replaceState(state, null, "");
+      app.state = {};
+      app.initializeComponents();
+      app.openMenu();
+    });
+
+</script>
+{% endblock %}

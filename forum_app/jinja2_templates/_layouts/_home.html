@@ -14,6 +14,7 @@
   </head>
   <body>
 
+    {% block sidenav %}
     <ul id="slide-out" class="sidenav">
       {%- if g.username %}
       <li>
@@ -74,43 +75,52 @@
       <!-- <li><a class="waves-effect" href="{{menu_item.href}}">{{menu_item.display_text}}</a></li> -->
       {% endfor %}
     </ul>
+    {% endblock %}
 
     <div style="display: flex; flex-direction: column; height: 100vh;">
 
-    <nav class="blue darken-4">
-      <div class="nav-wrapper">
-        <span data-target="slide-out" class="sidenav-trigger show-on-large interactive"><i class="material-icons">menu</i></span>
-        <a href="/" class="brand-logo">{{self.title()}}</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
+      {% block navbar %}
+      <nav class="blue darken-4">
+        <div class="nav-wrapper">
+          <span data-target="slide-out" class="sidenav-trigger show-on-large interactive"><i class="material-icons">menu</i></span>
+          <a href="/" class="brand-logo">{{self.title()}}</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <!-- applications -->
+            {%- if g.application == None %}
+            <!-- <li><a href="/client/dashboard">Anonymous</a></li> -->
+            {%- else %}
+            <li><a href="/client/dashboard">Clients</a></li>
+            <li><a href="/portfolio/dashboard">Portfolios</a></li>
+            {% endif %}
+
+            {%- if g.username %}
+            <!-- 
+            <li><a href="/logout" title="Log out">
+              <i class="material-icons">logout</i>
+            </a></li> 
+            -->
+            {%- endif %}
+
+            <!-- 
+            <li><a href="collapsible.html">Miscellaneous</a></li> 
+            <li><a href="/user/dashboard">Users</a></li>
+            <li><a href="/role/dashboard">Roles</a></li>
+            -->
+            <li>
+              <form>
+                  <input id="site_search_field" type="text" placeholder="SEARCH" style="color:aliceblue;">
+                  <!-- <label class="label-icon" for="site_search_field"><i class="material-icons">search</i></label> -->
+              </form>
+            </li>
+          </ul>
           
-          <!-- applications -->
-          {%- if g.application == None %}
-          <!-- <li><a href="/client/dashboard">Anonymous</a></li> -->
-          {%- else %}
-          <li><a href="/client/dashboard">Clients</a></li>
-          <li><a href="/portfolio/dashboard">Portfolios</a></li>
-          {% endif %}
+        </div>
+      </nav>
+      {% endblock %}
 
-          {%- if g.username %}
-          <!-- 
-          <li><a href="/logout" title="Log out">
-            <i class="material-icons">logout</i>
-          </a></li> 
-          -->
-          {%- endif %}
-
-          <!-- 
-          <li><a href="collapsible.html">Miscellaneous</a></li> 
-          <li><a href="/user/dashboard">Users</a></li>
-          <li><a href="/role/dashboard">Roles</a></li>
-          -->
-        </ul>
+      <div style="height: 100%;">
+      {% block content %}Place content here{% endblock %}
       </div>
-    </nav>
-
-    <div style="height: 100%;">
-    {% block content %}Place content here{% endblock %}
-    </div>
 
     </div>
     
