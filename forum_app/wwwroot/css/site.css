@@ -213,6 +213,14 @@ form.inline {
     margin: 0 0 1em;
 }
 
+.step-description-row {
+    display: block;
+}
+
+.step-description-row > * {
+    vertical-align: middle;
+}
+
 .breadcrumb-row {
     /* background-color: aquamarine; */
     display: block;

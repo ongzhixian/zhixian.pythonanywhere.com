@@ -27,3 +27,31 @@ def wms_location_list():
         breadcrumbs=breadcrumbs,
         dashboard_list=dashboard_list,
         location_list=location_list)
+
+@app.route('/wms/location/add')
+def wms_location_add():
+    """Web page at /wms/location/add"""
+    breadcrumbs = [
+        { 'href' : '/wms/dashboard', 'text': 'WMS' },
+        { 'href' : None, 'text': 'Location Add' }
+    ]
+    wms = WmsFeature()
+    wms_location = WmsLocationFeature()
+    location_list = wms_location.get_location_list()
+
+    wms_location = WmsLocationFeature()
+    # if request.method == 'POST':
+    #     location_type_id = request.form['location_type_field']
+    #     location_name = request.form['location_name_field']
+    #     parent_location_id = None
+    #     wms_location.add(location_type_id, location_name, parent_location_id)
+    
+    location_type_list = wms_location.get_location_type_list()
+
+    dashboard_list = wms.get_dashboard_list()
+    return render_template(
+        'wms/wms_location_add.html',
+        breadcrumbs=breadcrumbs,
+        dashboard_list=dashboard_list,
+        location_type_list=location_type_list,
+        location_list=location_list)

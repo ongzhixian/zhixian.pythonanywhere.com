@@ -2,53 +2,109 @@
 
 {% block content %}
 
-<form method="post" action="/api/wms/location/add" id="add_location_form">
-
-  <!-- 
+<div class="container">
   <div class="row">
-    
-    <div class="input-field col s3">
-      <select name="parent_location_type_field">
-        <option value="" disabled selected>Parent location type</option>
+    <div class="col s4" style="height: 100%;">
+      asdsd
+    </div>
+    <div class="col s8">
+      asd
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+  <div class="container">
+    <div class="row">
+      <div style="font-size:2rem;">Add location
+        <i class="material-icons">help</i>
+      </div>
+      <div class="step-description-row">
+        <span class="current-step">Step 1 &mdash; Select location type</span>
+        <span class="material-icons">forward</span>
+        <span class="next-step">Step 2 &mdash; Enter location name</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <ul class="collection with-header">
+        <li class="collection-header"><h4>Location type <i class="material-icons">add_circle</i></h4></li>
+        <li class="collection-item">
+          <div class="input-field">
+            <i class="material-icons prefix">textsms</i>
+            <input type="text" id="autocomplete-input" class="autocomplete">
+            <label for="autocomplete-input">Location type</label>
+          </div>
+        
+        
+
+        </li>
+
         {% for location_type in location_type_list %}
-        <option value="{{ location_type[0] }}">{{ location_type[1] }}</option>
+        <a href="#!" class="collection-item">{{ location_type[1] }}</a>
         {% endfor %}
-      </select>
-      <label>Parent Location Type</label>
-    </div>
-
-    <div class="input-field col s6">
-      <input id="parent_location_name_field" name="parent_location_name_field" type="text" class="validate">
-      <label for="parent_location_name_field">Parent Location Name</label>
+      </ul>
     </div>
     
-  </div>
-  -->
+    <form method="post" action="/api/wms/location/add" id="add_location_form">
 
-  <div class="row">
+      <!-- 
+      <div class="row">
+        
+        <div class="input-field col s3">
+          <select name="parent_location_type_field">
+            <option value="" disabled selected>Parent location type</option>
+            {% for location_type in location_type_list %}
+            <option value="{{ location_type[0] }}">{{ location_type[1] }}</option>
+            {% endfor %}
+          </select>
+          <label>Parent Location Type</label>
+        </div>
     
-    <div class="input-field col s3">
-      <select name="location_type_field">
-        <option value="" disabled selected>Choose location type</option>
-        {% for location_type in location_type_list %}
-        <option value="{{ location_type[0] }}">{{ location_type[1] }}</option>
-        {% endfor %}
-      </select>
-      <label>Location Type</label>
-    </div>
+        <div class="input-field col s6">
+          <input id="parent_location_name_field" name="parent_location_name_field" type="text" class="validate">
+          <label for="parent_location_name_field">Parent Location Name</label>
+        </div>
+        
+      </div>
+      -->
+    
+      <div class="row">
+        
+        <div class="input-field col s3">
+          <select name="location_type_field">
+            <option value="" disabled selected>Choose location type</option>
+            {% for location_type in location_type_list %}
+            <option value="{{ location_type[0] }}">{{ location_type[1] }}</option>
+            {% endfor %}
+          </select>
+          <label>Location Type</label>
+        </div>
+    
+        <div class="input-field col s6">
+          <input id="location_name_field" name="location_name_field" type="text" class="validate">
+          <label for="location_name_field">Location Name</label>
+        </div>
+    
+      </div>
+    
+      <div class="row">
+        <button type="button" class="waves-effect waves-light btn" onclick="app.postForm('add_location_form');">Add location type</button>
+      </div>
+    
+    </form>
 
-    <div class="input-field col s6">
-      <input id="location_name_field" name="location_name_field" type="text" class="validate">
-      <label for="location_name_field">Location Name</label>
-    </div>
+    <div class="row">
+      
 
-  </div>
+    </div><!-- end-of-row -->
+  </div><!-- end-of-container -->
 
-  <div class="row">
-    <button type="button" class="waves-effect waves-light btn" onclick="app.postForm('add_location_form');">Add location</button>
-  </div>
 
-</form>
 
 <!-- <script class="page" type="text/javascript" src="/js/test.js"></script> -->
 <script type="text/javascript">
@@ -56,4 +112,13 @@
   var selects = M.FormSelect.init(document.querySelectorAll('select'));
 </script>
 
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+  "use strict";
+  var selects = M.FormSelect.init(document.querySelectorAll('select'));
+
+  
+</script>
 {% endblock %}
