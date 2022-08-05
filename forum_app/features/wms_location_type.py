@@ -3,12 +3,7 @@ from forum_app import app_path
 from forum_app.modules import app_state, log
 from forum_app.features import BaseFeatureInterface, BaseMenuInterface
 
-# Testing concept of have a single module that has multiple features.
-# In this case, this module can manage the Location and Location Type feature.
-# We have 2 administration modules; 1 for Location, 1 for Location Type
-# The more I think about this, the more it looks like a bad idea.
-# Let's split it up
-class WmsLocationFeature(BaseFeatureInterface):
+class WmsLocationTypeFeature(BaseFeatureInterface):
 
     def __init__(self):
         super().__init__()
@@ -16,12 +11,12 @@ class WmsLocationFeature(BaseFeatureInterface):
     @property
     def feature_name(self):
         """feature_name getter property. (required)"""
-        return "WMS Location"
+        return "WMS Location Type"
 
     @property
     def feature_description(self):
         """feature_description getter property. (required)"""
-        return "Enable WMS Location module"
+        return "Enable WMS Location Type module"
 
     def initialize(self):
         """Things to do when feature is initialized (eg. restore state from persistence storage) (on initialize_features)"""
@@ -32,10 +27,10 @@ class WmsLocationFeature(BaseFeatureInterface):
     def register(self):
         if self.is_registered(self.feature_name):
             return
-        self.register_feature(self.feature_name, self.feature_description, __name__, "WMS Location Type")
-        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'wms_location', 'tables')
+        self.register_feature(self.feature_name, self.feature_description, __name__, "Warehouse Management System")
+        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'wms_location_type', 'tables')
         self.db.run_scripts_in_path(database_table_scripts_path)
-        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'wms_location', 'data')
+        database_table_scripts_path = path.join(app_path, 'data', 'feature_database_scripts', 'wms_location_type', 'data')
         self.db.run_scripts_in_path(database_table_scripts_path)
         # Add application menu item (if applicable)
         # BaseMenuInterface().add_menu_item(self.feature_name, 'WMS', 'Warehouse management module', '/wms/dashboard', 'Applications')

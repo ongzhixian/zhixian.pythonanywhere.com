@@ -1,0 +1,53 @@
+{% extends "_layouts/_wms.html" %}
+{%
+    set SN, ID, NAME, TYPE_NAME = 0, 1, 2, 3
+%}
+
+{% block content %}
+
+<style>
+.location-type-list {
+  display: grid;
+  grid-auto-rows: min-content minmax(300px, auto);
+  grid-template-columns: 280px 1fr;
+  /* gap: 10px; */
+  background-color: antiquewhite;
+  justify-content: stretch;
+}
+
+.title-strip {
+  grid-column: 1 / 4;
+  grid-row: 1 / 2;
+  background-color: white;
+}
+
+.selection-panel {
+  background-color: cadetblue;
+}
+
+</style>
+
+<div class="location-type-list">
+  <div class="title-strip">
+    <h1 style="margin: 0;">Location Type</h1>
+  </div>
+  <div class="selection-panel">
+    <div style="background-color:darkorange; overflow:scroll">some content 
+
+      
+    </div>
+  </div>
+  <div class="right-panel">Three</div>
+</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    var instances = M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'));
+  });
+</script>
+{% endblock %}

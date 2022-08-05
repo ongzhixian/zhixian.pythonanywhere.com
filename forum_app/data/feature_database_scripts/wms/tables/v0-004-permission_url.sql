@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `wms_permission_url` (
 	`display_text`			VARCHAR(128) NOT NULL,
 	`description`			VARCHAR(128) NOT NULL,
 	`permission_id`			INT UNSIGNED NULL,
+	`display_order`			INT UNSIGNED DEFAULT 1,
 	`cre_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	`upd_dt` 				DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	PRIMARY KEY (`id`),

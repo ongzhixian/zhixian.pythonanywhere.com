@@ -71,13 +71,17 @@
       <li><a class="waves-effect" href="/feature/dashboard">Feature</a></li>
       -->
 
+      {% for i in range(25) %}
+      <li><a href="/"><i class="material-icons">home</i>xxx {{ i }} </a></li>
+      {% endfor %}
+
       {%- for menu_item in drawer_admin_menu %}
       <!-- <li><a class="waves-effect" href="{{menu_item.href}}">{{menu_item.display_text}}</a></li> -->
       {% endfor %}
     </ul>
     {% endblock %}
 
-    <div style="display: flex; flex-direction: column; height: 100vh;">
+    <div style="display: flex; flex-direction: column; height: 100vh; overflow: hidden;">
 
       {% block navbar %}
       <nav class="blue darken-4">

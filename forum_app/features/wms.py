@@ -122,15 +122,20 @@ SELECT  wpu.id
         , wpu.url
         , wpu.display_text
         , wpu.description
+        , p.feature_id
 FROM    permission p
 INNER JOIN
         wms_permission_url wpu
         ON p.id = wpu.permission_id
 WHERE   action = 'List'
-        AND feature_id = (
+        AND p.feature_id IN (
             SELECT  id 
             FROM    _feature 
-            WHERE   display_name = %s
+            WHERE   COALESCE(_feature.ancestor_id, _feature.id) = (
+                        SELECT  id 
+                        FROM    _feature 
+                        WHERE   display_name = %s
+                    )
         );
 """
         return self.db.fetch_record_set(sql, (self.feature_name,))

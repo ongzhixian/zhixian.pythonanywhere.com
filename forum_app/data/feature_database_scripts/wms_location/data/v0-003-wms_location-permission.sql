@@ -13,7 +13,7 @@ FROM   	_feature,
             UNION SELECT    'Remove'                    AS 'action', 'WMS Location' AS 'target'
             UNION SELECT    'View'                      AS 'action', 'WMS Location' AS 'target'
 		) permission
-WHERE 	display_name = 'Warehouse Management System'
+WHERE 	display_name = 'WMS Location'
 ;
 
 SET sql_notes = 1; -- enable warnings
