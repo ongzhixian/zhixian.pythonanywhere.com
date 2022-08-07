@@ -1,7 +1,4 @@
 {% extends "_layouts/_wms.html" %}
-{%
-    set SN, ID, NAME, TYPE_NAME = 0, 1, 2, 3
-%}
 
 {% block content %}
 
@@ -53,9 +50,11 @@
     </div>
     
     <div class="main-content">
+
       {% for i in range(30) %}
       <p>exrta {{ i }}</p>
       {% endfor %}
+      
     </div>
     
   </div>

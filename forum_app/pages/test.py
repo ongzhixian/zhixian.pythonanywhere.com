@@ -54,6 +54,8 @@ def test_init_get():
 #         log.error(f"[{ex}];")
     return render_template('test_add_get.html')
 
+
+
 # @app.route('/test/add', methods=['POST'])
 # def test_init_post():
 #     """Web page at '/'"""
