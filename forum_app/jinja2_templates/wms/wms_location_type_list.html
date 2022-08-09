@@ -27,7 +27,7 @@
 .left-content {
   border: 4px dashed hsla(150, 100%, 50%, 1);
   overflow: scroll;
-  flex-basis: 200px;
+  flex-basis: 300px;
 }
 .main-content {
   border: 4px dashed hsla(210, 100%, 50%, 1);
@@ -39,23 +39,70 @@
 <div class="location-type-list">
 
   <div class="title-section">
-    Some title
+    <span style="margin:0; font-family: var(--sub-title-text); font-size: 2em;">Location Type</span>
   </div>
   
-  <div class="content-section">
+  <div class="content-section" style="flex-grow:1;">
 
-    <div class="left-content">
-      <ul class="collection">
-        {% for i in range(30) %}
-        <li class="collection-item">Some item {{ i }}</li>
+    <div class="left-content" style="padding:1em;">
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="location_type_filter" type="text" class="validate">
+          <label class="active" for="location_type_filter">Location Type</label>
+        </div>
+      </div>
+
+      <ul class="collection location-type">
+
+        <!--
+        <li class="collection-item">
+  <button class="btn waves-effect waves-light" type="submit" name="action">
+    Add location type
+    <i class="material-icons right">send</i>
+  </button>
+        </li>
+        -->
+
+        {% for location_type_item in wms_location_type_list %}
+        <li class="collection-item interactive">{{ location_type_item[1] }}</li>
         {% endfor %}
+
+        <!-- 
+        {% for i in range(20) %}
+        <li class="collection-item interactive">some item {{ i }}</li>
+        {% endfor %}
+        -->
       </ul>
     </div>
     
-    <div class="main-content">
-      {% for i in range(30) %}
-      <p>exrta {{ i }}</p>
-      {% endfor %}
+    <div class="main-content" style="display: flex; flex-direction:column; justify-content: space-evenly; ">
+      <div class="item-detail" style="border: 4px dotted hsla(10, 100%, 50%, 1); flex-grow: 1;">
+        <p>
+          some detail
+        </p>
+        
+      </div>
+
+      <div class="new-entry-form" style="border: 4px dotted hsla(40, 100%, 50%, 1); flex-grow: 1; padding: 0 1em;">
+        
+        <div class="row">
+          <h3>Add new location type</h3>
+          <div class="input-field col s4">
+            
+            <input id="new_location_type" type="text" class="validate">
+            <label class="active" for="new_location_type">Location Type</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="btn waves-effect waves-light" type="button" name="action">
+            <i class="material-icons right">add</i> Add
+          </button>
+        </div>
+
+      </div><!-- end-of-new-entry-form -->
+
     </div>
     
   </div>
@@ -71,5 +118,41 @@
   document.addEventListener('DOMContentLoaded', function() {
     var instances = M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'));
   });
+
+  // document.querySelectorAll('.collection.location-type .collection-item').length
+  const locationTypeItemList = document.querySelectorAll('.collection.location-type .collection-item');
+  locationTypeItemList.forEach(function(curr, index, arr) {
+    curr.addEventListener('click', function (e) {
+      console.log(e.target.innerText , "clicked!");
+      const post_url = '/api/wms/location-type'
+      var postData = JSON.stringify({
+        'location_type' : e.target.innerText
+      });
+
+      fetch(post_url, {
+        method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: postData
+      })
+      .then(function(response) {
+        // response.json
+        return response.text();
+      })
+      .then(function(data) {
+        //document.getElementById('app_content').innerHTML = data;
+        // Update state
+        // window.history.pushState(state, null, "");
+        //M.toast({html: 'OK', classes: 'green'});
+        console.log(data);
+      })
+      .catch(function(e) {
+        console.error(e);
+      });
+    });
+  });
+  
+
 </script>
 {% endblock %}

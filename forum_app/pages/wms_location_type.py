@@ -22,10 +22,12 @@ def wms_location_type_list():
     wms_location = WmsLocationFeature()
     wms_location_type = WmsLocationTypeFeature()
     location_list = wms_location.get_location_list()
-
+    wms_location_type_list = wms_location_type.get_location_type_list()
+    
     dashboard_list = wms.get_dashboard_list()
     return render_template(
         'wms/wms_location_type_list.html',
         breadcrumbs=breadcrumbs,
         dashboard_list=dashboard_list,
+        wms_location_type_list = wms_location_type_list,
         location_list=location_list)
