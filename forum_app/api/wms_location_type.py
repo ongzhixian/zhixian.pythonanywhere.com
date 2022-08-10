@@ -48,15 +48,19 @@ def api_wms_location_type():
     if action == 'add-location-type':
         location_type_name = post_data['location_type'] if 'location_type' in post_data else None
         (rows_affected, exception) = wms_location_type.add_location_type(location_type_name)
-        # (rows_affected, exception)
+        # (rows_affected, exception) IntegrityError(1062, "1062 (23000): Duplicate entry 'asd' for key 'name_u_idx'", '23000')
         if exception is None:
             return json.dumps({
                 'result' : "OK"
             }), 200
+        if exception.errno == 1062:
+            return json.dumps({
+                'result' : "Duplicate"
+            }), 400
 
     return json.dumps({
-        'result': 'Bad request'
-    }), 400
+        'result': 'Internal Server Error'
+    }), 500
 
     # defined_actions['get-detail'](location_type)
     # defined_actions['add-location-type'](location_type)
