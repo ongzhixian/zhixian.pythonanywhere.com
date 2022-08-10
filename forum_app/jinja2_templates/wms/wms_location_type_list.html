@@ -78,8 +78,7 @@
     
     <div class="main-content" style="display: flex; flex-direction:column; justify-content: space-evenly; ">
       <div class="item-detail" style="border: 4px dotted hsla(10, 100%, 50%, 1); flex-grow: 1;">
-        <p>
-          some detail
+        <p>TODO: Display some detail for selected location type: <span id="selected_location_type"></span>
         </p>
         
       </div>
@@ -96,7 +95,7 @@
         </div>
 
         <div class="row">
-          <button class="btn waves-effect waves-light" type="button" name="action">
+          <button class="btn waves-effect waves-light" type="button" name="action" id="add_location_type_button">
             <i class="material-icons right">add</i> Add
           </button>
         </div>
@@ -126,6 +125,7 @@
       console.log(e.target.innerText , "clicked!");
       const post_url = '/api/wms/location-type'
       var postData = JSON.stringify({
+        'action': 'get-detail',
         'location_type' : e.target.innerText
       });
 
@@ -138,13 +138,16 @@
       })
       .then(function(response) {
         // response.json
-        return response.text();
+        // return response.text();
+        return response.json();
       })
       .then(function(data) {
         //document.getElementById('app_content').innerHTML = data;
         // Update state
         // window.history.pushState(state, null, "");
-        //M.toast({html: 'OK', classes: 'green'});
+        
+        var selected_location_type = document.getElementById('selected_location_type')
+        selected_location_type.innerText = data.result[1];
         console.log(data);
       })
       .catch(function(e) {
@@ -153,6 +156,44 @@
     });
   });
   
+  const addLocationTypeButton = document.getElementById('add_location_type_button');
+  addLocationTypeButton.addEventListener('click', function(e) {
+
+      const new_location_type_field = document.getElementById('new_location_type');
+      const post_url = '/api/wms/location-type';
+      debugger;
+      var postData = JSON.stringify({
+        'action': 'add-location-type',
+        'location_type' : new_location_type_field.value
+      });
+
+      fetch(post_url, {
+        method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: postData
+      })
+      .then(function(response) {
+        // response.json
+        // return response.text();
+        return response.json();
+      })
+      .then(function(data) {
+        //document.getElementById('app_content').innerHTML = data;
+        // Update state
+        // window.history.pushState(state, null, "");
+        //M.toast({html: 'OK', classes: 'green'});
+        
+        // data['location_type']
+        var selected_location_type = document.getElementById('selected_location_type')
+        selected_location_type.innerText = data['location_type'];
+        console.log(data);
+      })
+      .catch(function(e) {
+        console.error(e);
+      });
+  });
 
 </script>
 {% endblock %}

@@ -9,16 +9,67 @@ from flask import render_template, request
 
 from forum_app import app, app_path
 from forum_app.features.wms_location import WmsLocationFeature
+from forum_app.features.wms_location_type import WmsLocationTypeFeature
+
 
 @app.route('/api/wms/location-type', methods=['GET', 'POST'])
 def api_wms_location_type():
-    posts_data = request.json
-    # {'location_type': 'Building'}
-    response_data = {
-        'location_type' : posts_data['location_type'],
-        'data' : 'some custom data'
-    }
-    return json.dumps(response_data), 200
+    wms_location_type = WmsLocationTypeFeature()
+    try:
+        post_data = request.json
+    except Exception as ex:
+        logging.error(f"Bad request {ex}")
+        return f"Bad request", 400
+    
+    # defined_actions = {
+    #     'get-detail' : wms_location_type.get_location_type_list,
+    #     'add-location-type' : lambda : 'add-location-type function placeholder'
+    # }
+    # defined_actions = {
+    #     'get-detail' : lambda location_type_name : wms_location_type.get_location_type_detail(location_type_name),
+    #     'add-location-type' : lambda : 'add-location-type function placeholder'
+    # }
+    defined_actions = ['get-detail', 'add-location-type']
+
+    if 'action' not in post_data or post_data['action'] not in defined_actions:
+        return json.dumps({
+            'result': 'Bad request'
+        }), 400
+    
+    action = post_data['action'] if 'action' in post_data else None
+
+    if action == 'get-detail':
+        location_type_name = post_data['location_type'] if 'location_type' in post_data else None
+        location_type_detail = wms_location_type.get_location_type_detail(location_type_name)
+        return json.dumps({
+            'result' : location_type_detail
+        }), 200
+
+    if action == 'add-location-type':
+        location_type_name = post_data['location_type'] if 'location_type' in post_data else None
+        (rows_affected, exception) = wms_location_type.add_location_type(location_type_name)
+        # (rows_affected, exception)
+        if exception is None:
+            return json.dumps({
+                'result' : "OK"
+            }), 200
+
+    return json.dumps({
+        'result': 'Bad request'
+    }), 400
+
+    # defined_actions['get-detail'](location_type)
+    # defined_actions['add-location-type'](location_type)
+
+    # result = defined_actions[post_data['action']]()
+    # response_data = {
+    #     'result' : defined_actions[post_data['action']]()
+    # }
+    # return json.dumps({
+    #     'result' : defined_actions[post_data['action']]()
+    # }), 200
+
+
     # breadcrumbs = [
     #     { 'href' : '/wms/dashboard', 'text': 'WMS' },
     #     { 'href' : None, 'text': 'Location Type' }
@@ -74,5 +125,3 @@ def api_wms_location_type():
 #         breadcrumb_list=breadcrumbs,
 #         location_type_list=location_type_list
 #         ), 200
-
-

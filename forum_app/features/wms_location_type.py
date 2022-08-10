@@ -86,3 +86,15 @@ inner join
 LIMIT 25;
 """
         return self.db.fetch_record_set(sql, None)
+
+    def get_location_type_detail(self, location_type_name):
+        sql = """
+SELECT id, name FROM wms_location_type WHERE name = %s;
+"""
+        return self.db.fetch_record(sql, (location_type_name,))
+
+    def add_location_type(self, location_type_name):
+        sql = """
+INSERT INTO wms_location_type (name) VALUES (%s);
+"""
+        return self.db.execute(sql, (location_type_name,))
