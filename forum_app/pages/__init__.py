@@ -10,7 +10,7 @@ __all__ = [
     "investment", "investment_client", "investment_portfolio",
     "trade", "trade_portfolio",
     "wms", "wms_location_type", "wms_location",
-    "ipf",
+    "ipf", "ipf_portfolio",
     "logistics"]
 
 # Page UI Components

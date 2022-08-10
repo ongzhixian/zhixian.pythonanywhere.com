@@ -58,3 +58,9 @@ class IpfPortfolioFeature(BaseFeatureInterface):
         self.update_ui()
 
     # Feature specific methods
+
+    def list(self):
+        sql = """
+SELECT id, name FROM ipf_portfolio;
+"""
+        return self.db.fetch_list(sql, None)

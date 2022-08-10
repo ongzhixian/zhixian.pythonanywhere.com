@@ -1,6 +1,6 @@
 SET sql_notes = 0; -- suppress warnings
 
-CREATE TABLE IF NOT EXISTS `wms_permission_url` (
+CREATE TABLE IF NOT EXISTS `ipf_permission_url` (
 	`id`					INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`url` 					VARCHAR(128) NOT NULL,
 	`display_text`			VARCHAR(128) NOT NULL,

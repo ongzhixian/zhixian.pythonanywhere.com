@@ -1,8 +1,8 @@
 SET sql_notes = 0; -- suppress warnings
 
-CREATE TABLE IF NOT EXISTS `ipf_portfolio_transaction` (
+CREATE TABLE IF NOT EXISTS `ipf_transaction` (
 	`id`					INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`portfolio_id`			INT UNSIGNED NOT NULL
+	`portfolio_id`			INT UNSIGNED NOT NULL,
 	`operation`				VARCHAR(10) NULL, -- BUY, SELL, SHORT
 	`symbol` 				VARCHAR(50) NULL,
 	`quantity` 				DECIMAL NOT NULL,

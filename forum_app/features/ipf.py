@@ -67,7 +67,7 @@ SELECT  wpu.id
         , p.feature_id
 FROM    permission p
 INNER JOIN
-        wms_permission_url wpu
+        ipf_permission_url wpu
         ON p.id = wpu.permission_id
 WHERE   action = 'List'
         AND p.feature_id IN (
