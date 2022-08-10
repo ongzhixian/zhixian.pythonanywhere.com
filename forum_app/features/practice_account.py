@@ -52,6 +52,19 @@ class PracticeAccountFeature(BaseFeatureInterface):
         rbac.assign_role("Trade administrator", "tradeadmin1")
         rbac.assign_role("Trade administrator", "tradeadmin2")
 
+        # IPF users / RBAC
+        
+        login.add("ipfadmin1", "ipfadmin1")
+        login.add("ipfadmin2", "ipfadmin2")
+        rbac.assign_role("IPF administrator", "ipfadmin1")
+
+        login.add("ipfuser1", "ipfuser1")
+        login.add("ipfuser2", "ipfuser1")
+        rbac.assign_role("IPF user", "ipfuser1")
+        rbac.assign_role("IPF user", "ipfuser2")
+
+        # WMS users / RBAC
+
         rbac.assign_role("WMS user", "dev1")
         rbac.assign_role("WMS administrator", "dev1")
         rbac.assign_role("Trade user", "dev1")

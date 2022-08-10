@@ -12,6 +12,7 @@ __all__ = [
     # Application
     "trade", "trade_instrument",
     "wms", "wms_location_type", "wms_location",
+    "ipf",
     # Functional
     "development", "development_note",
     # Practice / Demo / Test / Trial (whatever you want to call it)
