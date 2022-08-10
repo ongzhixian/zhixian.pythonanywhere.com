@@ -110,9 +110,9 @@ def api_wms_module(module_name):
     # else:
     #     html = f"""<p>Placeholder for {module_name}</p>"""
     
-@app.route('/api/wms/setup-demo', methods=['GET', 'POST'])
-def api_wms_setup_demo():
-    from forum_app.features.wms import WmsFeature
-    WmsFeature().setup_demo()
-    return "OK", 200
+# @app.route('/api/wms/setup-demo', methods=['GET', 'POST'])
+# def api_wms_setup_demo():
+#     from forum_app.features.wms import WmsFeature
+#     WmsFeature().setup_demo()
+#     return "OK", 200
     

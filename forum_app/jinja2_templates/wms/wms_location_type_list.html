@@ -114,8 +114,71 @@
 
 {% block scripts %}
 <script type="text/javascript">
+  function api() {
+    this.get = function(url, form_data) {
+      
+      // var x = Object.keys(input_data).map(function(key) {
+      //   return key + '=' + input_data[key]
+      // }).join('&');
+      var get_qs = new URLSearchParams(form_data);
+      var api_url = new URL(url, document.URL);
+      api_url.search = get_qs;
+      
+      fetch(api_url, {
+        method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        debugger;
+        console.log(data);
+        return data;
+      })
+      .catch(function(e) {
+        console.error(e);
+      });
+    }
+
+    this.post = function() {
+      console.log("api post() called");
+    }
+  }
+
+  const state = {
+    location_type_list : [],
+    selected_location_type : null,
+    api : new api(),
+
+    init : function() {
+      state.refreshUI();
+      state.location_type_list = [];
+      state.selected_location_type = null;
+      console.log("State initialized.");
+    },
+    
+    load_location_type_list : function() {
+      var f = new FormData();
+      f.append('action', 'get');
+      f.append('target', 'location-type-list');
+      state.location_type_list = state.api.get('/api/wms/location-type', f);
+      // state.location_type_list = state.api.get('/api/wms/location-type', {
+      //   'action' : 'get',
+      //   'target' : 'location-type-list'
+      // })
+    },
+    refreshUI : function() {
+      console.log("Refresh UI");
+      state.load_location_type_list();
+    }
+  };
+  
   document.addEventListener('DOMContentLoaded', function() {
     var instances = M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'));
+    state.init();
   });
 
   // document.querySelectorAll('.collection.location-type .collection-item').length

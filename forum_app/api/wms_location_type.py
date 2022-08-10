@@ -5,15 +5,35 @@
 
 import logging
 import json
+from urllib.parse import urlparse, parse_qs
 from flask import render_template, request
 
 from forum_app import app, app_path
 from forum_app.features.wms_location import WmsLocationFeature
 from forum_app.features.wms_location_type import WmsLocationTypeFeature
 
+@app.route('/api/wms/location-type', methods=['GET'])
+def api_wms_location_type_get():
+    defined_actions = ['get']
+    
+    query_string = parse_qs(request.query_string.decode('utf8'))
 
-@app.route('/api/wms/location-type', methods=['GET', 'POST'])
-def api_wms_location_type():
+    if 'action' not in query_string:
+        return json.dumps({
+            'result': 'Bad request'
+        }), 400
+    
+    #  query_string['action']  -> ['get']
+    wms_location_type = WmsLocationTypeFeature()
+    location_type_list = wms_location_type.get_location_type_list()
+    return json.dumps({
+        'result': json.dumps(location_type_list)
+    }), 200
+    
+
+
+@app.route('/api/wms/location-type', methods=['POST'])
+def api_wms_location_type_post():
     wms_location_type = WmsLocationTypeFeature()
     try:
         post_data = request.json
@@ -21,10 +41,6 @@ def api_wms_location_type():
         logging.error(f"Bad request {ex}")
         return f"Bad request", 400
     
-    # defined_actions = {
-    #     'get-detail' : wms_location_type.get_location_type_list,
-    #     'add-location-type' : lambda : 'add-location-type function placeholder'
-    # }
     # defined_actions = {
     #     'get-detail' : lambda location_type_name : wms_location_type.get_location_type_detail(location_type_name),
     #     'add-location-type' : lambda : 'add-location-type function placeholder'
