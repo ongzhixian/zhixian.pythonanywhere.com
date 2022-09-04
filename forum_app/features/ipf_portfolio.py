@@ -64,3 +64,9 @@ class IpfPortfolioFeature(BaseFeatureInterface):
 SELECT id, name FROM ipf_portfolio;
 """
         return self.db.fetch_list(sql, None)
+
+    def add_portfolio(self, portfolio_name):
+        sql = """
+INSERT INTO ipf_portfolio (name) VALUES (%s);
+"""
+        return self.db.execute(sql, (portfolio_name,))

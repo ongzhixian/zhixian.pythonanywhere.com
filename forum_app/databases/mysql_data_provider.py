@@ -244,6 +244,9 @@ class MySqlDataProvider(BaseDataProviderInterface):
         
 
     def execute(self, sql, args=None):
+        """
+        Returns a tuple of (rows_affected, ex)
+        """
         connection = None
         mycursor = None
         try:

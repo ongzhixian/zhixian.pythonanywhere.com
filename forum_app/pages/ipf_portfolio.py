@@ -34,3 +34,22 @@ def ipf_portfolio_list():
         'ipf/ipf_portfolio_list.html',
         breadcrumbs=breadcrumbs,
         portfolio_list=portfolio_list)
+
+
+@app.route('/ipf/portfolio/<id>')
+def ipf_portfolio_id(id):
+    """Url: /ipf/portfolio/<id>
+    """
+    breadcrumbs = [
+        { 'href' : '/ipf/dashboard', 'text': 'IPF' },
+        { 'href' : None, 'text': 'IPF Portfolio' }
+    ]
+
+    # dashboard_list = wms.get_dashboard_list()
+    ipf_portfolio = IpfPortfolioFeature()
+    portfolio_list = ipf_portfolio.list()
+    
+    return render_template(
+        'ipf/ipf_portfolio_detail.html',
+        breadcrumbs=breadcrumbs,
+        portfolio_list=portfolio_list)
