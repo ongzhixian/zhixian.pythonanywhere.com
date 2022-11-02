@@ -1,5 +1,17 @@
 # Overview
 
+# Branches
+
+1.  main
+
+This is the main production branch.
+
+2.  main_2022
+
+This is an archived of the main production branch as of 2022-11-02
+(because this branch is kind of ambitious and I want to start all over again).
+
+
 ## What to do after a new clone
 
 python -m venv .venv
