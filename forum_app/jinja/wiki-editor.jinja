@@ -1,0 +1,85 @@
+{% extends "_layouts/_wiki.jinja" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content -%}
+
+<div class="fixed-action-btn">
+  <button class="btn-floating btn-large red" id="saveButton">
+    <i class="large material-icons">save</i>
+  </button>
+  
+  <ul>
+    <li><a class="btn-floating red" ><i class="material-icons">arrow_back</i></a></li>
+    <!--
+    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    -->
+  </ul>
+  
+</div>
+
+<div class="pancake-grid">
+  
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="javascript:void(0);">Option one</a></li>
+    <li><a href="javascript:void(0);">Option two</a></li>
+    <li class="divider"></li>
+    <li><a href="javascript:void(0);">Option three</a></li>
+  </ul>
+
+  <nav class="blue darken-4">
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo">CE Wiki</a>
+      <ul class="right hide-on-med-and-down">
+        <!-- 
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        -->
+        <!-- Dropdown Trigger -->
+        <li><a class="dropdown-trigger" href="javascript:void(0);" data-target="dropdown1">Options<i class="material-icons right">arrow_drop_down</i></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- content starts here -->
+
+  <main id="wikiContent" class="section" contenteditable>{{ wiki_content }}
+</div>
+
+{% endblock %}
+
+{%- block scripts %}
+<script type="text/javascript">
+"use strict";
+
+function saveContent() {
+  console.log("TODO: action to save content");
+  var textContent = document.getElementById("wikiContent").textContent;
+  // TODO: Send API to save textContent
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var drop_downs = M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
+    var fixed_action_buttons = M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
+      hoverEnabled: false
+    });
+
+    var isCtrl = false;
+
+    document.getElementById('wikiContent').addEventListener('keydown', function(e){
+        if ((e.ctrlKey) && (e.keyCode == 83)) {
+          e.preventDefault();
+          saveContent();
+          return false;
+        }
+    });
+
+    // Setup actions for fixed-action-buttons
+    document.getElementById("saveButton").addEventListener("click", function () {
+      saveContent();
+    });
+});
+</script>
+{% endblock %}

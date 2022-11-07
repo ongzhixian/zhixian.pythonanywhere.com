@@ -1,0 +1,125 @@
+{% extends "_layouts/_default.jinja" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content -%}
+
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large red" href="/wiki-editor/{{ wiki_title }}">
+    <i class="large material-icons">mode_edit</i>
+  </a>
+  <!--
+  <ul>
+    <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+  </ul>
+  -->
+</div>
+
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href="javascript:void(0);">Option one</a></li>
+  <li><a href="javascript:void(0);">Option two</a></li>
+  <li class="divider"></li>
+  <li><a href="javascript:void(0);">Option three</a></li>
+</ul>
+
+<nav class="blue darken-4">
+  <div class="nav-wrapper">
+    <a href="/" class="brand-logo">CE Wiki</a>
+    <ul class="right hide-on-med-and-down">
+      <!-- 
+      <li><a href="sass.html">Sass</a></li>
+      <li><a href="badges.html">Components</a></li>
+      -->
+      <!-- Dropdown Trigger -->
+      <li><a class="dropdown-trigger" href="javascript:void(0);" data-target="dropdown1">Options<i class="material-icons right">arrow_drop_down</i></a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- content starts here -->
+
+<div class="row">
+
+    <div class="col s12 m2 l2"> <!-- Note that "m4 l3" was added -->
+    <!-- Grey navigation panel
+
+            This content will be:
+        3-columns-wide on large screens,
+        4-columns-wide on medium screens,
+        12-columns-wide on small screens  -->
+    </div>
+
+    <div class="col s12 m8 l8"> <!-- Note that "m8 l9" was added -->
+    <!-- Teal page content
+
+            This content will be:
+        9-columns-wide on large screens,
+        8-columns-wide on medium screens,
+        12-columns-wide on small screens  -->
+        
+        {{ wiki_content }}
+
+    </div>
+
+    <div class="col s12 m2 l2"></div>
+</div>
+
+
+<!-- Contact (hide for now)
+<div class="container">
+    <div class="section">
+
+      <div class="row">
+        <div class="col s12 center">
+          <h3><i class="mdi-content-send brown-text"></i></h3>
+          <h4>Contact Us</h4>
+          <p class="left-align light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque id nunc nec volutpat. Etiam pellentesque tristique arcu, non consequat magna fermentum ac. Cras ut ultricies eros. Maecenas eros justo, ullamcorper a sapien id, viverra ultrices eros. Morbi sem neque, posuere et pretium eget, bibendum sollicitudin lacus. Aliquam eleifend sollicitudin diam, eu mattis nisl maximus sed. Nulla imperdiet semper molestie. Morbi massa odio, condimentum sed ipsum ac, gravida ultrices erat. Nullam eget dignissim mauris, non tristique erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
+        </div>
+      </div>
+
+    </div>
+</div>
+-->
+
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+<p>&nbsp;
+
+
+<p>&nbsp;
+<p>&nbsp;
+
+
+
+{% endblock %}
+{%- block scripts %}
+<script type="text/javascript">
+"use strict";
+document.addEventListener('DOMContentLoaded', function() {
+    var drop_downs = M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
+    var fixed_action_buttons = M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
+      hoverEnabled: false
+    });
+});
+
+</script>
+{% endblock %}

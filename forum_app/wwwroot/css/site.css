@@ -1,0 +1,13 @@
+
+.pancake-grid {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+main[contenteditable] {
+    outline:  none;
+    border-left: teal double thick;;
+    margin: 0.67em;
+    padding: 1em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
