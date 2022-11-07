@@ -1,79 +1,23 @@
 import logging
 from flask import g, render_template, request, session, redirect
 from forum_app import app
-from forum_app.helpers.auth import login_required
-from forum_app.modules.barcode import QRCode
-from forum_app.features.authentication import authentication_check
+# from forum_app.helpers.auth import login_required
+# from forum_app.modules.barcode import QRCode
+# from forum_app.features.authentication import authentication_check
 
 @app.route('/')
-@authentication_check
+# @authentication_check
 def root_get():
-    """GET /"""
-    logging.debug(f"Username: {g.username}")
-    return render_template('root_get.html')
+    """Path: / (Application root)"""
+    # logging.debug(f"Username: {g.username}")
+    return render_template('root.jinja')
 
-@app.route('/forum')
-@login_required
-def forum_get():
-    """TODO: Reorganize; GET /"""
-    
-    return render_template('forum_get.html')
 
-@app.route('/chart-examples')
-@login_required
-def chart_examples_get():
-    """TODO: Reorganize; GET /"""
-    return render_template('chart_examples_get.html')
 
-@app.route('/qrcode')
-def qrcode_get():
-    """TODO: Reorganize; GET /"""
-    data = "dummy qr data"
-    
-    query_params = request.args
-
-    if 'd' in query_params:
-        data = query_params['d']
-        
-    qrcode = QRCode()
-    qr_img_base64 = qrcode.make_qr_image_as_base64(data)
-    
-    return render_template('qrcode_get.html', model = {
-        "qr_img_base64" : qr_img_base64
-    })
-
-@app.route('/link-dump', methods=['GET', 'POST'])
-@login_required
-def link_dump_get():
-    """TODO: Reorganize; GET /"""
-    # if request.method == 'POST':
-    #     url_text = request.form['urlText']
-    #     url_list = url_text.splitlines()
-    #     data = []
-    #     if len(url_list) > 0:
-    #         for url in url_list:
-    #             data.append((url, ))
-    #         mydb = ForumDb()
-    #         mydb.add_weblinks(data)
-    
-    return render_template('link_dump_get.html')
-
-@app.route('/lightbox', methods=['GET', 'POST'])
-def lightbox_page():
-    """TODO: Reorganize; GET /"""
-    return render_template('lightbox.html')
-
-@app.route('/file-upload', methods=['GET', 'POST'])
-def file_upload_page():
-    """TODO: Reorganize; GET /"""
-    return render_template('file_upload.html')
-
-@app.route('/shopping-cart', methods=['GET', 'POST'])
-def shopping_cart_page():
-    """TODO: Reorganize; GET /"""
-    return render_template('shopping_cart.html')
-
-@app.route('/stackedit', methods=['GET', 'POST'])
-def stackedit_page():
-    """TODO: Reorganize; GET /"""
-    return render_template('stackedit.html')
+# @app.route('/favicon.ico')
+# # @authentication_check
+# def favicon_ico_get():
+#     """Path: /favicon.ico"""
+#     # logging.debug(f"Username: {g.username}")
+#     # return render_template('root_get.html')
+#     return "", 201
