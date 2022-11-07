@@ -60,7 +60,7 @@ function saveContent() {
   var textContent = document.getElementById("wikiContent").textContent;
   // TODO: Send API to save textContent
   postData('/api/wiki/', {
-    'content': 'some content'
+    'content': textContent
   })
 }
 

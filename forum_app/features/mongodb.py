@@ -1,13 +1,6 @@
-import logging
-
 from pymongo import MongoClient
 
-# def test_connect(connection_string):
-#     logging.info(f"ConnectionString is: {connection_string}")
-#     mongo_client = MongoClient(connection_string)
-#     print(mongo_client.list_database_names())
-#     db = mongo_client['minitools']
-#     print(db.list_collection_names())
+from forum_app.features.logging import log
 
 class MongoDb(object):
     def __init__(self, connection_string, database_name):
@@ -29,9 +22,9 @@ class MongoDb(object):
     def get_database(self):
         mongo_client = MongoClient(self.connection_string)
         if self.database_name in self.database_names:
-            logging.info("Database exists.")
+            log.info("Database exists.", database_name=self.database_name)
             return mongo_client[self.database_name]
-        logging.error(f"'{self.database_name}' not found. Available databases are {self.database_names}")
+        log.error(f"Database not found", database_name=self.database_name, database_names=self.database_names)
         raise ValueError(self.database_name, "not found")
 
     def collection_exists(self, collection_name):

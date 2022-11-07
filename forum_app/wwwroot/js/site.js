@@ -25,5 +25,6 @@ async function postData(url = '', data = {}) {
     },
     body: JSON.stringify(data)
   });
+  debugger;
   return response.json();
 }

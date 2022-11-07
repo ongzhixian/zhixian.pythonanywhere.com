@@ -7,7 +7,7 @@ from forum_app import app
 # from forum_app.modules.barcode import QRCode
 # from forum_app.features.authentication import authentication_check
 
-from forum_app.features import wiki
+from forum_app import wiki
 
 @app.route('/')
 # @authentication_check

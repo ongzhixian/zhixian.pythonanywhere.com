@@ -12,7 +12,8 @@ import json
 import logging
 from os import environ, path, makedirs
 from flask import Flask, current_app
-
+from forum_app.features.logging import log
+from forum_app.features.wiki import Wiki
 
 ################################################################################
 # Helper functions for Flask application definition
@@ -168,12 +169,11 @@ app_settings = get_app_settings(app_path)
 
 configure_logging(app_settings)
 
-from forum_app.features.wiki import init_wiki
-init_wiki(app_secrets['mongodb:minitools:ConnectionString'])
-
-logging.info("Starting application.")
+log.info("Starting application.")
 
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja')
+
+wiki = Wiki(app_secrets['mongodb:minitools:ConnectionString'])
 
 if "SESSION_SECRET_KEY" in app_secrets:
     app.secret_key = app_secrets["SESSION_SECRET_KEY"]
