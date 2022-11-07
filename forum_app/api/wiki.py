@@ -15,7 +15,6 @@ def api_wiki_default_get(title):
 def api_wiki_default_post():
     """"""
     logging.info("Save default wiki page")
-    print("Save default wiki page")
 
     result = None
 

@@ -7,3 +7,4 @@ Faker==13.14.0
 coverage==6.4.1
 websockets==10.3
 Markdown==3.3.7
+pymongo==4.3.2

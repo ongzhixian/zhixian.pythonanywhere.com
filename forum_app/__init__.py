@@ -168,6 +168,9 @@ app_settings = get_app_settings(app_path)
 
 configure_logging(app_settings)
 
+from forum_app.features.wiki import init_wiki
+init_wiki(app_secrets['mongodb:minitools:ConnectionString'])
+
 logging.info("Starting application.")
 
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja')
