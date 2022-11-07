@@ -51,6 +51,7 @@
 {% endblock %}
 
 {%- block scripts %}
+<script type="text/javascript" src="/js/site.js"></script>
 <script type="text/javascript">
 "use strict";
 
@@ -58,6 +59,9 @@ function saveContent() {
   console.log("TODO: action to save content");
   var textContent = document.getElementById("wikiContent").textContent;
   // TODO: Send API to save textContent
+  postData('/api/wiki/', {
+    'content': 'some content'
+  })
 }
 
 document.addEventListener('DOMContentLoaded', function() {

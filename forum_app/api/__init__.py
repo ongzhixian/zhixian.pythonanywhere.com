@@ -1,1 +1,1 @@
-__all__ = ["website"]
+__all__ = ["website", "wiki"]
