@@ -10,7 +10,7 @@
   </button>
   
   <ul>
-    <li><a class="btn-floating red" ><i class="material-icons">arrow_back</i></a></li>
+    <li><a class="btn-floating red" href="/wiki/{{wiki_title}}"><i class="material-icons">pageview</i></a></li>
     <!--
     <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
     <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
@@ -57,20 +57,24 @@
 
 function saveContent() {
   console.log("TODO: action to save content");
-  var textContent = document.getElementById("wikiContent").textContent;
+  var wikiContentElement = document.getElementById("wikiContent")
+  var textContent = wikiContentElement.innerText;
+  var htmlContent = wikiContentElement.innerHTML;
+  debugger;
   // TODO: Send API to save textContent
+
   postData('/api/wiki/', {
-    'content': textContent
+    'path': '{{ wiki_path }}',
+    'content': textContent,
+    'editorContent': htmlContent
   })
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     var drop_downs = M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
     var fixed_action_buttons = M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
-      hoverEnabled: false
+      hoverEnabled: true
     });
-
-    var isCtrl = false;
 
     document.getElementById('wikiContent').addEventListener('keydown', function(e){
         if ((e.ctrlKey) && (e.keyCode == 83)) {

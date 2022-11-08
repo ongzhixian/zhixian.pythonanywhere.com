@@ -20,17 +20,22 @@ def api_wiki_default_post():
     OPERATION = "Save wiki document"
     
     if not request.is_json:
-        log.info("Bad request")
+        log.info(OPERATION, operation=api_wiki_default_post.__name__, status=400, status_text="Bad request", status_description="Request is not JSON", )
         return "Bad request", 400
+
+    json_data = request.json
+    wiki_path = json_data['path'] if 'path' in json_data else None
+
+    log.debug(OPERATION, operation=api_wiki_default_post.__name__, content=json_data)
 
     wiki = Wiki()
-    result = wiki.store_wiki_content(request.path, request.json)
+    result = wiki.store_wiki_content(wiki_path, request.json)
 
     if result is None:
-        log.info(OPERATION, status=400, path=request.path, content=request.json)
+        log.info(OPERATION, operation=api_wiki_default_post.__name__, status=400, status_text="Bad request", status_description="Result is None", )
         return "Bad request", 400
     
-    log.debug(OPERATION, status=200, path=request.path, content=request.json)
+    log.debug(OPERATION, status=200, path=request.path)
     
     return "{}"
 

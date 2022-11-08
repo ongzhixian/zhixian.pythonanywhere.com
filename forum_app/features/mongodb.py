@@ -22,9 +22,9 @@ class MongoDb(object):
     def get_database(self):
         mongo_client = MongoClient(self.connection_string)
         if self.database_name in self.database_names:
-            log.info("Database exists.", database_name=self.database_name)
+            log.debug("Database exists.", database_name=self.database_name, operation=MongoDb.get_database.__name__)
             return mongo_client[self.database_name]
-        log.error(f"Database not found", database_name=self.database_name, database_names=self.database_names)
+        log.error(f"Database not found", database_name=self.database_name, database_names=self.database_names, operation=MongoDb.get_database.__name__)
         raise ValueError(self.database_name, "not found")
 
     def collection_exists(self, collection_name):
