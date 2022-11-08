@@ -25,6 +25,7 @@ def root_get():
 def wiki_default_page_get():
     wiki = Wiki()
     wiki_content = wiki.get_wiki_content(DEFAULT_WIKI_PATH)
+    wiki_content = wiki_content.replace('\xa0', ' ')
     html = markdown(wiki_content)
     return render_template('wiki.jinja', wiki_content=html, wiki_title="", wiki_path=DEFAULT_WIKI_PATH)
 
@@ -34,6 +35,12 @@ def wiki_page_get(title):
     wiki_path = f'/wiki/{title}'
     wiki = Wiki()
     wiki_content = wiki.get_wiki_content(wiki_path)
+    wiki_content = wiki_content.replace('\xa0', ' ')
+    import re
+    res = re.findall("(\[\[(.+)\]\])", wiki_content)
+    for link in res:
+        wiki_content = wiki_content.replace(link[0], f'<a href="/wiki/{link[1]}">{link[1]}</a>')
+    
     html = markdown(wiki_content)
     return render_template('wiki.jinja', wiki_content=html, wiki_title=title, wiki_path=wiki_path)
 
