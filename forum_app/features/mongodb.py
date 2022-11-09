@@ -16,8 +16,11 @@ class MongoDb(object):
     #     print(db.list_collection_names())
 
     def refresh_database_names(self):
-        mongo_client = MongoClient(self.connection_string)
-        self.database_names = mongo_client.list_database_names()
+        try:
+            mongo_client = MongoClient(self.connection_string)
+            self.database_names = mongo_client.list_database_names()
+        except Exception as ex:
+            log.error(ex)
 
     def get_database(self):
         mongo_client = MongoClient(self.connection_string)

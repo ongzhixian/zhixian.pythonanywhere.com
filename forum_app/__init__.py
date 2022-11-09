@@ -157,6 +157,19 @@ def configure_logging(app_settings):
     logging.debug("Logging configured.")
 
 
+def new_app_state(app_path, app_secrets, app_settings):
+    from forum_app.features.capability import detect_capabilities
+    capabilities = detect_capabilities(app_path, app_secrets, app_settings)
+    return {
+        'app_path' : app_path, 
+        'app_secrets' : app_secrets, 
+        'app_settings' : app_settings,
+        'is_localhost': True if 'USERPROFILE' in environ else False,
+        'is_pythonanywherehost': True if 'PYTHONANYWHERE_DOMAIN' in environ else False,
+        'capabilities': capabilities
+    }
+
+
 ################################################################################
 # Define Flask application
 ################################################################################
@@ -171,9 +184,14 @@ configure_logging(app_settings)
 
 log.info("Starting application.")
 
+app_state = new_app_state(app_path, app_secrets, app_settings)
+
 app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja')
 
-wiki = Wiki(app_secrets['mongodb:minitools:ConnectionString'])
+# wiki = Wiki(app_secrets['mongodb:minitools:ConnectionString'])
+# from forum_app.features.data_store import DataStore
+# ds = DataStore(app_state)
+# print(ds["ads"])
 
 if "SESSION_SECRET_KEY" in app_secrets:
     app.secret_key = app_secrets["SESSION_SECRET_KEY"]

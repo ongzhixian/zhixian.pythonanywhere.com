@@ -1,1 +1,1 @@
-__all__ = ["wiki", "mongodb"]
+__all__ = ["wiki", "mongodb", "data_store"]
