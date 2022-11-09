@@ -20,6 +20,9 @@ def root_get():
     # logging.debug(f"Username: {g.username}")
     return render_template('root.jinja')
 
+@app.route("/code-review/")
+def code_review_root_page_get():
+    return render_template('root.jinja')
 
 @app.route("/wiki/")
 def wiki_default_page_get():

@@ -34,11 +34,13 @@ def detect_capabilities(app_path, app_secrets, app_settings):
 
     log.info("Detecting capabilities...")
 
-    can_access_mongodb_minitools = __can_access_mongodb_database(app_secrets, 'minitools')
+    # can_access_mongodb_minitools = __can_access_mongodb_database(app_secrets, 'minitools')
     
-    can_access_mysql = __can_access_mysql_forum(app_secrets)
+    # can_access_mysql = __can_access_mysql_forum(app_secrets)
 
-    return {
-        'can_access_mongodb' : can_access_mongodb_minitools,
-        'can_access_mysql' : can_access_mysql
-    }
+    # return {
+    #     'can_access_mongodb' : can_access_mongodb_minitools,
+    #     'can_access_mysql' : can_access_mysql
+    # }
+
+    return {}
