@@ -4,8 +4,6 @@ from forum_app import app
 
 @app.before_request
 def before_each_request():
-    import pdb
-    pdb.set_trace()
     if "username" in session:
         logging.debug("username is in session")
         g.username = session["username"]
