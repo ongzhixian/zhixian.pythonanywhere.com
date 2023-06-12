@@ -1,13 +1,12 @@
-
-.pancake-grid {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+:root {
+    --header-font: 'Trocchi', serif;
+    --text-font:'Source Sans 3', sans-serif;
 }
 
-main[contenteditable] {
-    outline:  none;
-    border-left: teal double thick;;
-    margin: 0.67em;
-    padding: 1em;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+body {
+    font-family: var(--text-font);
+}
+
+h1,h2,h3,h4,h5,h6,.title,.subtitle {
+    font-family: var(--header-font);
 }
