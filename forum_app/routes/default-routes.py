@@ -4,12 +4,14 @@ from forum_app import app
 from forum_app.features.logging import log
 from markdown import markdown
 
+from forum_app.features.security import require_authenticated_user
+
 # from forum_app.helpers.auth import login_required
 # from forum_app.modules.barcode import QRCode
 # from forum_app.features.authentication import authentication_check
 
 @app.route('/')
-# @authentication_check
+@require_authenticated_user
 def home():
     """Path: / (Application root)"""
     # logging.debug(f"Username: {g.username}")

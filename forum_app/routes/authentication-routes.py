@@ -5,12 +5,12 @@ from forum_app.features.logging import log
 from markdown import markdown
 
 def is_valid_credentials(username, password):
-    return False
+    return True
 
 @app.get('/login')
 # @authentication_check
 def login():
-    return render_template('login.html')
+    return render_template('login.html', model=None)
 
 @app.post('/login')
 # @authentication_check
@@ -20,6 +20,7 @@ def login_post():
         username = form['username']
         password = form['password']
         if is_valid_credentials(username, password):
+            session['username'] = username
             return redirect(url_for("home"))
     return render_template('login.html', model={
         'message': "Invalid credentials"
