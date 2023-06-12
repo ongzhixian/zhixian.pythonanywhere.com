@@ -18,7 +18,7 @@ DEFAULT_WIKI_PATH = '/wiki/'
 def root_get():
     """Path: / (Application root)"""
     # logging.debug(f"Username: {g.username}")
-    return render_template('root.jinja')
+    return render_template('home.html')
 
 @app.route("/code-review/")
 def code_review_root_page_get():

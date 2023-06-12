@@ -202,5 +202,5 @@ if "SESSION_SECRET_KEY" in app_secrets:
 ################################################################################
 
 from forum_app.lifecycle_handlers import *
-from forum_app.pages import *
+from forum_app.routes import *
 from forum_app.api import *
