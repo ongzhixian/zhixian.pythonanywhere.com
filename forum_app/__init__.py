@@ -186,7 +186,7 @@ log.info("Starting application.")
 
 app_state = new_app_state(app_path, app_secrets, app_settings)
 
-app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='jinja')
+app = Flask(__name__, static_url_path='/', static_folder='wwwroot', template_folder='templates')
 
 # wiki = Wiki(app_secrets['mongodb:minitools:ConnectionString'])
 # from forum_app.features.data_store import DataStore
