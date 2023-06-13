@@ -2,4 +2,4 @@
 # Define package composition
 ################################################################################
 
-__all__ = ["default-routes", "authentication-routes"]
+__all__ = ["default-routes", "authentication-routes", "poc-routes"]
