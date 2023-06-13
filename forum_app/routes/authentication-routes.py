@@ -7,12 +7,12 @@ from markdown import markdown
 def is_valid_credentials(username, password):
     return True
 
-@app.get('/login')
+@app.route('/login')
 # @authentication_check
 def login():
     return render_template('login.html', model=None)
 
-@app.post('/login')
+@app.route('/login', methods=['POST'])
 # @authentication_check
 def login_post():
     form = request.form
@@ -26,3 +26,9 @@ def login_post():
         'message': "Invalid credentials"
     })
 
+
+@app.route('/logout')
+def logout():
+    session.pop('username')
+    return redirect("login")
+    # return render_template('login.html', model=None)
