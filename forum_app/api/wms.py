@@ -32,7 +32,7 @@ def api_get_wms_customer():
         result = {
             id: id, 
             name: name, 
-            version: sys.version
+            'version': sys.version
         }
 
     cursor.close()
