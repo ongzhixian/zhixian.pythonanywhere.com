@@ -13,12 +13,13 @@ print(db_settings)
 def api_get_wms_customer():
     result = "asd"
 
-    # connection = mysql.connector.connect(user=db_settings['USERNAME'], password=db_settings['PASSWORD'], host=db_settings['HOST'], database=db_settings['DATABASE'])
-    # cursor = connection.cursor()
+    try:
+        connection = mysql.connector.connect(user=db_settings['USERNAME'], password=db_settings['PASSWORD'], host=db_settings['HOST'], database=db_settings['DATABASE'])
+        cursor = connection.cursor()
 
-    with mysql.connector.connect(user=db_settings['USERNAME'], password=db_settings['PASSWORD'], host=db_settings['HOST'], database=db_settings['DATABASE']) as connection, connection.cursor() as cursor:
-        # query = ("SELECT first_name, last_name, hire_date FROM employees ")
-        # query = "SELECT first_name, last_name, hire_date FROM employees "
+        # with mysql.connector.connect(user=db_settings['USERNAME'], password=db_settings['PASSWORD'], host=db_settings['HOST'], database=db_settings['DATABASE']) as connection, connection.cursor() as cursor:
+            # query = ("SELECT first_name, last_name, hire_date FROM employees ")
+            # query = "SELECT first_name, last_name, hire_date FROM employees "
         query = "SELECT id, name FROM wms_customer "
         cursor.execute(query)
 
@@ -37,8 +38,12 @@ def api_get_wms_customer():
                 'version': sys.version
             }
 
-    # cursor.close()
-    # connection.close()
+
+    except Exception as ex:
+        print(ex)
+    finally:
+        cursor is not None and cursor.close()
+        connection is not None and connection.close()
 
     if result is None:
         return "Bad request", 400
@@ -51,7 +56,7 @@ def api_get_wms_customer():
 def sample_api_get_wms_customer():
     result = "asd"
     # Note: Python 3.9 supports using 'with' for connection and cursor
-    # however this does not work on PythonAnywhere (using python 2.7?)
+    # however this does not work on PythonAnywhere (unsure why)
     connection = mysql.connector.connect(user=db_settings['USERNAME'], password=db_settings['PASSWORD'], host=db_settings['HOST'], database=db_settings['DATABASE'])
     cursor = connection.cursor()
 
