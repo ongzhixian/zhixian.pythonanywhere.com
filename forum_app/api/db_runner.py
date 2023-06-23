@@ -30,7 +30,7 @@ def api_get_db_runner(script_name):
     ex = os.path.exists(script_path)
     print(ex)
 
-    return f"{script_name} {ex}"
+    return f"{script_name} {ex} {script_path}"
     try:
         connection = mysql.connector.connect(user=db_settings['USERNAME'], password=db_settings['PASSWORD'], host=db_settings['HOST'], database=db_settings['DATABASE'])
         cursor = connection.cursor()
