@@ -4,6 +4,7 @@ from forum_app import app
 from forum_app.features.logging import log
 import mysql.connector
 from forum_app import app_secrets
+import sys
 
 db_settings = app_secrets["MYSQL"]['forum']
 print(db_settings)
@@ -31,6 +32,7 @@ def api_get_wms_customer():
         result = {
             id: id, 
             name: name, 
+            version: sys.version
         }
 
     cursor.close()
@@ -46,7 +48,8 @@ def api_get_wms_customer():
 
 def sample_api_get_wms_customer():
     result = "asd"
-
+    # Note: Python 3.9 supports using 'with' for connection and cursor
+    # however this does not work on PythonAnywhere (using python 2.7?)
     connection = mysql.connector.connect(user=db_settings['USERNAME'], password=db_settings['PASSWORD'], host=db_settings['HOST'], database=db_settings['DATABASE'])
     cursor = connection.cursor()
 
