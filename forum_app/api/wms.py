@@ -6,33 +6,35 @@ import mysql.connector
 from forum_app import app_secrets
 
 db_settings = app_secrets["MYSQL"]['forum']
+print(db_settings)
 
 @app.route('/api/wms/customer', methods=['GET'])
 def api_get_wms_customer():
     result = "asd"
 
-    with mysql.connector.connect(user=db_settings['USERNAME'], password=db_settings['PASSWORD'], host=db_settings['HOST'], database=db_settings['DATABASE']) as connection, connection.cursor() as cursor:
-        # query = ("SELECT first_name, last_name, hire_date FROM employees ")
-        # query = "SELECT first_name, last_name, hire_date FROM employees "
-        query = "SELECT id, name FROM wms_customer "
-        cursor.execute(query)
+    connection = mysql.connector.connect(user=db_settings['USERNAME'], password=db_settings['PASSWORD'], host=db_settings['HOST'], database=db_settings['DATABASE'])
+    cursor = connection.cursor()
+    # query = ("SELECT first_name, last_name, hire_date FROM employees ")
+    # query = "SELECT first_name, last_name, hire_date FROM employees "
+    query = "SELECT id, name FROM wms_customer "
+    cursor.execute(query)
 
-        #for (first_name, last_name, hire_date) in cursor:
-        for (id, name) in cursor:
-            # print("{}, {} was hired on {:%d %b %Y}".format(
-            #     last_name, first_name, hire_date))
-            # result = {
-            #     last_name: last_name, 
-            #     first_name: first_name, 
-            #     hire_date: hire_date
-            # }
-            result = {
-                id: id, 
-                name: name, 
-            }
+    #for (first_name, last_name, hire_date) in cursor:
+    for (id, name) in cursor:
+        # print("{}, {} was hired on {:%d %b %Y}".format(
+        #     last_name, first_name, hire_date))
+        # result = {
+        #     last_name: last_name, 
+        #     first_name: first_name, 
+        #     hire_date: hire_date
+        # }
+        result = {
+            id: id, 
+            name: name, 
+        }
 
-        # cursor.close()
-        # connection.close()
+    cursor.close()
+    connection.close()
 
     if result is None:
         return "Bad request", 400
