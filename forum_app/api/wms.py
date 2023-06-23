@@ -36,7 +36,7 @@ def api_get_wms_customer():
                 name: name, 
                 'version': sys.version
             }
-a
+
     # cursor.close()
     # connection.close()
 
