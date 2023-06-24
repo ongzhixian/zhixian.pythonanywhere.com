@@ -54,6 +54,7 @@ def get_app_settings(app_path):
     
     with open(pythonanywhere_settings_path) as app_settings_file:
         app_settings = json.load(app_settings_file)
+        app_settings['is_local_development_environment'] = False if 'PYTHONANYWHERE_DOMAIN' in environ else True
 
     return app_settings
 

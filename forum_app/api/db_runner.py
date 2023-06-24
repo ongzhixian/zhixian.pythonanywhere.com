@@ -3,7 +3,7 @@ from flask import render_template, session, request, redirect, url_for
 from forum_app import app
 from forum_app.features.logging import log
 import mysql.connector
-from forum_app import app_secrets
+from forum_app import app_secrets, app_settings
 import sys
 
 db_settings = app_secrets["MYSQL"]['forum']
@@ -23,7 +23,10 @@ def api_get_db_runner(script_name):
     else:
         script_file_name = script_name
 
-    script_path = os.path.join(os.getcwd(), 'run/forum', script_file_name)
+    if app_settings['is_local_development_environment']:
+        script_path = os.path.join(os.getcwd(), 'run/forum', script_file_name)
+    else:
+        script_path = os.path.join(os.getcwd(), 'forum', script_file_name)
 
     
     print(script_path)
