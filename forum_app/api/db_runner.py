@@ -1,13 +1,13 @@
-import json
+import os
+import mysql.connector
+
 from flask import render_template, session, request, redirect, url_for
 from forum_app import app
 from forum_app.features.logging import log
-import mysql.connector
-from forum_app import app_secrets, app_settings, resolve_file_path
-import sys
-import os
+from forum_app import app_secrets, resolve_file_path
 
 db_settings = app_secrets["MYSQL"]['forum']
+
 
 def get_script_file_name(script_name):
     _, file_extension = os.path.splitext(script_name)
@@ -16,6 +16,7 @@ def get_script_file_name(script_name):
     else:
         script_file_name = script_name
     return script_file_name
+
 
 def run_script(script_path):
     with open(script_path, 'r') as file:
@@ -31,22 +32,6 @@ def run_script(script_path):
 
         connection.commit()
 
-        print(sql)
-
-        # #for (first_name, last_name, hire_date) in cursor:
-        # for (id, name) in cursor:
-        #     # print("{}, {} was hired on {:%d %b %Y}".format(
-        #     #     last_name, first_name, hire_date))
-        #     # result = {
-        #     #     last_name: last_name, 
-        #     #     first_name: first_name, 
-        #     #     hire_date: hire_date
-        #     # }
-        #     result = {
-        #         id: id, 
-        #         name: name, 
-        #         'version': sys.version
-        #     }
         return "OK", 200
 
     except mysql.connector.Error as err:
@@ -59,8 +44,6 @@ def run_script(script_path):
         cursor is not None and cursor.close()
         connection is not None and connection.close()
     
-    
-
 
 @app.route('/api/db_runner/<script_name>', methods=['GET'])
 def api_get_db_runner(script_name):
