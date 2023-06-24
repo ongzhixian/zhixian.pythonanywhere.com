@@ -23,7 +23,7 @@ def api_get_db_runner(script_name):
     else:
         script_file_name = script_name
 
-    script_path = os.path.join(os.getcwd(), 'forum_app/data/database-scripts/mysql/forum', script_file_name)
+    script_path = os.path.join(os.getcwd(), 'run/forum', script_file_name)
 
     
     print(script_path)
