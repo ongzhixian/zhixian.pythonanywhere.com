@@ -5,58 +5,76 @@ from forum_app.features.logging import log
 import mysql.connector
 from forum_app import app_secrets, app_settings, resolve_file_path
 import sys
+import os
 
 db_settings = app_secrets["MYSQL"]['forum']
-print(db_settings)
 
-@app.route('/api/db_runner/<script_name>', methods=['GET'])
-def api_get_db_runner(script_name):
-
-    # C:\src\github.com\ongzhixian\pythonanywhere.com\forum_app\data\database-scripts\mysql\forum\gn-tables.sql
-    import os
-
+def get_script_file_name(script_name):
     _, file_extension = os.path.splitext(script_name)
     if file_extension == "":
         script_file_name = f"{script_name}.sql"
     else:
         script_file_name = script_name
+    return script_file_name
 
-    script_path = resolve_file_path('forum', script_file_name)
+def run_script(script_path):
+    with open(script_path, 'r') as file:
+        sql = file.read()
     
-    ex = os.path.exists(script_path)
-
-    return f"{script_name} {ex} {script_path}"
+    print(sql)
     try:
         connection = mysql.connector.connect(user=db_settings['USERNAME'], password=db_settings['PASSWORD'], host=db_settings['HOST'], database=db_settings['DATABASE'])
+        
         cursor = connection.cursor()
+        
+        cursor.execute(sql)
 
-        query = "SELECT id, name FROM wms_customer "
-        cursor.execute(query)
+        connection.commit()
 
-        #for (first_name, last_name, hire_date) in cursor:
-        for (id, name) in cursor:
-            # print("{}, {} was hired on {:%d %b %Y}".format(
-            #     last_name, first_name, hire_date))
-            # result = {
-            #     last_name: last_name, 
-            #     first_name: first_name, 
-            #     hire_date: hire_date
-            # }
-            result = {
-                id: id, 
-                name: name, 
-                'version': sys.version
-            }
+        print(sql)
 
+        # #for (first_name, last_name, hire_date) in cursor:
+        # for (id, name) in cursor:
+        #     # print("{}, {} was hired on {:%d %b %Y}".format(
+        #     #     last_name, first_name, hire_date))
+        #     # result = {
+        #     #     last_name: last_name, 
+        #     #     first_name: first_name, 
+        #     #     hire_date: hire_date
+        #     # }
+        #     result = {
+        #         id: id, 
+        #         name: name, 
+        #         'version': sys.version
+        #     }
+        return "OK", 200
 
+    except mysql.connector.Error as err:
+        print(err)
+        return "Internal Server Error", 500
     except Exception as ex:
         print(ex)
+        return "Internal Server Error", 500
     finally:
         cursor is not None and cursor.close()
         connection is not None and connection.close()
+    
+    
 
-    if result is None:
-        return "Bad request", 400
-    else:
-        return str(result)
 
+@app.route('/api/db_runner/<script_name>', methods=['GET'])
+def api_get_db_runner(script_name):
+
+    try:
+        script_file_name = get_script_file_name(script_name)
+
+        script_path = resolve_file_path('forum', script_file_name)
+        
+        if os.path.exists(script_path):
+            (status_text, status_code) = run_script(script_path)
+            return status_text, status_code
+        else:
+            return "Not Found", 404
+    except Exception as ex:
+        log.error(ex)
+        return "Bad Request", 400
