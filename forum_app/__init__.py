@@ -10,7 +10,7 @@ __all__ = ["pages", "api"]
 
 import json
 import logging
-from os import environ, path, makedirs
+from os import environ, path, getcwd, makedirs
 from flask import Flask, current_app
 from forum_app.features.logging import log
 from forum_app.features.wiki import Wiki
@@ -169,6 +169,13 @@ def new_app_state(app_path, app_secrets, app_settings):
         'is_pythonanywherehost': True if 'PYTHONANYWHERE_DOMAIN' in environ else False,
         'capabilities': capabilities
     }
+
+def resolve_file_path(sub_directory_path, file_name):
+    if app_settings['is_local_development_environment']:
+        script_path = path.join(getcwd(), 'run', sub_directory_path, file_name)
+    else:
+        script_path = path.join(getcwd(), sub_directory_path, file_name)
+    return script_path
 
 
 ################################################################################
