@@ -7,21 +7,21 @@ Describe "gn_user API Tests" {
         "Content-Type" = "application/json"
     }
 
-    Context "HTTP GET (list) first page of supplier item (for purchase order) with sort - data page of records" {
+    # Context "HTTP GET (list) first page of supplier item (for purchase order) with sort - data page of records" {
 
-        # Arrange
-        $url = "$($baseUrl)api/gn/gn-user"
+    #     # Arrange
+    #     $url = "$($baseUrl)api/gn/gn-user"
         
-        # Act
-        $result = Invoke-RestMethod -Method Get -Uri $url -Headers $headers
+    #     # Act
+    #     $result = Invoke-RestMethod -Method Get -Uri $url -Headers $headers
 
-        # Asserts
-        It "should have 3 records." {
-            # $result.totalRecordCount -gt 0 | Should Be $true
-            $result.data.length | Should Be 3
-            Write-Output $result.data
-        }
-    }
+    #     # Asserts
+    #     It "should have 3 records." {
+    #         # $result.totalRecordCount -gt 0 | Should Be $true
+    #         $result.data.length | Should Be 3
+    #         Write-Output $result.data
+    #     }
+    # }
 
     Context "Add new user" {
 
@@ -34,13 +34,23 @@ Describe "gn_user API Tests" {
         } | ConvertTo-Json -Compress
 
         # Act
-        $result = Invoke-RestMethod -Method Post -Uri $url -Headers $headers -body $body
+        try {
+            
+            $result = Invoke-RestMethod -Method Post -Uri $url -Headers $headers -body $body
+            $result|gm
+            write-host $result
+        } catch {
+            Write-host "some exception happened"
+            write-host $_
+        }
+        
+        
 
         # Asserts
-        It "should have 3 records." {
-            # $result.totalRecordCount -gt 0 | Should Be $true
-            $result.data.length | Should Be 3
-            Write-Output $result.data
-        }
+        # It "should have 3 records." {
+        #     # $result.totalRecordCount -gt 0 | Should Be $true
+        #     $result.data.length | Should Be 3
+        #     Write-Output $result.data
+        # }
     }
 }

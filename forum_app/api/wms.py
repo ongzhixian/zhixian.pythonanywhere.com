@@ -7,7 +7,6 @@ from forum_app import app_secrets
 import sys
 
 db_settings = app_secrets["MYSQL"]['forum']
-print(db_settings)
 
 @app.route('/api/wms/customer', methods=['GET'])
 def api_get_wms_customer():
@@ -67,6 +66,20 @@ def sample_api_get_wms_customer():
     # hire_end = datetime.date(1999, 12, 31)
 
     # cursor.execute(query, (hire_start, hire_end))
+
+    # cursor.execute("INSERT INTO employees (first_name) VALUES (%s), (%s)", ('Jane', 'Mary'))
+    # query = "INSERT INTO gn_user ()"
+    # add_salary = ("INSERT INTO salaries "
+    #       "(emp_no, salary, from_date, to_date) "
+    #       "VALUES (%(emp_no)s, %(salary)s, %(from_date)s, %(to_date)s)")
+    # data_salary = {
+    # 'emp_no': emp_no,
+    # 'salary': 50000,
+    # 'from_date': tomorrow,
+    # 'to_date': date(9999, 1, 1),
+    # }
+    # cursor.execute(add_salary, data_salary)
+
 
     query = ("SELECT first_name, last_name, hire_date FROM employees ")
     cursor.execute(query)

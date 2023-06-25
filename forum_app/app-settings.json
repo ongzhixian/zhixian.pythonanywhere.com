@@ -5,5 +5,11 @@
         "faker": "WARNING"
     },
     "cc_log_file_path": "./logs/forum_app.log",
-    "is_development": true
+    
+    "is_development": true,
+    "jwt": {
+        "issuer": "zxpyany",
+        "audience": ["http://localhost:31000/", "http://localhost:5000/"],
+        "expiry_minutes": 60
+    }
 }
