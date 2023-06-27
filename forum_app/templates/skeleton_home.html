@@ -1,0 +1,94 @@
+{% extends "_layouts/_skeleton_default.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content -%}
+<nav class="navbar" style="display: flex; justify-content: space-between; align-items: center;" aria-label="nav-bar">
+
+    <div style="margin: 0 1em; display: flex; align-items: center; gap:1.2em;">
+        <span style="font-size: 2.2em;margin:.2em 0; font-weight: bold;">Gnet</span>
+        <span>Home (Directory)</span>
+        <a href="#">Page 1</a>
+        <a href="#">Page 2</a>
+    </div>
+
+    <div style="margin: 0 1em; display: flex; align-items: center; gap:1.2em;">
+        <!--
+            <span>Right item 1</span>
+            <span>Right item 2</span>
+        -->
+        <span>Log out Zhixian
+
+        </span>
+    </div>
+</nav>
+
+<main style="display: grid; margin: 1em; grid-template-columns: 16em 1fr;">
+
+    <nav class="nav-menu" aria-label="nav-menu" style="display: flex; flex-direction: column; align-self: 100%;">
+        <span style="font-size:1.8em">Register</span>
+        <a href="#">Company</a>
+        <a href="#">Contract</a>
+        <a href="#">Item 3</a>
+        <span>&nbsp;</span>
+        <span style="font-size:1.8em">Nominations</span>
+        <span>item 3</span>
+        <span>item 4</span>
+        <span>&nbsp;</span>
+        <span style="font-size:1.8em">Allocations</span>
+        <span>item 3</span>
+        <span>item 4</span>
+    </nav>
+
+    <article style="margin-left: 1em;">
+
+        <section>
+            <h1>Announcements</h1>
+
+            <ol>
+                <li class="announcement" style="margin-left: 2.2em;">
+                    <h1>New funds needed!</h1>
+                    <p>
+                        If you like this website, please donate!
+                    </p>
+                </li>
+            </ol>
+
+            <div class="announcement" style="margin-left: 2.2em;">
+                <h1>Server maintenance</h1>
+                <p>
+                    A server maintenance will be conducted this Thursday from 1:00 AM to 1:15 AM SGTx
+                </p>
+            </div>
+
+            <div class="announcement" style="margin-left: 2.2em;">
+                <h1>Gnet feature deployment</h1>
+                <p>
+
+                    There will be a feature deployment for Gnet this Saturday from 1:00 AM to 1:15 AM SGT.<br />
+                    The following features will be deployed:
+
+                </p>
+
+                <ol>
+                    <li>Guest</li>
+                    <li>Company registration</li>
+                </ol>
+            </div>
+        </section>
+
+
+
+    </article>
+
+
+</main>
+
+<footer style="align-self: stretch;">
+    <div style="margin: 0 1em; display: flex; align-items: center; gap:1.2em; height: 100%;">
+        <span>Last update 2023</span>
+    </div>
+
+</footer>
+
+{% endblock %}

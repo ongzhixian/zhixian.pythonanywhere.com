@@ -1,0 +1,36 @@
+:root {
+    /* --header-font: 'Trocchi', serif;
+    --text-font:'Source Sans 3', sans-serif; */
+
+    --color1: #151f05;
+    --color2: #364034;
+    --color3: #444916;
+    --color4: #7b7f38;
+    --color5: #5e683f;
+    --color6: #5c6a77;
+    --color7: #97a49d;
+}
+
+body {
+    background-color: var(--color1);
+    color: var(--color7);
+}
+
+nav.navbar {
+    background-color: var(--color2);
+    border-bottom: var(--color2) .3em outset;
+    /* border-color: var(--color3); */
+}
+
+nav.nav-menu {
+    background-color: var(--color2);
+    border-radius: .36em;
+    padding: 1em;
+}
+
+footer {
+    /* border-top: var(--color2) .3em solid; */
+    background-color: var(--color1);
+    text-transform: lowercase;
+    text-decoration: dotted;
+}

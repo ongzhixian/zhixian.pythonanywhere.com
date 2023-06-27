@@ -15,4 +15,5 @@ from forum_app.features.security import require_authenticated_user
 def home():
     """Path: / (Application root)"""
     # logging.debug(f"Username: {g.username}")
-    return render_template('home.html')
+    return render_template('skeleton_home.html')
+    # return render_template('home.html')
