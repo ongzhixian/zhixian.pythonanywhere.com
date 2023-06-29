@@ -7,29 +7,36 @@
 <main style="display: grid; margin: 1em; grid-template-columns: 16em 1fr;">
 
     <nav class="nav-menu" aria-label="nav-menu" style="display: flex; flex-direction: column; align-self: 100%;">
-        
-        <span style="font-size:1.8em">Overview</span>
-        <a href="#">GN</a>
-        <a href="#">WMS</a>
-        <a href="#">HR</a>
+        <span style="font-size:1.8em">Register</span>
+        <a href="#">Company</a>
+        <a href="#">Contract</a>
+        <a href="#">Item 3</a>
         <span>&nbsp;</span>
-        <!-- 
         <span style="font-size:1.8em">Nominations</span>
         <span>item 3</span>
         <span>item 4</span>
         <span>&nbsp;</span>
-        
         <span style="font-size:1.8em">Allocations</span>
-        <span>item 3</span>
-        <span>item 4</span>
+        <span>item 5</span>
+        <span>item 6</span>
         <span>&nbsp;</span>
-        -->
-
+        <span style="font-size:1.8em">Billing</span>
+        <span>item 7</span>
+        <span>item 8</span>
+        <span>&nbsp;</span>
+        <span style="font-size:1.8em">Training</span>
+        <span>Documentation</span>
+        <span>Videos</span>
+        <span>Tutorials</span>
+        <a href="gn/simulator">Simulator</a>
     </nav>
 
     <article style="margin-left: 1em;">
 
-        <section class="announcement">
+        <h1>GN home</h1>
+
+
+        <section>
 
             <h1>Announcements</h1>
 
@@ -79,67 +86,4 @@
 
 </footer>
 
-{% endblock %}
-
-{%- block scripts %}
-<script type="text/javascript">
-"use strict";
-(function() {
-
-})();
-
-let canvas;
-let context;
-let gameClockDisplay = document.getElementById("clock");
-let fpsDisplay = document.getElementById("fpsDisplay");
-
-window.onload = init;
-
-function init(){
-    canvas = document.getElementById('canvas');
-    context = canvas.getContext('2d');
-
-    // Start the first frame request
-    window.requestAnimationFrame(gameLoop);
-}
-
-function draw(){
-    // let randomColor = Math.random() > 0.5? '#ff8080' : '#0099b0';
-    // context.fillStyle = randomColor;
-    // context.fillRect(0, 100, 200, 175);
-    gameClockDisplay.innerText = secondsPassed;
-    fpsDisplay.innerText = fps;
-}
-
-
-let secondsPassed = 0;
-let oldTimeStamp;
-let fps;
-let counter = 0;
-
-
-function gameLoop(timeStamp) {
-    window.requestAnimationFrame(gameLoop);
-
-    // Calculate the number of seconds passed since the last frame
-    secondsPassed = (timeStamp - oldTimeStamp) / 1000;
-    oldTimeStamp = timeStamp;
-
-    // // Calculate fps
-    fps = Math.round(1 / secondsPassed);
-
-    // // Draw number to the screen
-    // context.fillStyle = 'white';
-    // context.fillRect(0, 0, 200, 100);
-    // context.font = '25px Arial';
-    // context.fillStyle = 'black';
-    // context.fillText("FPS: " + fps, 10, 30);
-    // context.fillText("Counter: " + (counter++), 10, 60);
-
-    // Perform the drawing operation
-    draw();
-}
-
-
-</script>
 {% endblock %}

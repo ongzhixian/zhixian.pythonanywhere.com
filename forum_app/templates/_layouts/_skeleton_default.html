@@ -17,18 +17,45 @@
 
 <body>
     <div style="display: grid; grid-template-rows: 4.36em 1fr 2.672em; height: 100vh;">
-    {% block content -%}
-    <div class="container">
-        <div class="row">
-            <div class="one-half column" style="margin-top: 25%">
-                <h4>Basic Page</h4>
-                <p>This index.html page is a placeholder with the CSS, font and favicon. It's just waiting for you to
-                    add some content! If you need some help hit up the <a href="http://www.getskeleton.com">Skeleton
-                        documentation</a>.</p>
+        <nav class="navbar" style="display: flex; justify-content: space-between; align-items: center;" aria-label="nav-bar">
+
+            <div style="margin: 0 1em; display: flex; align-items: center; gap:1.2em;">
+                <span style="font-size: 2.2em;margin:.2em 0; font-weight: bold;">Gnet</span>
+                <span>Home (Directory)</span>
+                <a href="/">Home (Directory)</a>
+                <a href="/gn">GN</a>
+                <a href="/wms">WMS</a>
+                <a href="/hr">HR</a>
+                <a href="/cms">CMS</a>
+                <a href="/research">Research</a>
+                <!--
+                    <a href="/etrm">ETRM</a>
+                    <a href="/crm">CRM</a>
+                    <a href="/algo-trading">Algorithmic Trading</a>
+                -->
+            </div>
+        
+            <div style="margin: 0 1em; display: flex; align-items: center; gap:1.2em;">
+                <!--
+                    <span>Right item 1</span>
+                    <span>Right item 2</span>
+                -->
+                <span>Log out Zhixian</span>
+            </div>
+
+        </nav>
+        {% block content -%}
+        <div class="container">
+            <div class="row">
+                <div class="one-half column" style="margin-top: 25%">
+                    <h4>Basic Page</h4>
+                    <p>This index.html page is a placeholder with the CSS, font and favicon. It's just waiting for you to
+                        add some content! If you need some help hit up the <a href="http://www.getskeleton.com">Skeleton
+                            documentation</a>.</p>
+                </div>
             </div>
         </div>
-    </div>
-    {% endblock %}
+        {% endblock %}
     </div>
     {%- block scripts %}{% endblock %}
 </body>

@@ -34,3 +34,8 @@ footer {
     text-transform: lowercase;
     text-decoration: dotted;
 }
+
+li::marker {
+    /* content: '✝ '; */
+    font-size: 2.2em;
+}
