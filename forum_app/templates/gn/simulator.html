@@ -1,82 +1,168 @@
 {% extends "_layouts/_skeleton_default.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}GN Simulator{% endblock %}
 
 {% block content -%}
 
-<main style="display: grid; margin: 1em; grid-template-columns: 16em 1fr;">
+<div style="display: grid; margin: 1em; grid-template-columns: 16em 1fr;">
 
     <nav class="nav-menu" aria-label="nav-menu" style="display: flex; flex-direction: column; align-self: 100%;">
+        <!--
         <span style="font-size:1.8em">Register</span>
         <a href="#">Company</a>
         <a href="#">Contract</a>
         <a href="#">Item 3</a>
         <span>&nbsp;</span>
-        <span style="font-size:1.8em">Nominations</span>
-        <span>item 3</span>
-        <span>item 4</span>
+        -->
+        <span style="font-size:1.8em">Scenario</span>
+        <span>GN 1</span>
+        <span>GN 2</span>
         <span>&nbsp;</span>
-        <span style="font-size:1.8em">Allocations</span>
-        <span>item 3</span>
-        <span>item 4</span>
+
     </nav>
 
-    <article style="margin-left: 1em;">
+    <main style="margin-left: 1em;">
 
-        <section>
-            
-            <div id="fpsDisplay" style="position: absolute; top: 70px; left: 10px;">MY FPS</div>
-
-            
-            <div>
-                <span id="clock">xxx</span>
+        <section class="meta-data">
+            <div class="metric">
+                <span class="label">FPS</span>
+                <span class="value" id="fpsDisplay">0</span>
             </div>
-            
-            <canvas id="canvas"></canvas>
+            <div class="metric">
+                <span class="label">Real-time</span>
+                <span class="value" id="jsDateDisplay">0</span>
+            </div>
+            <div class="metric">
+                <span class="label">High-res (s):</span>
+                <span class="value" id="totalSecondsPassedDisplay">0</span>
+            </div>
+            <div class="metric">
+                <span class="label">Redraw count:</span>
+                <span class="value" id="redrawCounterDisplay">0</span>
+            </div>
+            <div class="metric">
+                <span class="label">Game clock:</span>
+                <span class="value" id="gameClockDisplay">0</span>
+            </div>
+
+            <!-- <span id="clock">xxx</span> -->
         </section>
 
         <section>
 
-            <h1>Announcements</h1>
+            <h1>Simulator</h1>
 
-            <ol>
-                <li class="announcement" style="margin-left: 2.2em;">
-                    <h1>New funds needed!</h1>
-                    <p>
-                        If you like this website, please donate!
-                    </p>
-                </li>
-            </ol>
+            <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                <div>
+                    <div style="height: 24em;">
+                        <canvas id="nominationChart"></canvas>
+                    </div>
 
-            <div class="announcement" style="margin-left: 2.2em;">
-                <h1>Server maintenance</h1>
-                <p>
-                    A server maintenance will be conducted this Thursday from 1:00 AM to 1:15 AM SGTx
-                </p>
+                     <canvas id="canvas"></canvas>
+                </div>
+
+                <div>
+                    <h3>Parameters</h3>
+
+                    <div>
+                        Every second in real-time represents <input type="text" class="small-number" id="simulatedTimeIntervalPerSecond" value="5" /> minutes in simulated time.
+                    </div>
+
+                    <div class="game-controls panel">
+                        
+                        <button type="button" class="minimal" id="gamePauseButton">
+                            <span class="material-icons">pause</span>
+                        </button>
+        
+                        <button type="button" class="minimal">
+                            <span class="material-icons">fast_forward</span>
+                        </button>
+
+                    </div>
+
+                    &nbsp;
+
+                    <div>
+                        Reset nomination (MMBtu) to <input type="text" class="MMBtu" value="100" />
+                    </div>
+
+                    &nbsp;
+
+                    <table class="nomination-input">
+                        <caption>Balancing Period Nomination</caption>
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th>Nomination (MMBtu)</th>
+                                <th>Period</th>
+                                <th>Nomination (MMBtu)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>X0:00-00:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                                <td>06:00-06:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                            </tr>
+                            <tr>
+                                <td>01:00-01:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                                <td>07:00-07:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                            </tr>
+                            <tr>
+                                <td>02:00-02:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                                <td>08:00-08:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                            </tr>
+                            <tr>
+                                <td>03:00-03:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                                <td>09:00-09:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                            </tr>
+                            <tr>
+                                <td>04:00-04:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                                <td>10:00-10:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                            </tr>
+                            <tr>
+                                <td>05:00-05:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                                <td>11:00-11:59</td>
+                                <td><input type="text" class="MMBtu" value="100" /></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="1">
+                                    <button type="button" class="minimal" id="previousNominationButton">
+                                        <span class="material-icons">arrow_back_ios</span>
+                                    </button>
+                                    <button type="button" class="minimal" id="nextNominationButton">
+                                        <span class="material-icons">arrow_forward_ios</span>
+                                    </button>
+                                </td>
+                                <td colspan="3" style="text-align: right;">
+                                    Total nominated MMBTU <span>1220</span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+
             </div>
 
-            <div class="announcement" style="margin-left: 2.2em;">
-                <h1>Gnet feature deployment</h1>
-                <p>
-
-                    There will be a feature deployment for Gnet this Saturday from 1:00 AM to 1:15 AM SGT.<br />
-                    The following features will be deployed:
-
-                </p>
-
-                <ol>
-                    <li>Guest</li>
-                    <li>Company registration</li>
-                </ol>
-            </div>
         </section>
 
+    </main>
 
 
-    </article>
-
-
-</main>
+</div>
 
 <footer style="align-self: stretch;">
     <div style="margin: 0 1em; display: flex; align-items: center; gap:1.2em; height: 100%;">
@@ -88,63 +174,351 @@
 {% endblock %}
 
 {%- block scripts %}
+<!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="text/javascript">
-"use strict";
-(function() {
+    "use strict";
+    (function () {
 
-})();
+    })();
 
-let canvas;
-let context;
-let gameClockDisplay = document.getElementById("clock");
-let fpsDisplay = document.getElementById("fpsDisplay");
+    let canvas;
+    let context;
 
-window.onload = init;
+    let fpsDisplay = document.getElementById("fpsDisplay");
+    let jsDateDisplay = document.getElementById("jsDateDisplay");
+    let totalSecondsPassedDisplay = document.getElementById("totalSecondsPassedDisplay");
+    let redrawCounterDisplay = document.getElementById("redrawCounterDisplay");
+    let gameClockDisplay = document.getElementById("gameClockDisplay");
+    // let gameClockDisplay = document.getElementById("clock");
 
-function init(){
-    canvas = document.getElementById('canvas');
-    context = canvas.getContext('2d');
+    let gamePauseButton = document.getElementById("gamePauseButton");
+    let simulatedTimeIntervalPerSecond = document.getElementById("simulatedTimeIntervalPerSecond");
+    let previousNominationButton = document.getElementById("previousNominationButton");
+    let nextNominationButton = document.getElementById("nextNominationButton");
 
-    // Start the first frame request
-    window.requestAnimationFrame(gameLoop);
-}
+    let nominationChartElement = document.getElementById('nominationChart');
+    let nominationChart = undefined;
 
-function draw(){
-    // let randomColor = Math.random() > 0.5? '#ff8080' : '#0099b0';
-    // context.fillStyle = randomColor;
-    // context.fillRect(0, 100, 200, 175);
-    gameClockDisplay.innerText = secondsPassed;
-    fpsDisplay.innerText = fps;
-}
+    window.onload = init;
+
+    function init() {
+        canvas = document.getElementById('canvas');
+        context = canvas.getContext('2d');
+
+        presentInitialData();
+
+        // Bind event-handlers
+        gamePauseButton.addEventListener("click", function (e) {
+
+            gamePaused = !gamePaused;
+
+            if (gamePaused) {
+                e.currentTarget.children[0].textContent = "play_arrow";
+            } else {
+                e.currentTarget.children[0].textContent = "pause";
+            }
+        });
+
+        simulatedTimeIntervalPerSecond.addEventListener("change", function(e) {
+            let newValue = parseInt(e.currentTarget.value, 10);
+            if (isNaN(newValue)) {
+                e.currentTarget.value = gameTimeSpeedInMinutes;
+            } else {
+                gameTimeSpeedInMinutes = newValue;
+            }
+        })
+
+        previousNominationButton.addEventListener("click", function(e) {
+            if ((balancingPeriodDisplayStart - 12) < 0) {
+                return;
+            }
+
+            balancingPeriodDisplayStart = balancingPeriodDisplayStart - 12;
+            loadNominationTableInputValues();
+
+            // Update chart
+            let nominationData = balancingPeriodNominations.slice(balancingPeriodDisplayStart, balancingPeriodDisplayStart + 12);
+            nominationChart.data.labels = nominationData.map(function(val, idx, arr) {
+                return val.name;
+            });
+            nominationChart.data.datasets[0].data = nominationData.map(function(val, idx, arr) {
+                return val.nomination;
+            });
+            nominationChart.update();
+        });
+
+        nextNominationButton.addEventListener("click", function(e) {
+            if ((balancingPeriodDisplayStart + 12) >= balancingPeriodNominations.length) {
+                return;
+            }
+
+            balancingPeriodDisplayStart = balancingPeriodDisplayStart + 12;
+            loadNominationTableInputValues();
+
+            // Update chart
+            let nominationData = balancingPeriodNominations.slice(balancingPeriodDisplayStart, balancingPeriodDisplayStart + 12);
+            nominationChart.data.labels = nominationData.map(function(val, idx, arr) {
+                return val.name;
+            });
+            nominationChart.data.datasets[0].data = nominationData.map(function(val, idx, arr) {
+                return val.nomination;
+            });
+            nominationChart.update();
+        });
+
+        
+        let mmBtuInputs = document.querySelectorAll("input.MMBtu");
+
+        let nominationInputs = document.querySelectorAll("table.nomination-input input.MMBtu");
+
+        // mmBtuInputs.forEach(element => {
+        //     element.addEventListener("change", function(e) {
+        //         console.log("mmBtuInputs input validation check");
+        //         const decimalRegex = /^-?\d*\.?\d*$/;
+        //         let isMatch = decimalRegex.test(e.currentTarget.value);
+        //         if (!isMatch) {
+        //             // revert value to 
+        //             e.stopImmediatePropagation();
+        //         }
+        //     });
+        // });
+
+        nominationInputs.forEach(element => {
+            element.addEventListener("change", function(e) {
+                console.log("write changes input validation check");
+                let cellIndex = e.currentTarget.parentElement.cellIndex;
+                let rowIndex = e.currentTarget.parentElement.parentElement.rowIndex;
+                let dataArrayIndex = balancingPeriodDisplayStart + rowIndex + (cellIndex === 1 ? 0 : 6) - 1;
+                
+                const decimalRegex = /^-?\d*\.?\d*$/;
+                let isMatch = decimalRegex.test(e.currentTarget.value);
+                if (isMatch) {
+                    // Update data array
+                    balancingPeriodNominations[dataArrayIndex].nomination = parseFloat( e.currentTarget.value );
+
+                    // Update chart
+                    nominationChart.data.datasets[0].data = balancingPeriodNominations
+                        .slice(balancingPeriodDisplayStart, balancingPeriodDisplayStart + 12)
+                        .map(function(val, idx, arr) {
+                            return val.nomination;
+                        });
+                    nominationChart.update();
+
+                    console.info("New updated value is ", balancingPeriodNominations[dataArrayIndex]);
+
+                } else {
+                    // console.log("You are changing ", dataArrayIndex, balancingPeriodNominations[dataArrayIndex]);
+                    // Revert value to last stored.
+                    e.currentTarget.value = balancingPeriodNominations[dataArrayIndex].nomination;
+                }
+            });
+        });
+
+        // Start the first frame request
+        window.requestAnimationFrame(gameLoop);
+    }
+
+    function loadNominationTableInputValues() {
+        let tableRows = document.querySelectorAll("table.nomination-input tbody tr");
+        tableRows.forEach((element, index) => {
+            element.children[0].textContent = balancingPeriodNominations[balancingPeriodDisplayStart + index + 0].description;
+            element.children[1].children[0].value = balancingPeriodNominations[balancingPeriodDisplayStart + index + 0].nomination;
+            element.children[2].textContent = balancingPeriodNominations[balancingPeriodDisplayStart + index + 6].description;
+            element.children[3].children[0].value = balancingPeriodNominations[balancingPeriodDisplayStart + index + 6].nomination;
+        });
+    }
+
+    function loadChart() {
+
+        let dataValues = balancingPeriodNominations.slice(0, 12);
+        let barChartLabels = dataValues.map(function(val, idx, arr) {
+            return val.name;
+        });
+        let barChartValues = dataValues.map(function(val, idx, arr) {
+            return val.nomination;
+        });
 
 
-let secondsPassed = 0;
-let oldTimeStamp;
-let fps;
-let counter = 0;
+        nominationChart = new Chart(nominationChartElement, {
+            type: 'bar',
+            data: {
+                //labels: ['1 AM', '2 AM', '3 AM', '4 AM', '5 AM', '6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM', '12 PM'],
+                labels: barChartLabels,
+                datasets: [
+                    {
+                        label: 'Shipper A',
+                        data: barChartValues,
+                        // borderColor: Utils.CHART_COLORS.red,
+                        // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+                    }
+                    // ,
+                    // {
+                    // label: 'Customer B',
+                    //  data: [1, 2, 1, 1, 1, 1],
+                    // // borderColor: Utils.CHART_COLORS.blue,
+                    // // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
+                    // }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
 
+    function presentInitialData() {
+        // Load chart
+        loadChart();
+        // Load Table
+        loadNominationTableInputValues();
+    }
 
-function gameLoop(timeStamp) {
-    window.requestAnimationFrame(gameLoop);
+    function shortTime(date) {
+        return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`
+    }
 
-    // Calculate the number of seconds passed since the last frame
-    secondsPassed = (timeStamp - oldTimeStamp) / 1000;
-    oldTimeStamp = timeStamp;
+    function longTime(date) {
+        return `${date.getFullYear().toString().padStart(4, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}
+    ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}.${date.getMilliseconds().toString().padStart(3, '0')}`
+    }
 
-    // // Calculate fps
-    fps = Math.round(1 / secondsPassed);
+    function GameClock() {
 
-    // // Draw number to the screen
-    // context.fillStyle = 'white';
-    // context.fillRect(0, 0, 200, 100);
-    // context.font = '25px Arial';
-    // context.fillStyle = 'black';
-    // context.fillText("FPS: " + fps, 10, 30);
-    // context.fillText("Counter: " + (counter++), 10, 60);
+        //let gameStartTime = 0; // game-milliseconds;
+        this.gameStartTime = new Date(2055, 5, 31, 22, 0, 0);
 
-    // Perform the drawing operation
-    draw();
-}
+        this.gameTime = function () {
+            return this.gameStartTime;
+        }
+        this.addSeconds = function (seconds) {
+            this.gameStartTime.setSeconds(this.gameStartTime.getSeconds() + seconds);
+        }
+    }
+
+    function draw() {
+        // let randomColor = Math.random() > 0.5? '#ff8080' : '#0099b0';
+        // context.fillStyle = randomColor;
+        // context.fillRect(0, 100, 200, 175);
+
+        // Display scene meta-data
+        fpsDisplay.textContent = fps;
+        totalSecondsPassedDisplay.textContent = totalSeconds.toFixed(0);
+        jsDateDisplay.textContent = shortTime(new Date());
+        redrawCounterDisplay.textContent = ++redrawCounter;
+
+        gameClockDisplay.textContent = longTime(gameClock.gameTime());
+        // gameClockDisplay.innerText = secondsPassed;
+
+        // let gameTime = gameStartTime + (Date.now() - realStartTime) * speed;
+        // let sec = Math.floor(gameTime / 1000) % 60;
+        // let min = Math.floor(gameTime / 60000) % 60;
+        // let hour = Math.floor(gameTime / 3600000) % 24;
+        // gameClockDisplay.innerText = `${hour}:${min}:${sec}`.replace(/\b\d\b/g, "0$&");
+    }
+
+    function updateGameState() {
+        // Every 1s in real-time is  5min game-time (60s *  5 =  300)
+        // Every 1s in real-time is 15s game-time (60s * 15 =  900)
+        // Every 1s in real-time is 30s game-time (60s * 30 = 1800)
+        // Every 1s in real-time is 60s game-time (60s * 60 = 3600)
+        gameClock.addSeconds(60 * gameTimeSpeedInMinutes);
+    }
+
+    let gamePaused = false;
+    let secondsPassed = 0;
+    let previousFrameTimeStamp;
+    let fps;
+    // let counter = 0;
+    let totalSecondsPassed = 0;
+    let totalSeconds = 0;
+    let redrawCounter = 0;
+    let gameClock = new GameClock();
+    let gameTimeSpeedInMinutes = 5;     // gameTimeSpeed represents the amount of game-time in minutes for each second in real-time
+
+    // let speed = 20; // how many times faster than real time
+    // let gameStartTime = 0; // game-milliseconds;
+    // let realStartTime = Date.now(); // real milliseconds
+
+    let redVoteCount = 12;
+    let voterData = [redVoteCount, 19, 3, 5, 2, 3];
+
+    let balancingPeriodDisplayStart = 0;
+    let balancingPeriodNominations = [
+        { 'name': ' 1 AM', 'description': '00:00-00:59', 'nomination': 100 },
+        { 'name': ' 2 AM', 'description': '01:00-01:59', 'nomination': 100 },
+        { 'name': ' 3 AM', 'description': '02:00-02:59', 'nomination': 100 },
+        { 'name': ' 4 AM', 'description': '03:00-03:59', 'nomination': 100 },
+        { 'name': ' 5 AM', 'description': '04:00-04:59', 'nomination': 100 },
+        { 'name': ' 6 AM', 'description': '05:00-05:59', 'nomination': 100 },
+
+        { 'name': ' 7 AM', 'description': '06:00-06:59', 'nomination': 100 },
+        { 'name': ' 8 AM', 'description': '07:00-07:59', 'nomination': 100 },
+        { 'name': ' 9 AM', 'description': '08:00-08:59', 'nomination': 100 },
+        { 'name': '10 AM', 'description': '09:00-09:59', 'nomination': 100 },
+        { 'name': '11 AM', 'description': '10:00-10:59', 'nomination': 100 },
+        { 'name': '12 PM', 'description': '11:00-11:59', 'nomination': 100 },
+
+        { 'name': ' 1 PM', 'description': '12:00-12:59', 'nomination': 100 },
+        { 'name': ' 2 PM', 'description': '13:00-13:59', 'nomination': 100 },
+        { 'name': ' 3 PM', 'description': '14:00-14:59', 'nomination': 100 },
+        { 'name': ' 4 PM', 'description': '15:00-15:59', 'nomination': 100 },
+        { 'name': ' 5 PM', 'description': '16:00-16:59', 'nomination': 100 },
+        { 'name': ' 6 PM', 'description': '17:00-17:59', 'nomination': 100 },
+
+        { 'name': ' 7 PM', 'description': '18:00-18:59', 'nomination': 100 },
+        { 'name': ' 8 PM', 'description': '19:00-19:59', 'nomination': 100 },
+        { 'name': ' 9 PM', 'description': '20:00-20:59', 'nomination': 100 },
+        { 'name': '10 PM', 'description': '21:00-21:59', 'nomination': 100 },
+        { 'name': '11 PM', 'description': '22:00-22:59', 'nomination': 100 },
+        { 'name': '12 AM', 'description': '23:00-23:59', 'nomination': 100 },
+    ];
+
+    function gameLoop(timeStamp) {
+        window.requestAnimationFrame(gameLoop);
+
+        // Calculate the number of seconds passed since the last frame
+        secondsPassed = ((timeStamp - previousFrameTimeStamp) / 1000) || 0;
+        previousFrameTimeStamp = timeStamp;
+        totalSecondsPassed = totalSecondsPassed + secondsPassed;
+        totalSeconds = totalSeconds + secondsPassed;
+
+        // Calculate fps
+        fps = Math.round(1 / secondsPassed);
+
+        // We want to redraw only on every second
+        if (totalSecondsPassed < 1) {
+            return;
+        }
+
+        // Update state
+        if (!gamePaused) {
+            updateGameState();
+            // redVoteCount = redVoteCount - 1;
+            // voterData = [redVoteCount, 19, 3, 5, 2, 3];
+            // //voteChart.data.datasets[0].data[0] = redVoteCount;
+            // nominationChart.data.datasets[0].data = voterData;
+            //voteChart.update();
+        }
+
+        // Perform the drawing operation
+        draw();
+        totalSecondsPassed = 0;
+
+        // // Draw number to the screen
+        // context.fillStyle = 'white';
+        // context.fillRect(0, 0, 200, 100);
+        // context.font = '25px Arial';
+        // context.fillStyle = 'black';
+        // context.fillText("FPS: " + fps, 10, 30);
+        // context.fillText("Counter: " + (counter++), 10, 60);
+    }
+
+    
 
 
 </script>

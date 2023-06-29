@@ -1,6 +1,9 @@
 :root {
     /* --header-font: 'Trocchi', serif;
-    --text-font:'Source Sans 3', sans-serif; */
+    --text-font:'Source Sans 3', sans-serif; 
+    font-family: 'Nova Mono', monospace;
+    font-family: 'Raleway', sans-serif;
+    */
 
     --color1: #151f05;
     --color2: #364034;
@@ -9,6 +12,9 @@
     --color5: #5e683f;
     --color6: #5c6a77;
     --color7: #97a49d;
+
+    --font1: 'Raleway', sans-serif;
+    --font2: 'Nova Mono', monospace;
 }
 
 body {
@@ -38,4 +44,47 @@ footer {
 li::marker {
     /* content: '✝ '; */
     font-size: 2.2em;
+}
+
+div.metric {
+    display: inline-block;
+    margin-right: .67em;
+}
+
+div.metric span.label {
+    font-weight: bold;
+}
+div.metric span.value {
+    font-family: var(--font2);
+}
+
+button.minimal {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    line-height: initial;
+    color: var(--color7);
+    height: auto;
+}
+
+input.small-number{
+    background: none;
+    width: 5em;
+    text-align: center;
+    margin: 0 .36em;
+    height: auto;
+}
+
+input.MMBtu {
+    background: none;
+    width: 5em;
+    margin:0;
+}
+
+table.nomination-input caption{
+    font-weight: bold;
+}
+
+table.nomination-input td {
+    border:0;
 }
