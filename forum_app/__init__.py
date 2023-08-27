@@ -186,6 +186,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 
 SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
 API_URL = 'http://petstore.swagger.io/v2/swagger.json'  # Our API url (can of course be a local resource)
+API_URL = 'http://localhost:31000/api/swagger'
 
 # Call factory function to create our blueprint
 swaggerui_blueprint = get_swaggerui_blueprint(
@@ -205,6 +206,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 )
 
 # localhost:5000/api/docs/
+# Reference: https://github.com/sveint/flask-swagger-ui
 
 ################################################################################
 # Define Flask application
