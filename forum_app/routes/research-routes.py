@@ -18,3 +18,19 @@ def research_home():
     return render_template('research/home.html')
     # return render_template('skeleton_home.html')
     # return render_template('home.html')
+
+@app.route('/research/css-effects')
+@require_authenticated_user
+def research_css_effects():
+    """Path: / (Application root)"""
+    # logging.debug(f"Username: {g.username}")
+    return render_template('research/css-effects.html')
+
+
+
+@app.route('/research/css-effects/css-curves')
+@require_authenticated_user
+def research_css_effects_css_curves():
+    """Path: / (Application root)"""
+    # logging.debug(f"Username: {g.username}")
+    return render_template('research/css-effects/css-curves.html')

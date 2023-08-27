@@ -19,6 +19,17 @@ def gn_home():
     # return render_template('home.html')
 
 
+
+@app.route('/gn/information/markets')
+@require_authenticated_user
+def gn_information_markets():
+    """Path: / (Application root)"""
+    # logging.debug(f"Username: {g.username}")
+    return render_template('gn/information/markets.html')
+    # return render_template('home.html')
+
+
+
 @app.route('/gn/simulator')
 @require_authenticated_user
 def gn_simulator():

@@ -1,0 +1,310 @@
+{% extends "_layouts/_skeleton_default.html" %}
+
+{% block title %}Markets{% endblock %}
+
+{% block content -%}
+
+<main style="display: grid; margin: 1em; grid-template-columns: 16em 1fr;">
+
+    <nav class="nav-menu" aria-label="nav-menu" style="display: flex; flex-direction: column; align-self: 100%;">
+        <span style="font-size:1.8em">Register</span>
+        <a href="#">Company</a>
+        <a href="#">Contract</a>
+        
+        <span>&nbsp;</span>
+        <span style="font-size:1.8em">Nominations</span>
+        <span>item 3</span>
+        <span>item 4</span>
+        <span>&nbsp;</span>
+        
+        <span style="font-size:1.8em">Allocations</span>
+        <span>item 5</span>
+        <span>item 6</span>
+        <span>&nbsp;</span>
+        
+        <span style="font-size:1.8em">Billing</span>
+        <span>item 7</span>
+        <span>item 8</span>
+        <span>&nbsp;</span>
+        
+        <span style="font-size:1.8em">Information</span>
+        <a href="gn/information/markets">Markets</a>
+        <span>Documentation</span>
+        <span>Videos</span>
+        <span>&nbsp;</span>
+
+        <span style="font-size:1.8em">Training</span>
+        <span>Tutorials</span>
+        <a href="gn/simulator">Simulator</a>
+        <span>&nbsp;</span>
+    </nav>
+
+    <article style="margin-left: 1em;">
+
+        <h1>Markets</h1>
+
+        <div>
+            <canvas id="canvas" style="width: 800px; height: 600px;"></canvas>
+
+        </div>
+
+        <section>
+
+            <p>We want to display JKM, HSOF prices.
+                What other energy indexes do we want to display?
+            </p>
+
+
+            <!-- <h1>Market Prices</h1> -->
+
+            <!-- 
+            <ol>
+                <li class="announcement" style="margin-left: 2.2em;">
+                    <h1>New funds needed!</h1>
+                    <p>
+                        If you like this website, please donate!
+                    </p>
+                </li>
+            </ol>
+
+            <div class="announcement" style="margin-left: 2.2em;">
+                <h1>Server maintenance</h1>
+                <p>
+                    A server maintenance will be conducted this Thursday from 1:00 AM to 1:15 AM SGTx
+                </p>
+            </div>
+
+
+            
+            <div class="announcement" style="margin-left: 2.2em;">
+                <h1>Gnet feature deployment</h1>
+                <p>
+
+                    There will be a feature deployment for Gnet this Saturday from 1:00 AM to 1:15 AM SGT.<br />
+                    The following features will be deployed:
+
+                </p>
+
+
+                <ol>
+                    <li>Guest</li>
+                    <li>Company registration</li>
+                </ol>
+
+            </div>
+            -->
+
+        </section>
+
+    </article>
+
+
+</main>
+
+<footer style="align-self: stretch;">
+    <div style="margin: 0 1em; display: flex; align-items: center; gap:1.2em; height: 100%;">
+        <span>Last update 2023</span>
+    </div>
+
+</footer>
+
+{% endblock %}
+
+{%- block scripts %}
+<script type="text/javascript">
+// Create a canvas element
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+// Define the parameters of the network
+var n = 10; // number of nodes
+var m = 15; // number of edges
+var r = 20; // radius of the nodes
+var s = 5; // speed of the water particles
+var p = 10; // number of water particles per edge
+
+// Define the color of the nodes, edges and water
+var nodeColor = "blue";
+var edgeColor = "gray";
+var waterColor = "cyan";
+
+// Create an array of nodes
+var nodes = [];
+for (var i = 0; i < n; i++) {
+  // Randomize the position and label of each node
+  var x = r + Math.random() * (canvas.width - 2 * r);
+  var y = r + Math.random() * (canvas.height - 2 * r);
+  var label = String.fromCharCode(65 + i);
+  // Add the node to the array
+  nodes.push({x: x, y: y, label: label});
+}
+
+// Create an array of edges
+var edges = [];
+for (var i = 0; i < m; i++) {
+  // Randomize the source and target nodes of each edge
+  var source = Math.floor(Math.random() * n);
+  var target = Math.floor(Math.random() * n);
+  // Avoid self-loops and duplicate edges
+  while (source == target || edges.some(e => e.source == source && e.target == target)) {
+    source = Math.floor(Math.random() * n);
+    target = Math.floor(Math.random() * n);
+  }
+  // Calculate the length and angle of the edge
+  var dx = nodes[target].x - nodes[source].x;
+  var dy = nodes[target].y - nodes[source].y;
+  var length = Math.sqrt(dx * dx + dy * dy);
+  var angle = Math.atan2(dy, dx);
+  // Add the edge to the array
+  edges.push({source: source, target: target, length: length, angle: angle});
+}
+
+// Create an array of water particles
+var particles = [];
+for (var i = 0; i < m; i++) {
+  // Loop through each edge
+  var edge = edges[i];
+  for (var j = 0; j < p; j++) {
+    // Randomize the initial position and direction of each particle along the edge
+    var t = Math.random();
+    var x = nodes[edge.source].x + t * edge.length * Math.cos(edge.angle);
+    var y = nodes[edge.source].y + t * edge.length * Math.sin(edge.angle);
+    var dx = s * Math.cos(edge.angle);
+    var dy = s * Math.sin(edge.angle);
+    // Add the particle to the array
+    particles.push({x: x, y: y, dx: dx, dy: dy, edge: i});
+  }
+}
+
+// Define a function to draw a node
+function drawNode(node) {
+   // Save the current context state
+   ctx.save();
+   // Set the fill and stroke color of the node
+   ctx.fillStyle = nodeColor;
+   ctx.strokeStyle = nodeColor;
+   // Set the font and alignment of the node label
+   ctx.font = "20px Arial";
+   ctx.textAlign = "center";
+   ctx.textBaseline = "middle";
+   // Begin a new path
+   ctx.beginPath();
+   // Draw a circle with the node's position and radius
+   ctx.arc(node.x, node.y, r ,0 ,2 * Math.PI);
+   // Close the path 
+   ctx.closePath();
+   // Fill and stroke the path 
+   ctx.fill();
+   ctx.stroke();
+   // Draw the node label 
+   ctx.fillStyle = "white";
+   ctx.fillText(node.label, node.x, node.y);
+   // Restore the context state 
+   ctx.restore();
+}
+
+// Define a function to draw an edge
+function drawEdge(edge) {
+   // Save the current context state
+   ctx.save();
+   // Set the stroke color of the edge
+   ctx.strokeStyle = edgeColor;
+   // Set the line width of the edge
+   ctx.lineWidth = r /2 ;
+   // Begin a new path 
+   ctx.beginPath();
+   // Move to the source node's position 
+   ctx.moveTo(nodes[edge.source].x, nodes[edge.source].y);
+   // Draw a line to the target node's position 
+   ctx.lineTo(nodes[edge.target].x, nodes[edge.target].y);
+   // Close the path 
+   ctx.closePath();
+   // Stroke the path 
+   ctx.stroke();
+   // Restore the context state 
+   ctx.restore();
+}
+
+// Define a function to draw a water particle
+function drawParticle(particle) {
+   // Save the current context state
+   ctx.save();
+   // Set the fill color of the particle
+   ctx.fillStyle = waterColor;
+   // Begin a new path
+   ctx.beginPath();
+   // Draw a circle with the particle's position and radius
+   ctx.arc(particle.x, particle.y, s /2 ,0 ,2 * Math.PI);
+   // Close the path 
+   ctx.closePath();
+   // Fill the path 
+   ctx.fill();
+   // Restore the context state 
+   ctx.restore();
+}
+
+// Define a function to update a water particle's position and direction 
+function updateParticle(particle) {
+   // Move the particle by its velocity 
+   particle.x += particle.dx;
+   particle.y += particle.dy;
+   
+   // Check if the particle reaches the end of its edge 
+   var edge = edges[particle.edge];
+   var dx = nodes[edge.target].x - nodes[edge.source].x;
+   var dy = nodes[edge.target].y - nodes[edge.source].y;
+   var dot = dx * particle.dx + dy * particle.dy;
+   if (dot < 0) {
+      // Reverse the direction of the particle 
+      particle.dx *= -1;
+      particle.dy *= -1;
+   } else {
+      var d = Math.sqrt(Math.pow(particle.x - nodes[edge.target].x ,2) + Math.pow(particle.y - nodes[edge.target].y ,2));
+      if (d < r) {
+         // Find a new edge connected to the target node 
+         var newEdge = edge;
+         while (newEdge.source == edge.target || newEdge.target == edge.target) {
+            newEdge = edges[Math.floor(Math.random() * m)];
+         }
+         // Set the new edge, position and direction of the particle 
+         particle.edge = newEdge;
+         particle.x = nodes[newEdge.source].x;
+         particle.y = nodes[newEdge.source].y;
+         particle.dx = s * Math.cos(newEdge.angle);
+         particle.dy = s * Math.sin(newEdge.angle);
+      }
+   }
+}
+
+// Define a function to animate the water particles 
+function animate() {
+   // Clear the canvas 
+   ctx.clearRect(0, 0, canvas.width, canvas.height);
+   // Loop through the edges array 
+   for (var i = 0; i < m; i++) {
+      // Draw the edge 
+      drawEdge(edges[i]);
+   }
+   // Loop through the nodes array 
+   for (var i = 0; i < n; i++) {
+      // Draw the node 
+      drawNode(nodes[i]);
+   }
+   // Loop through the particles array 
+   for (var i = 0; i < m * p; i++) {
+      // Draw the particle 
+      drawParticle(particles[i]);
+      // Update the particle 
+      updateParticle(particles[i]);
+   }
+   
+  // Request the next animation frame 
+  requestAnimationFrame(animate);
+}
+
+// Start the animation 
+animate();
+
+</script>
+
+{% endblock %}
