@@ -4,6 +4,7 @@ from forum_app import app
 from apispec import APISpec
 
 from flask import Response
+from flask import request
 
 @app.route('/api/swagger', methods=['GET'])
 def api_swagger_json():
